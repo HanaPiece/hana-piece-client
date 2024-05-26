@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        customGreen: "#008485",
+        customTeal: "#008485",
       },
     },
   },
