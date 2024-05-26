@@ -12,6 +12,9 @@ function App() {
           <Route path="home">
             <Route index element={<HomePage />} />
           </Route>
+          <Route path="productList">
+            <Route index element={<ProductListPage />} />
+          </Route>
         </Route>
 
         {/* NavBar 없는 화면 */}
