@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 type Props = {
   userGoalId: number;
   goalBeginDate: string;
@@ -9,6 +11,12 @@ type Props = {
 };
 
 const GoalBox = ({ userGoalId, goalBeginDate, goalTypeNm, productNm, amount, duration, color }: Props) => {
+  const navigate = useNavigate();
+
+  const goToDetail = (userGoalId:number) => {
+    navigate(`${userGoalId}`);
+  };
+
   const gradientClass = color === 'violet'
     ? 'from-violet-400 to-violet-600'
     : color === 'blue'
@@ -18,7 +26,7 @@ const GoalBox = ({ userGoalId, goalBeginDate, goalTypeNm, productNm, amount, dur
     : 'from-orange-300 to-orange-400';
   
   return (
-    <div className={`bg-gradient-to-r ${gradientClass} rounded-2xl p-3 my-4 text-white shadow-xl`}>
+    <div className={`bg-gradient-to-r ${gradientClass} rounded-2xl p-3 my-4 text-white shadow-xl cursor-pointer`} onClick={() => goToDetail(userGoalId)}>
       <div className='flex justify-between text-xs font-semibold'>
         <div>목표 {userGoalId}</div>
         <div>{goalBeginDate} ~</div>

@@ -3,6 +3,7 @@ import { Layout } from "./pages/Layout";
 import Splash from "./pages/start/Splash";
 import { TutorialPage1 } from "./pages/start/TutorialPage1";
 import { HomePage } from "./pages/home/HomePage";
+import { GoalProductDetailPage } from "./pages/home/GoalProductDetailPage";
 function App() {
   return (
     <BrowserRouter>
@@ -11,6 +12,7 @@ function App() {
           {/* NavBar 있는 화면 */}
           <Route path="home">
             <Route index element={<HomePage />} />
+            <Route path=":id" element={<GoalProductDetailPage />} />
           </Route>
         </Route>
 
