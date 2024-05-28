@@ -15,7 +15,7 @@ const ProductTerm = ({ name, content }: Props) => {
         </div>
         <div className="col-span-5">
           <div className="font-bold text-customGreen">{name}</div>
-          <div>{content}</div>
+          <div className='break-words'>{content}</div>
         </div>
       </div>
       <br />

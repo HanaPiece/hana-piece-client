@@ -14,6 +14,10 @@ import { ProductSignupPage } from "./pages/product/ProductSignupPage";
 import { ProductCompletePage } from "./pages/product/ProductCompletePage";
 import { MypagePage } from "./pages/mypage/MypagePage";
 import { SalaryPage } from "./pages/mypage/salary/SalaryPage";
+import { AccountPage } from "./pages/mypage/account/AccountPage";
+import { AccountAddPage } from "./pages/mypage/account/AccountAddPage";
+import { AccountTermPage } from "./pages/mypage/account/AccountTermPage";
+import { AccountCompletePage } from "./pages/mypage/account/AccountCompletePage";
 
 
 function App() {
@@ -36,6 +40,7 @@ function App() {
           <Route path="mypage">
             <Route index element={<MypagePage />} />
             <Route path="salary" element={<SalaryPage />} />
+            <Route path="account" element={<AccountPage />} />
           </Route>
           <Route path="split">
             <Route index element={<SplitMainPage />} />
@@ -51,6 +56,13 @@ function App() {
         <Route path="/tutorial">
           <Route index element={<TutorialPage1 />} />
         </Route>
+        <Route path="mypage">
+            <Route path="account">
+              <Route path="add" element={<AccountAddPage />} />
+              <Route path="term" element={<AccountTermPage />} />
+              <Route path="complete" element={<AccountCompletePage />} />
+            </Route>
+          </Route>
       </Routes>
     </BrowserRouter>
   );
