@@ -5,7 +5,7 @@ export const ProductSignupPage = () => {
   const id = 4;
   return (
     <>
-      <div>
+      <div className="container">
         <TopLine name={"적금 개설"} />
         <div>
           <div className="text-3xl font-bold">적금 이름</div>

@@ -27,7 +27,7 @@ export const ProductTermPage = () => {
   const id = 4;
   return (
     <>
-      <div>
+      <div className="container">
         <TopLine name={"적금 개설"} />
 
         <div>

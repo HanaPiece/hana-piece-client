@@ -1,4 +1,5 @@
 import {
+  SlArrowRight,
   SlBell,
   SlBookOpen,
   SlCalculator,
@@ -20,25 +21,28 @@ export const MypagePage = () => {
 
         <div>
           <div
-            onClick={() => navigate("")}
+            onClick={() => navigate("salary")}
             className="flex cursor-pointer border border-gray-300 m-2 p-2 hover:shadow-lg"
           >
             <SlCalculator className="mr-4 w-6 h-6" />
             월급관리
+            <SlArrowRight className="ml-auto mt-1 w-3 h-3" />
           </div>
           <div
-            onClick={() => navigate("")}
+            onClick={() => navigate("account")}
             className="flex cursor-pointer border border-gray-300 m-2 p-2 hover:shadow-lg"
           >
             <SlBookOpen className="mr-4 w-6 h-6" />
             계좌 관리
+            <SlArrowRight className="ml-auto mt-1 w-3 h-3" />
           </div>
           <div
-            onClick={() => navigate("")}
+            onClick={() => navigate("goal")}
             className="flex cursor-pointer border border-gray-300 m-2 p-2 hover:shadow-lg"
           >
             <SlPieChart className="mr-4 w-6 h-6" />
             목표 관리
+            <SlArrowRight className="ml-auto mt-1 w-3 h-3" />
           </div>
           <div
             onClick={() => navigate("")}
@@ -46,6 +50,7 @@ export const MypagePage = () => {
           >
             <SlBell className="mr-4 w-6 h-6" />
             알림 관리
+            <SlArrowRight className="ml-auto mt-1 w-3 h-3" />
           </div>
           <div
             onClick={() => navigate("")}
@@ -53,6 +58,7 @@ export const MypagePage = () => {
           >
             <SlSettings className="mr-4 w-6 h-6" />
             설정
+            <SlArrowRight className="ml-auto mt-1 w-3 h-3" />
           </div>
         </div>
       </div>
