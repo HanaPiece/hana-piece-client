@@ -18,12 +18,18 @@ import { ProductSignupPage } from "./pages/product/ProductSignupPage";
 import { ProductCompletePage } from "./pages/product/ProductCompletePage";
 import { MypagePage } from "./pages/mypage/MypagePage";
 import { SalaryPage } from "./pages/mypage/salary/SalaryPage";
+import { AccountPage } from "./pages/mypage/account/AccountPage";
+import { AccountAddPage } from "./pages/mypage/account/AccountAddPage";
+import { AccountTermPage } from "./pages/mypage/account/AccountTermPage";
+import { AccountCompletePage } from "./pages/mypage/account/AccountCompletePage";
 import { GoalListPage } from "./pages/mypage/goal/GoalListPage";
 import { GoalCreatePage } from "./pages/mypage/goal/GoalCreatePage";
 import { GoalDetailPage } from "./pages/mypage/goal/GoalDetailPage";
 import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
 import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
+import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
+import { ModalTestPage } from "./pages/home/ModalTestPage";
 
 function App() {
   return (
@@ -43,9 +49,13 @@ function App() {
             <Route index element={<MypagePage />} />
             <Route path="goal" element={<GoalListPage />} />
             <Route path="account">
+              <Route index element={<AccountPage />} />
               <Route path="setting">
                 <Route index element={<AccountSettingPage />} />
-                <Route path="open" element={<AccountOpenList />} />
+                <Route path="open">
+                  <Route index element={<AccountOpenList />} />
+                  <Route path="update" element={<AccountOpenUpdatePage />} />
+                </Route>
                 <Route path="saving" element={<AccountSavingList />} />
               </Route>
             </Route>
@@ -83,7 +93,12 @@ function App() {
             <Route path=":id" element={<GoalDetailPage />} />
             <Route path="create" element={<GoalCreatePage />} />
           </Route>
-        </Route>
+          <Route path="account">
+            <Route path="add" element={<AccountAddPage />} />
+            <Route path="term" element={<AccountTermPage />} />
+            <Route path="complete" element={<AccountCompletePage />} />
+          </Route>
+      </Route>
       </Routes>
     </BrowserRouter>
   );
