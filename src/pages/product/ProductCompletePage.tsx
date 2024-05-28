@@ -4,7 +4,7 @@ import { TopLine } from "../../components/ui/TopLine";
 export const ProductCompletePage = () => {
   return (
     <>
-      <div>
+      <div className="container">
         <TopLine name={"적금 개설"} />
         <div>
           <div className="text-3xl font-bold">적금 이름</div>
