@@ -37,18 +37,22 @@ export const AccountOpenList = () => {
       <div>
         <TopLine name={"입출금 통장 설정"} />
         <div>
-          <span className="text-xl font-bold">입출금 통장</span>
-          <div className="mt-4 space-y-4">
-            {accounts.map((account, count) => (
-              <Account
-                key={account.id}
-                count={count + 1}
-                number={account.number}
-                state={account.state}
-              />
-            ))}
+          <div className="m-10">
+            <span className="text-xl font-bold">입출금 통장</span>
+            <div className="mt-4 space-y-4">
+              {accounts.map((account, count) => (
+                <Account
+                  key={account.id}
+                  count={count + 1}
+                  number={account.number}
+                  state={account.state}
+                />
+              ))}
+            </div>
+            <div className="mt-10">
+              <GreenButton path={"update"} name={"수정하기"} />
+            </div>
           </div>
-          <GreenButton path={""} name={"수정하기"} />
         </div>
       </div>
     </>
