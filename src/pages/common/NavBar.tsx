@@ -1,6 +1,11 @@
 import { useState } from "react";
 // import { SlArrowRight } from "react-icons/sl";
-import { SlBookOpen, SlWallet, SlCreditCard, SlUser } from "react-icons/sl";
+import {
+  SlWallet,
+  SlCreditCard,
+  SlUser,
+  SlSocialDropbox,
+} from "react-icons/sl";
 
 export const NavBar = () => {
   const [selected, setSelected] = useState(0);
@@ -17,7 +22,7 @@ export const NavBar = () => {
             className={`nav-item ${selected === 0 ? "selected" : ""}`}
             onClick={() => handleClick(0)}
           >
-            <SlBookOpen className="nav-icon" />
+            <SlSocialDropbox className="nav-icon" />
             <p className="text-xs flex-1 align-middle justify-center">상품</p>
           </div>
           <div

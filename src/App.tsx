@@ -8,6 +8,8 @@ import { ProductDetailPage } from "./pages/product/ProductDetailPage";
 import { ProductTermPage } from "./pages/product/ProductTermPage";
 import { ProductSignupPage } from "./pages/product/ProductSignupPage";
 import { ProductCompletePage } from "./pages/product/ProductCompletePage";
+import { MypagePage } from "./pages/mypage/MypagePage";
+import { SalaryPage } from "./pages/mypage/salary/SalaryPage";
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +25,10 @@ function App() {
             <Route path=":id/term" element={<ProductTermPage />} />
             <Route path=":id/signup" element={<ProductSignupPage />} />
             <Route path=":id/complete" element={<ProductCompletePage />} />
+          </Route>
+          <Route path="mypage">
+            <Route index element={<MypagePage />} />
+            <Route path="salary" element={<SalaryPage />} />
           </Route>
         </Route>
 
