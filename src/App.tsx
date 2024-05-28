@@ -3,10 +3,10 @@ import { Layout } from "./pages/Layout";
 import Splash from "./pages/start/Splash";
 import { TutorialPage1 } from "./pages/start/TutorialPage1";
 import { HomePage } from "./pages/home/HomePage";
+import { GoalProductDetailPage } from "./pages/home/GoalProductDetailPage";
 import { SplitMainPage } from "./pages/split/SplitMainPage";
 import { SplitManualPage } from "./pages/split/SplitManualPage";
 import { SplitAutoPage } from "./pages/split/SplitAutoPage";
-import { GoalProductDetailPage } from "./pages/home/GoalProductDetailPage";
 import { ProductListPage } from "./pages/product/ProductListPage";
 import { ProductDetailPage } from "./pages/product/ProductDetailPage";
 import { ProductTermPage } from "./pages/product/ProductTermPage";
@@ -17,8 +17,8 @@ import { SalaryPage } from "./pages/mypage/salary/SalaryPage";
 import { GoalListPage } from "./pages/mypage/goal/GoalListPage";
 import { GoalCreatePage } from "./pages/mypage/goal/GoalCreatePage";
 import { GoalDetailPage } from "./pages/mypage/goal/GoalDetailPage";
-import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
+import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
 
 function App() {
@@ -34,9 +34,6 @@ function App() {
           <Route path="product">
             <Route index element={<ProductListPage />} />
             <Route path=":id" element={<ProductDetailPage />} />
-            {/* <Route path=":id/term" element={<ProductTermPage />} /> */}
-            {/* <Route path=":id/signup" element={<ProductSignupPage />} /> */}
-            {/* <Route path=":id/complete" element={<ProductCompletePage />} /> */}
           </Route>
           <Route path="mypage">
             <Route index element={<MypagePage />} />
