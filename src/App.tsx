@@ -1,7 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import Splash from "./pages/start/Splash";
-import { TutorialPage1 } from "./pages/start/TutorialPage1";
+import { Splash } from "./pages/start/Splash";
+import { Tutorial1Page } from "./pages/start/Tutorial1Page";
+import { Tutorial2Page } from "./pages/start/Tutorial2Page";
+import { Tutorial3Page } from "./pages/start/Tutorial3Page";
+import { Tutorial4Page } from "./pages/start/Tutorial4Page";
+import { LoginPage } from "./pages/start/LoginPage";
 import { HomePage } from "./pages/home/HomePage";
 import { GoalProductDetailPage } from "./pages/home/GoalProductDetailPage";
 import { SplitMainPage } from "./pages/split/SplitMainPage";
@@ -54,12 +58,20 @@ function App() {
         </Route>
 
         {/* NavBar 없는 화면 */}
-        <Route path="/splash">
+        <Route path="/start">
           <Route index element={<Splash />} />
         </Route>
         <Route path="/tutorial">
-          <Route index element={<TutorialPage1 />} />
+          <Route index element={<Tutorial1Page />} />
         </Route>
+
+        <Route path="splash" element={<Splash />} />
+        <Route path="tutorial1" element={<Tutorial1Page />} />
+        <Route path="tutorial2" element={<Tutorial2Page />} />
+        <Route path="tutorial3" element={<Tutorial3Page />} />
+        <Route path="tutorial4" element={<Tutorial4Page />} />
+        <Route path="login" element={<LoginPage />} />
+
         <Route path="product">
           <Route path=":id/term" element={<ProductTermPage />} />
           <Route path=":id/signup" element={<ProductSignupPage />} />
