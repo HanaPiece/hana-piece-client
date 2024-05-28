@@ -24,6 +24,8 @@ import { GoalDetailPage } from "./pages/mypage/goal/GoalDetailPage";
 import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
 import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
+import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
+import { ModalTestPage } from "./pages/home/ModalTestPage";
 
 function App() {
   return (
@@ -46,7 +48,10 @@ function App() {
               <Route index element={<AccountPage />} />
               <Route path="setting">
                 <Route index element={<AccountSettingPage />} />
-                <Route path="open" element={<AccountOpenList />} />
+                <Route path="open">
+                  <Route index element={<AccountOpenList />} />
+                  <Route path="update" element={<AccountOpenUpdatePage />} />
+                </Route>
                 <Route path="saving" element={<AccountSavingList />} />
               </Route>
             </Route>
