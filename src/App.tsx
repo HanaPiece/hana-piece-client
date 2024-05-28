@@ -3,6 +3,10 @@ import { Layout } from "./pages/Layout";
 import Splash from "./pages/start/Splash";
 import { TutorialPage1 } from "./pages/start/TutorialPage1";
 import { HomePage } from "./pages/home/HomePage";
+import { SplitMainPage } from "./pages/split/SplitMainPage";
+import { SplitManualPage } from "./pages/split/SplitManualPage";
+import { SplitAutoPage } from "./pages/split/SplitAutoPage";
+import { GoalProductDetailPage } from "./pages/home/GoalProductDetailPage";
 import { ProductListPage } from "./pages/product/ProductListPage";
 import { ProductDetailPage } from "./pages/product/ProductDetailPage";
 import { ProductTermPage } from "./pages/product/ProductTermPage";
@@ -10,6 +14,8 @@ import { ProductSignupPage } from "./pages/product/ProductSignupPage";
 import { ProductCompletePage } from "./pages/product/ProductCompletePage";
 import { MypagePage } from "./pages/mypage/MypagePage";
 import { SalaryPage } from "./pages/mypage/salary/SalaryPage";
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +24,7 @@ function App() {
           {/* NavBar 있는 화면 */}
           <Route path="home">
             <Route index element={<HomePage />} />
+            <Route path=":id" element={<GoalProductDetailPage />} />
           </Route>
           <Route path="product">
             <Route index element={<ProductListPage />} />
@@ -29,6 +36,11 @@ function App() {
           <Route path="mypage">
             <Route index element={<MypagePage />} />
             <Route path="salary" element={<SalaryPage />} />
+          </Route>
+          <Route path="split">
+            <Route index element={<SplitMainPage />} />
+            <Route path="manual" element={<SplitManualPage />} />
+            <Route path="auto" element={<SplitAutoPage />} />
           </Route>
         </Route>
 
