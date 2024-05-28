@@ -3,6 +3,9 @@ import { Layout } from "./pages/Layout";
 import Splash from "./pages/start/Splash";
 import { TutorialPage1 } from "./pages/start/TutorialPage1";
 import { HomePage } from "./pages/home/HomePage";
+import { SplitMainPage } from "./pages/split/SplitMainPage";
+import { SplitManualPage } from "./pages/split/SplitManualPage";
+import { SplitAutoPage } from "./pages/split/SplitAutoPage";
 import { GoalProductDetailPage } from "./pages/home/GoalProductDetailPage";
 import { ProductListPage } from "./pages/product/ProductListPage";
 import { ProductDetailPage } from "./pages/product/ProductDetailPage";
@@ -26,6 +29,11 @@ function App() {
             <Route path=":id/term" element={<ProductTermPage />} />
             <Route path=":id/signup" element={<ProductSignupPage />} />
             <Route path=":id/complete" element={<ProductCompletePage />} />
+          </Route>
+          <Route path="split">
+            <Route index element={<SplitMainPage />} />
+            <Route path="manual" element={<SplitManualPage />} />
+            <Route path="auto" element={<SplitAutoPage />} />
           </Route>
         </Route>
 
