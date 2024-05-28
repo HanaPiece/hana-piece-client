@@ -29,7 +29,6 @@ import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
 import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
 import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
-import { ModalTestPage } from "./pages/home/ModalTestPage";
 
 function App() {
   return (
@@ -98,7 +97,7 @@ function App() {
             <Route path="term" element={<AccountTermPage />} />
             <Route path="complete" element={<AccountCompletePage />} />
           </Route>
-      </Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );
