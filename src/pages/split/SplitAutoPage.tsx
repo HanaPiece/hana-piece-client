@@ -1,11 +1,8 @@
+import { GreenButton } from "../../components/ui/GreenButton";
+import { TopLine } from "../../components/ui/TopLine";
+import { Ratio } from "./SplitMainPage";
 
-export type Ratio = {
-  saving: number;
-  life: number;
-  reserve: number;
-}
-
-export const SplitMainPage = () => {
+export const SplitAutoPage = () => {
   const ratio: Ratio = {
     saving: 50,
     life: 23,
@@ -13,11 +10,19 @@ export const SplitMainPage = () => {
   };
 
   return (
-    <div className='m-10'>
-      <div className='mt-20'>
-        <h3 className='font-bold text-xl'>
-          다음 달 <br />통장 쪼개기 비율
-        </h3>
+    <>
+      <TopLine name={''} />
+      <div className='m-10'>
+      <div>
+        <div className='flex justify-between items-center'>
+          <h3 className='font-bold text-xl'>
+            <span className='text-green-600 mr-2'>하나</span>님을 위한<br />통장 쪼개기 추천 비율
+          </h3>
+          <div>
+            <img src='\src\assets\byul5.png' className='w-20' alt='하나은행' />
+          </div>
+        </div>
+        <p className='text-gray-400 text-xs'>최근 한 달간 소비 패턴을 분석해서 추천해드렸어요</p>
       </div>
       <div className='mt-5'>
         <div className='w-full flex h-5 rounded-full bg-gray-300'>
@@ -68,7 +73,7 @@ export const SplitMainPage = () => {
           </div>
         </div>
       </div>
-      <div className='mt-8'>
+      <div className='mt-8 mb-10'>
         <div>
           <h3 className='font-bold text-gray-400 text-md'>💡예비 통장</h3>
           <div className='grid grid-cols-7 items-end mt-1'>
@@ -79,10 +84,9 @@ export const SplitMainPage = () => {
           </div>
         </div>
       </div>
-      <div className='flex justify-between mt-14 gap-4'>
-        <button className='bg-gray-200 w-1/2 rounded-md h-10 font-bold text-gray-600'>비율 설정하기</button>
-        <button className='bg-emerald-600 w-1/2 rounded-md h-10 font-bold text-white'>비율 추천받기</button>
-      </div>
+      <hr className= 'bg-gray-200 border-0 w-16 mx-auto my-8 h-px' />
+      <GreenButton name={'이대로 설정하기'} path={''} />
     </div>
+    </>
   );
 };
