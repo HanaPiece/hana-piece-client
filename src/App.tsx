@@ -4,6 +4,8 @@ import Splash from "./pages/start/Splash";
 import { TutorialPage1 } from "./pages/start/TutorialPage1";
 import { HomePage } from "./pages/home/HomePage";
 import { SplitMainPage } from "./pages/split/SplitMainPage";
+import { SplitManualPage } from "./pages/split/SplitManualPage";
+import { SplitAutoPage } from "./pages/split/SplitAutoPage";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +17,8 @@ function App() {
           </Route>
           <Route path="split">
             <Route index element={<SplitMainPage />} />
+            <Route path="manual" element={<SplitManualPage />} />
+            <Route path="auto" element={<SplitAutoPage />} />
           </Route>
         </Route>
 
