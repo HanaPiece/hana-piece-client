@@ -68,3 +68,11 @@ body {
   margin: 15px;
   margin-left: 25px;
 }
+
+.hana-color {
+  background-color: #008485;
+}
+
+.hana-text-color {
+  color: #008485;
+}
