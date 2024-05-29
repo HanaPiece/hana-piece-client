@@ -1,9 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import clsx from "clsx";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  children?: ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
