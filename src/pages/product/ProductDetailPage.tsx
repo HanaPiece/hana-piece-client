@@ -1,15 +1,21 @@
-import { useLocation } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
 import { Product } from "./ProductListPage";
 import { GreenButton } from "../../components/ui/GreenButton";
 
+const product: Product = {
+  id: 1,
+  name: "적금1",
+  rate: 2.5,
+  info: "적금와랄라라",
+  term_year: 1,
+  cautions: "주의사항",
+  deposit_protection: "예적금 보호법",
+  contract_terms: "적금 약관동의",
+};
 export const ProductDetailPage = () => {
-  const location = useLocation();
-  const product: Product = location.state;
-
   return (
     <>
-      <div>
+      <div className="container">
         <TopLine name={"적금 상세 설명"} />
         <br />
 
