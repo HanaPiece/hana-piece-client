@@ -1,15 +1,19 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
 import { useState } from "react";
 
 type Props = {
   name: string;
   content: string;
+  isChecked: boolean;
   onCheckboxChange: () => void;
 };
 
-const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
+const ProductTerm = ({ name, content, isChecked, onCheckboxChange }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const check =
+    name === location.state?.name ? location.state?.agreed : isChecked;
   return (
     <>
       <div
@@ -17,7 +21,12 @@ const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
         onClick={() => navigate("detail", { state: { name, content } })}
       >
         <div>
-          <input type="checkbox" onChange={onCheckboxChange} disabled />
+          <input
+            type="checkbox"
+            checked={check}
+            onChange={onCheckboxChange}
+            disabled
+          />
         </div>
         <div className="col-span-5">
           <div className="font-bold text-customGreen">{name}</div>
@@ -49,7 +58,7 @@ export const ProductTermPage = () => {
   const id = 4;
   return (
     <>
-      <div>
+      <div className="container">
         <TopLine name={"적금 개설"} />
 
         <div>
@@ -59,19 +68,21 @@ export const ProductTermPage = () => {
             <ProductTerm
               name="적금 약관동의"
               content="product.contract_terms\nproduct.contract_terms\nproduct.contract_terms"
+              isChecked={termsChecked[0]}
               onCheckboxChange={() => handleCheckboxChange(0)}
             />
             <ProductTerm
               name="예금자 보호법"
               content="product.contract_terms\nproduct.contract_terms\nproduct.contract_terms"
+              isChecked={termsChecked[1]}
               onCheckboxChange={() => handleCheckboxChange(1)}
             />
           </div>
           <label className="text-customGreen font-semibold">이메일</label>
           <input type="text" className="m-3 bg-slate-300" /> <br />
-          <text className="text-sm">
+          <span className="text-sm">
             [필수] 입력하신 이메일로 상품 이용약관 설명서가 발송됩니다.
-          </text>
+          </span>
           <button onClick={handleSubmit} className="border-2 w-3/4">
             다음
           </button>
