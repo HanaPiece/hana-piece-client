@@ -11,28 +11,29 @@ export const NavBar = () => {
 
   return (
     <>
-      <div className="nav-bar">
-        <div className="sticky flex justify-between bottom-0 left-0 w-full">
-          <div className={"nav-item"} onClick={() => navigate("/product")}>
+      <div className="nav-shadow-top-lg rounded-t-3xl w-full h-20 absolute bottom-0 bg-white">
+        <div className="sticky flex justify-between bottom-0 left-0 w-full px-4">
+          <div className="flex flex-col items-center justify-center nav-item" onClick={() => navigate("/product")}>
             <SlSocialDropbox className="nav-icon" />
-            <p className="text-xs flex-1 align-middle justify-center">상품</p>
+            <p className="text-xs mt-1">상품</p>
           </div>
-          <div className={"nav-item"} onClick={() => navigate("split")}>
+          <div className="flex flex-col items-center justify-center nav-item" onClick={() => navigate("/split")}>
             <SlWallet className="nav-icon" />
-            <p className="text-xs">통장쪼개기</p>
+            <p className="text-xs mt-1">통장</p>
           </div>
-          <div className={"nav-item"} onClick={() => navigate("/home")}>
+          <div className="nav-item -mt-5" onClick={() => navigate("/home")}>
             <img src="/home.png" alt="Home Image" />
           </div>
-          <div className={"nav-item"} onClick={() => navigate("/home")}>
+          <div className="flex flex-col items-center justify-center nav-item" onClick={() => navigate("/life")}>
             <SlCreditCard className="nav-icon" />
-            <p className="text-xs">생활</p>
+            <p className="text-xs mt-1">생활</p>
           </div>
-          <div className={"nav-item"} onClick={() => navigate("/mypage")}>
+          <div className="flex flex-col items-center justify-center nav-item" onClick={() => navigate("/mypage")}>
             <SlUser className="nav-icon" />
-            <p className="text-xs">마이페이지</p>
+            <p className="text-xs mt-1">마이페이지</p>
           </div>
         </div>
+        <div className="h-1 bg-gray-200 w-28 m-auto"></div>
       </div>
     </>
   );
