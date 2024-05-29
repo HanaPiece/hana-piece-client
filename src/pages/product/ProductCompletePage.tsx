@@ -29,7 +29,7 @@ export const ProductCompletePage = () => {
             </label>
             <span className="m-3 col-span-2">value</span>
           </div>
-          <GreenButton path={"/"} name={"확인"} />
+          <GreenButton path={"/home"} name={"확인"} />
         </div>
       </div>
     </>

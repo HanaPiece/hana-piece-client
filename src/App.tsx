@@ -64,21 +64,10 @@ function App() {
             <Route index element={<SplitMainPage />} />
             <Route path="manual" element={<SplitManualPage />} />
             <Route path="auto" element={<SplitAutoPage />} />
-            <Route path=":id/term" element={<ProductTermPage />} />
-            <Route path=":id/term/detail" element={<ProductTermDetailPage />} />
-            <Route path=":id/signup" element={<ProductSignupPage />} />
-            <Route path=":id/complete" element={<ProductCompletePage />} />
           </Route>
         </Route>
 
         {/* NavBar 없는 화면 */}
-        <Route path="/start">
-          <Route index element={<Splash />} />
-        </Route>
-        <Route path="/tutorial">
-          <Route index element={<Tutorial1Page />} />
-        </Route>
-
         <Route path="splash" element={<Splash />} />
         <Route path="tutorial1" element={<Tutorial1Page />} />
         <Route path="tutorial2" element={<Tutorial2Page />} />
