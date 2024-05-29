@@ -40,6 +40,13 @@ body {
   height: 70px;
 }
 
+.selected-nav-item {
+  color: #008485;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+}
+
 .nav-icon {
   width: 20px;
   height: 20px;
