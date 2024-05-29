@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { GreenButton } from "../../../components/ui/GreenButton";
 import { TopLine } from "../../../components/ui/TopLine";
-import Modal from "../../../components/ui/Modal";
-import Modal2 from "../../../components/ui/PhoneModal";
 import PhoneModal from "../../../components/ui/PhoneModal";
 
 type Props = {
