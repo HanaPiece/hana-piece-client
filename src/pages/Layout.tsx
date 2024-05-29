@@ -5,7 +5,7 @@ export const Layout = () => {
   return (
     <>
       <div className="container flex flex-col relative">
-        <div className="flex-grow">
+        <div className="flex-grow overflow-auto">
           <Outlet />
         </div>
         <NavBar />
