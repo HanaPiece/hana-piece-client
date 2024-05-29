@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { addCommas } from "../../components/utils/formatters";
 
 type Props = {
   userGoalId: number;
@@ -49,10 +50,6 @@ const GoalBox = ({ userGoalId, goalBeginDate, goalTypeNm, productNm, amount, dur
 export const HomePage = () => {
   const name = '김하나';
   const totalAmount = 500000;
-
-  const addCommas = (num: number): string => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
 
   return (
     <div className='m-10'>
