@@ -7,7 +7,7 @@ interface ModalProps {
   children?: ReactNode;
 }
 
-const PhoneModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const PhoneModal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <div
       className={clsx(
@@ -20,11 +20,12 @@ const PhoneModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white p-6 shadow-top-lg rounded-t-3xl h-1/2 w-full flex flex-col"
+        className="bg-white p-6 shadow-top-lg rounded-t-3xl w-full flex flex-col"
         onClick={(e) => e.stopPropagation()}
+        style={{ maxHeight: "calc(3/4 * 100vh)" }}
       >
         <hr className="bg-gray-200 border-0 w-20 mx-auto mt-2 mb-6 h-1" />
-        {/* <div className="flex-grow overflow-auto">{children}</div> */}
+        <div className="flex-grow overflow-auto">{children}</div>
         <div>
           <div className="h-1 bg-gray-200 w-28 m-auto"></div>
         </div>

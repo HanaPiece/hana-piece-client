@@ -30,6 +30,7 @@ import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
 import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
 import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
+import { ProductGoalPage } from "./pages/product/ProductGoalPage";
 
 function App() {
   return (
@@ -43,7 +44,6 @@ function App() {
           </Route>
           <Route path="product">
             <Route index element={<ProductListPage />} />
-            <Route path=":id" element={<ProductDetailPage />} />
           </Route>
           <Route path="mypage">
             <Route index element={<MypagePage />} />
@@ -87,6 +87,8 @@ function App() {
         <Route path="login" element={<LoginPage />} />
 
         <Route path="product">
+          <Route path=":id/goal" element={<ProductGoalPage />} />
+          <Route path=":id/detail" element={<ProductDetailPage />} />
           <Route path=":id/term" element={<ProductTermPage />} />
           <Route path=":id/term/detail" element={<ProductTermDetailPage />} />
           <Route path=":id/signup" element={<ProductSignupPage />} />
