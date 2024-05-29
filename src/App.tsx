@@ -29,6 +29,7 @@ import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
 import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
 import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
+import { LifePage } from "./pages/life/LifePage";
 
 function App() {
   return (
@@ -63,6 +64,9 @@ function App() {
             <Route index element={<SplitMainPage />} />
             <Route path="manual" element={<SplitManualPage />} />
             <Route path="auto" element={<SplitAutoPage />} />
+          </Route>
+          <Route path="life">
+            <Route index element={<LifePage />} />
           </Route>
         </Route>
 
