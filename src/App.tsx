@@ -14,6 +14,7 @@ import { SplitAutoPage } from "./pages/split/SplitAutoPage";
 import { ProductListPage } from "./pages/product/ProductListPage";
 import { ProductDetailPage } from "./pages/product/ProductDetailPage";
 import { ProductTermPage } from "./pages/product/ProductTermPage";
+import { ProductTermDetailPage } from "./pages/product/ProductTermDetailPage";
 import { ProductSignupPage } from "./pages/product/ProductSignupPage";
 import { ProductCompletePage } from "./pages/product/ProductCompletePage";
 import { MypagePage } from "./pages/mypage/MypagePage";
@@ -29,6 +30,7 @@ import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
 import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
 import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
+import { ProductGoalPage } from "./pages/product/ProductGoalPage";
 
 function App() {
   return (
@@ -42,7 +44,6 @@ function App() {
           </Route>
           <Route path="product">
             <Route index element={<ProductListPage />} />
-            <Route path=":id" element={<ProductDetailPage />} />
           </Route>
           <Route path="mypage">
             <Route index element={<MypagePage />} />
@@ -63,6 +64,10 @@ function App() {
             <Route index element={<SplitMainPage />} />
             <Route path="manual" element={<SplitManualPage />} />
             <Route path="auto" element={<SplitAutoPage />} />
+            <Route path=":id/term" element={<ProductTermPage />} />
+            <Route path=":id/term/detail" element={<ProductTermDetailPage />} />
+            <Route path=":id/signup" element={<ProductSignupPage />} />
+            <Route path=":id/complete" element={<ProductCompletePage />} />
           </Route>
         </Route>
 
@@ -82,7 +87,10 @@ function App() {
         <Route path="login" element={<LoginPage />} />
 
         <Route path="product">
+          <Route path=":id/goal" element={<ProductGoalPage />} />
+          <Route path=":id/detail" element={<ProductDetailPage />} />
           <Route path=":id/term" element={<ProductTermPage />} />
+          <Route path=":id/term/detail" element={<ProductTermDetailPage />} />
           <Route path=":id/signup" element={<ProductSignupPage />} />
           <Route path=":id/complete" element={<ProductCompletePage />} />
         </Route>

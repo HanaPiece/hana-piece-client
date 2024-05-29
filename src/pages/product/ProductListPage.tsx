@@ -95,7 +95,7 @@ const Product = ({ product }: Props) => {
   const navigate = useNavigate();
   if (!product) return null; // product가 없을 경우 렌더링하지 않음
   const goToDetail = (product: Product) => {
-    navigate(`/product/${product.id}`, { state: product });
+    navigate(`/product/${product.id}/goal`, { state: product });
   };
   return (
     <>
