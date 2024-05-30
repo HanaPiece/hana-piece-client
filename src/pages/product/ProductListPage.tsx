@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SlArrowRight } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 
 export type Product = {
@@ -101,11 +102,21 @@ const Product = ({ product }: Props) => {
     <>
       <div
         onClick={() => goToDetail(product)}
-        className="product-item cursor-pointer border border-gray-300 m-2 p-2 w-36 hover:shadow-lg"
+        className="grid grid-cols-7 pl-2 py-2 pb-3 mb-3 items-center hover:bg-slate-100 cursor-pointer"
       >
-        <div className="text-center text-sm">{product.name}</div>
-        <div className="text-center text-sm">{product.term_year}</div>
-        <div className="text-center text-sm">{product.rate}</div>
+        <div>
+          <div className='bg-gray-200 w-8 h-8 rounded-full grid place-items-center'>
+              <img src='src\assets\img-hana-symbol-m.png' alt='하나은행' className='w-9/12' />
+          </div>
+        </div>
+        <div className="col-span-4">
+          <p className="font-semibold">{product.name}</p>
+          <p className="text-xs text-gray-400">기본 {product.rate}% ({product.term_year*12}개월)</p>
+        </div>
+        <div className="col-span-2 flex justify-between place-items-center">
+          <p className="text-red-500 font-semibold">최고 {product.rate}%</p>
+          <SlArrowRight className="h-3" />
+        </div>
       </div>
     </>
   );
@@ -125,8 +136,15 @@ export const ProductListPage = () => {
   return (
     <>
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">적금 상품 추천</h1>
-        <div className="flex space-x-2 mb-4">
+        <h1 className="text-2xl font-bold mb-4">상품</h1>
+        <div className="flex justify-between rounded-2xl bg-white shadow-md p-3 px-5 mb-8">
+          <div>
+            <p className=" font-semibold">적금 상품 추천</p>
+            <p className="text-sm mt-2">김하나님의 목표에 따라서<br />적합한 적금을 추천해 드릴게요!</p>
+          </div>
+          <div className="flex justify-center items-cneter text-4xl place-items-center">☝️</div>
+        </div>
+        <div className="flex space-x-2 mb-4 justify-center gap-x-2">
           {goalProducts.map((goal) => (
             <button
               key={goal.id}
@@ -141,7 +159,7 @@ export const ProductListPage = () => {
             </button>
           ))}
         </div>
-        <div className="h-[500px] overflow-y-auto border p-2">
+        <div className="h-[500px] overflow-y-auto p-2">
           {selectedGoalProducts.map((product) => (
             <Product key={product.id} product={product} />
           ))}
