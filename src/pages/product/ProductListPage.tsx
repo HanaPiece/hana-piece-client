@@ -135,14 +135,14 @@ export const ProductListPage = () => {
 
   return (
     <>
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">상품</h1>
+      <div className="p-4 ">
+        <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b">상품</h1>
         <div className="flex justify-between rounded-2xl bg-white shadow-md p-3 px-5 mb-8">
           <div>
-            <p className=" font-semibold">적금 상품 추천</p>
+            <p className="font-bold" style={{ fontSize: '16px' }}>적금 상품 추천</p>
             <p className="text-sm mt-2">김하나님의 목표에 따라서<br />적합한 적금을 추천해 드릴게요!</p>
           </div>
-          <div className="flex justify-center items-cneter text-4xl place-items-center">☝️</div>
+          <div className="flex justify-center items-cneter text-4xl place-items-center font-hana-b">☝️</div>
         </div>
         <div className="flex space-x-2 mb-4 justify-center gap-x-2">
           {goalProducts.map((goal) => (
