@@ -6,6 +6,9 @@ export default {
       colors: {
         customGreen: "#008485",
       },
+      fontFamily: {
+        'noto-sans-kr': ['Noto Sans KR', 'sans-serif'],
+      },
     },
   },
   plugins: [],
