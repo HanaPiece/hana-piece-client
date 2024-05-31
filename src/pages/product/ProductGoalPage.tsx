@@ -22,7 +22,7 @@ const Goal = ({ count, name, isSelected, onSelect }: Props) => {
     <div
       onClick={onSelect}
       className={`flex p-4 mb-2 rounded-lg bg-white shadow-sm cursor-pointer border border-gray-300 hover:shadow-md ${
-        isSelected ? "border-lime-500" : "border-gray-300"
+        isSelected ? "border-lime-500 border-4" : "border-gray-300"
       }`}
     >
       <span className="text-sm text-customGreen font-bold">목표 {count}</span>
