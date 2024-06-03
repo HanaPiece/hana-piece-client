@@ -14,3 +14,8 @@ export const currentTime = (): string => {
 
   return `${hours}:${formattedMinutes}`;
 }
+
+export const getMonthFromDateString = (dateString: string): string => {
+  const parts = dateString.split("-");
+  return parts[1];
+}
