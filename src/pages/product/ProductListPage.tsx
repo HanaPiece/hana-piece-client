@@ -1,22 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-export type Product = {
-  id: number;
-  name: string;
-  rate: number;
-  info: string;
-  term_year: number;
-  cautions: string;
-  deposit_protection: string;
-  contract_terms: string;
-};
-
-export type GoalProducts = {
-  id: number;
-  goal: string;
-  products: Product[];
-};
+import type { Product, GoalProducts } from "../../types/ProductType";
 
 type Props = {
   product: Product;
@@ -91,7 +75,7 @@ const goalProducts: GoalProducts[] = [
   { id: 3, goal: "차", products: products },
 ];
 
-const Product = ({ product }: Props) => {
+export const ProductItem = ({ product }: Props) => {
   const navigate = useNavigate();
   if (!product) return null; // product가 없을 경우 렌더링하지 않음
   const goToDetail = (product: Product) => {
@@ -143,7 +127,7 @@ export const ProductListPage = () => {
         </div>
         <div className="h-[500px] overflow-y-auto border p-2">
           {selectedGoalProducts.map((product) => (
-            <Product key={product.id} product={product} />
+            <ProductItem key={product.id} product={product} />
           ))}
         </div>
       </div>
