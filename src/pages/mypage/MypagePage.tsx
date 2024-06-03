@@ -14,11 +14,11 @@ export const MypagePage = () => {
   return (
     <>
       <div className="">
-        <div className="flex bg-white p-10 mb-10">
+        <div className="flex bg-white p-10 mb-4">
           <img src="/hana.png" alt="Hana Image" className="w-16 h-16"></img>
           <span className="m-4 text-xl font-bold font-hana-m">김하나 님</span>
         </div>
-        <div className="mx-7 mb-2 font-hana-m text-lg">메뉴</div>
+        <div className="mx-8 mb-2 font-hana-m text-lg">메뉴</div>
         <div className="divide-y divide-solid m-5">
           <div
             onClick={() => navigate("salary")}
