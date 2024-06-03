@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { TopLine } from "../../../components/ui/TopLine";
 import { SlPlus } from "react-icons/sl";
+import { GreenButton } from "../../../components/ui/GreenButton";
 
 const goals = [
   { id: 1, name: "아파트 이름" },
@@ -20,8 +21,8 @@ const Goal = ({ id, count, name }: Props) => {
   return (
     <>
       <div
+        className="flex p-4 mb-2 border rounded-lg shadow-sm bg-white items-center cursor-pointer hover:shadow-md"
         onClick={() => navigate(`${id}`, { state: { count } })}
-        className="flex cursor-pointer border border-gray-300 m-2 p-2 hover:shadow-lg"
       >
         <span className="text-sm text-customGreen font-bold">목표 {count}</span>
         <span className="ml-5">{name}</span>
@@ -31,26 +32,23 @@ const Goal = ({ id, count, name }: Props) => {
 };
 
 export const GoalListPage = () => {
-  const navigate = useNavigate();
   return (
     <>
       <div>
-        <div className="flex">
-          <TopLine name={"목표 관리"} />
-          <SlPlus
-            className="ml-auto m-8 w-7 h-7 cursor-pointer"
-            onClick={() => navigate("create")}
-          />
-        </div>
-        <div>
-          {goals.map((goal, count) => (
-            <Goal
-              key={goal.id}
-              id={goal.id}
-              count={count + 1}
-              name={goal.name}
-            />
-          ))}
+        <TopLine name={"목표 관리"} />
+        <div className="m-10">
+          <span className="text-xl font-hana-m">🚩 목표</span>
+          <div className="my-4 space-y-4">
+            {goals.map((goal, count) => (
+              <Goal
+                key={goal.id}
+                id={goal.id}
+                count={count + 1}
+                name={goal.name}
+              />
+            ))}
+          </div>
+          <GreenButton path={"create"} name={"+ 목표 추가"} />
         </div>
       </div>
     </>
