@@ -2,7 +2,6 @@ import { TopLine } from "../../components/ui/TopLine";
 import { Product } from "./ProductListPage";
 import { GreenButton } from "../../components/ui/GreenButton";
 import { useState } from "react";
-import { BsChevronCompactDown } from "react-icons/bs";
 
 const product: Product = {
   id: 1,

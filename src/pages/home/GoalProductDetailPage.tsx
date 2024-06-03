@@ -1,10 +1,11 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { SlCreditCard } from "react-icons/sl";
 import GoalProductRecommend from "./GoalProductRecommend";
 
 export const GoalProductDetailPage = () => {
   const name = "김하나";
-  const [isRecommend, setRecommend] = useState<boolean>(true);
+  const isRecommend = true;
+  // const [isRecommend, setRecommend] = useState<boolean>(true);
 
   return (
     <>

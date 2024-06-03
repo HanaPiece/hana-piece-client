@@ -12,7 +12,7 @@ type Props = {
   color: string;
 };
 
-const GoalBox = ({ userGoalId, goalBeginDate, goalTypeNm, productNm, amount, duration, color }: Props) => {
+const GoalBox = ({ userGoalId, goalBeginDate, goalTypeNm, productNm, amount, color }: Props) => {
   const navigate = useNavigate();
 
   const goToDetail = (userGoalId:number) => {

@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { TopLine } from "../../../components/ui/TopLine";
-import { SlPlus } from "react-icons/sl";
 import { GreenButton } from "../../../components/ui/GreenButton";
 
 const goals = [

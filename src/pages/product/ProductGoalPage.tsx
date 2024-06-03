@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
 import { GreenButton } from "../../components/ui/GreenButton";
 
