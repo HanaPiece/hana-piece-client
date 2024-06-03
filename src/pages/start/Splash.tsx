@@ -15,9 +15,10 @@ export const Splash = () => {
     <>
       <div className="container flex items-center justify-center h-screen">
         <div className="text-center">
-          <div className="mb-4">
-            <img src="hana.png" alt="Hana Picture" className="mx-auto mb-2" />
-            <span className="text-customGreen text-xl font-bold">하나피스</span>
+          <div>
+            {/* <img src="hana.png" alt="Hana Picture" className="mx-auto mb-2" /> */}
+            <img src="logo.png" alt="Hana Picture" className="mx-auto w-2/3" />
+            {/* <span className="text-customGreen text-xl font-bold">하나피스</span> */}
           </div>
           <span className=" text-gray-500 text-sm">@Copyright HanaPiece</span>
         </div>

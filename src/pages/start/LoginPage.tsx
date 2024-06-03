@@ -34,47 +34,47 @@ export const LoginPage = () => {
   };
   return (
     <>
-      <div className="container flex items-center justify-center">
-        <div>
-          <span className="flex justify-center text-customGreen text-lg font-bold">
-            로그인
-          </span>
-          <div className="flex justify-center">
-            {[...Array(6)].map((_, index) => (
-              <div
-                key={index}
-                className={`w-5 h-5 m-2 rounded-xl ${
-                  password.length > index ? "bg-slate-400" : "bg-slate-200"
-                }`}
-              />
-            ))}
+      <div className="h-screen flex flex-col justify-between container">
+      <div className="flex flex-col items-center justify-center flex-grow">
+        <p className="text-customGreen text-2xl font-hana-b mb-4">로그인</p>
+        <div className="flex justify-center mb-6">
+          {[...Array(6)].map((_, index) => (
+            <div
+              key={index}
+              className={`w-5 h-5 m-2 rounded-xl ${
+                password.length > index ? "bg-customGreen" : "bg-slate-200"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="text-2xl font-hana-m">
+        <div className="grid grid-cols-3">
+          {[...Array(9)].map((_, index) => (
+            <div
+              key={index}
+              className="col-span-1 py-7 border-gray-200 border-2 flex justify-center items-center cursor-pointer p-4"
+              onClick={() => insertPassword((index + 1).toString())}
+            >
+              {index + 1}
+            </div>
+          ))}
+          <div className="col-span-1 border-gray-200 border-2 flex justify-center items-center p-4" />
+          <div
+            className="col-span-1 py-7 border-gray-200 border-2 flex justify-center items-center cursor-pointer p-4"
+            onClick={() => insertPassword("0")}
+          >
+            0
           </div>
-
-          <div className="grid grid-cols-3">
-            {[...Array(9)].map((_, index) => (
-              <div
-                className="col-span-1 border-gray-200 border-2 flex justify-center cursor-pointer p-4"
-                onClick={() => insertPassword((index + 1).toString())}
-              >
-                {index + 1}
-              </div>
-            ))}
-            <div className="col-span-1border-gray-200 border-2 flex justify-center p-4" />
-            <div
-              className="col-span-1 border-gray-200 border-2 flex justify-center cursor-pointer p-4"
-              onClick={() => insertPassword("0")}
-            >
-              0
-            </div>
-            <div
-              className="col-span-1 border-gray-200 border-2 flex justify-center cursor-pointer p-4"
-              onClick={() => insertPassword("back")}
-            >
-              <SlArrowLeft />
-            </div>
+          <div
+            className="col-span-1 py-7 border-gray-200 border-2 flex justify-center items-center cursor-pointer p-4"
+            onClick={() => insertPassword("back")}
+          >
+            <SlArrowLeft />
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 };
