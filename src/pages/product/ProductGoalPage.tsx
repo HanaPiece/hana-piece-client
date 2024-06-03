@@ -1,13 +1,7 @@
 import { useState } from "react";
 import { TopLine } from "../../components/ui/TopLine";
 import { GreenButton } from "../../components/ui/GreenButton";
-
-const goals = [
-  { id: 1, name: "아파트 이름" },
-  { id: 2, name: "차 이름" },
-  { id: 3, name: "냄비 사기" },
-  { id: 4, name: "여행 가기" },
-];
+import { useGoalsProducts } from "../../contexts/ProductContext";
 
 type Props = {
   count: number;
@@ -32,15 +26,15 @@ const Goal = ({ count, name, isSelected, onSelect }: Props) => {
 
 export const ProductGoalPage = () => {
   const [selectedGoal, setSelectedGoal] = useState<number | null>(null);
+  const { goalsProducts } = useGoalsProducts();
 
   const handleSelectGoal = (goalId: number) => {
     setSelectedGoal(goalId);
   };
 
-
   return (
     <>
-      <div className="container">
+      <div>
         <TopLine name={"적금 개설"} />
         <div className="h-1 bg-gray-200">
           <div className="w-1/5 hana-color h-1"></div>
@@ -51,17 +45,17 @@ export const ProductGoalPage = () => {
             <h2 className="font-bold text-xl">목표 선택</h2>
           </div>
           <div className="my-10">
-            {goals.map((goal, cnt) => (
+            {goalsProducts?.goalsProducts?.map((goalProduct, index) => (
               <Goal
-                key={goal.id}
-                count={cnt + 1}
-                name={goal.name}
-                isSelected={goal.id === selectedGoal}
-                onSelect={() => handleSelectGoal(goal.id)}
+                key={goalProduct.goal.userGoalId}
+                count={index + 1}
+                name={goalProduct.goal.goalAlias}
+                isSelected={index + 1 === selectedGoal}
+                onSelect={() => handleSelectGoal(goalProduct.goal.userGoalId)}
               />
             ))}
           </div>
-          <GreenButton path={`/product/${selectedGoal}/detail`} name={"선택하기"} />
+          <GreenButton path={`/product/${selectedGoal}`} name={"선택하기"} />
         </div>
       </div>
     </>
