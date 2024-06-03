@@ -18,9 +18,21 @@ export const ProductTermDetailPage = () => {
     <>
       <div className="container">
         <TopLine name={"적금 개설"} />
-        <div>
-          <div className="text-lg font-bold">적금 이름</div>
-          <div className="bg-slate-200 h-[500px] overflow-y-auto border p-2">
+        <div className="h-1 bg-gray-200">
+          <div className="w-3/5 hana-color h-1"></div>
+        </div>
+        <div className="mx-7">
+          <div className="text-lg font-bold mt-10">
+            <div className="flex justify-center gap-x-3 my-10 items-center">
+              <div>
+                <div className='bg-gray-200 w-8 h-8 rounded-full grid place-items-center'>
+                    <img src='\img-hana-symbol-m.png' alt='하나은행' className='w-9/12' />
+                </div>
+              </div>
+              <p className="text-xl font-hana-cm">청년 주택드림 청약통장</p>
+            </div>
+          </div>
+          <div className="bg-slate-200 h-[450px] overflow-y-auto border p-2">
             {terms.map((term: Term) => (
               <div key={term.id} className="bg-slate-200">
                 <span className="text-customGreen text-lg font-bold">
@@ -32,14 +44,16 @@ export const ProductTermDetailPage = () => {
             ))}
           </div>
 
-          <button onClick={() => setModalOpen(true)}>약관 동의</button>
+          <button onClick={() => setModalOpen(true)} className="green-button mt-5">약관 동의</button>
 
           <PhoneModal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-            <h2 className="mt-3 text-3xl text-center">📢</h2>
+            <h2 className="mt-3 text-3xl text-center">✔️</h2>
             <h2 className="mt-4 mb-4 text-xl font-bold text-center">
-              진짜 가입할 거야?
+              정말로 가입하시겠습니까?
             </h2>
-            <GreenButton path={`/product/${id}/signup`} name={"확인했어요"} />
+            <div className="mb-5 mt-10">
+              <GreenButton path={`/product/${id}/signup`} name={"확인했어요"} />
+            </div>
           </PhoneModal>
         </div>
       </div>

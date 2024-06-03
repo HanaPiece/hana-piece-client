@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { GreenButton } from "../../../components/ui/GreenButton";
-import { TopLine } from "../../../components/ui/TopLine";
+import { GreenButton } from "../../components/ui/GreenButton";
+import { TopLine } from "../../components/ui/TopLine";
 
 type Account = {
   id: number;
   accountNumber: string;
 };
 
-export const AccountOpenUpdatePage = () => {
+export const SplitStartSettingPage = () => {
+
   const accountList: Account[] = [
     { id: 1, accountNumber: "111-22222-33333" },
     { id: 2, accountNumber: "2339-102-59-30408" },
@@ -47,13 +48,16 @@ export const AccountOpenUpdatePage = () => {
 
     return accountList.filter((account) => !selectedIds.includes(account.id));
   };
-
-  return (
-    <>
-      <div>
-        <TopLine name={"입출금 통장 설정"} />
-        <div className="m-10">
-        <span className="text-xl font-hana-m">입출금 통장</span>
+  
+  return(
+    <div className="container">
+      <TopLine name={"통장 쪼개기 시작하기"} />
+      <div className="h-1 bg-gray-200">
+          <div className="w-1/3 hana-color h-1"></div>
+      </div>
+      <div className="m-10">
+      <span className="text-2xl font-hana-b">통장 설정하기</span>
+      <p className="text-gray-400 text-sm">해당 통장으로 사용하실 계좌를 선택해주세요!</p>
           <div className="mt-8">
             <div>
               <h3 className="font-bold text-gray-400 text-md">💸 월급 통장</h3>
@@ -159,10 +163,9 @@ export const AccountOpenUpdatePage = () => {
             </div>
           </div>
           <div className="mt-10">
-            <GreenButton name={"확인"} path={"/mypage/account/setting/open"} />
+            <GreenButton name={"설정하기"} path={"/split/start/split"} />
           </div>
-        </div>
       </div>
-    </>
+    </div>
   );
 };

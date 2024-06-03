@@ -19,25 +19,20 @@ export const GoalDetailPage = () => {
 
   return (
     <>
-      <div className="container m-10">
-        <TopLine name={"목표 관리"} />
-
+      <div className="container">
+        <TopLine name={"목표 수정"} />
         <div className="flex flex-col items-center">
-          <div className=" bg-slate-200 mt-10 w-3/4 h-200 rounded-lg">
-            <span className="text-sm text-customGreen font-bold p-5">
+          <div className=" bg-slate-200 mt-10 w-3/4 h-200 rounded-3xl p-5 mb-8">
+            <p className="text-sm text-customGreen font-bold mb-5">
               목표 {count}
-            </span>
-            <br />
-            <br />
+            </p>
             <span className="flex justify-center text-xl text-customGreen font-bold">
-              목표 이름 다시 fetch 해오기~
+              🚗🏠🙏🧙🪄
             </span>
           </div>
 
-          <div className="">
-            <label className="m-3 text-customGreen">목표 카테고리</label>
-            <br />
-
+          <div className="mx-10 mb-5">
+            <label className="text-customGreen font-bold text-lg">목표 카테고리</label>
             <div className="relative inline-block text-left">
               <div>
                 <button
@@ -89,40 +84,29 @@ export const GoalDetailPage = () => {
             <br />
             <br />
 
-            <label className="m-3 text-customGreen">아파트 이름</label>
-            <br />
-            <span className="m-3 bg-slate-100">아파트 이름</span>
-            <br />
-            <br />
-            <label className="m-3 text-customGreen">아파트 평수</label>
-            <br />
+            <label className="text-customGreen font-bold text-lg">아파트 이름</label>
+            <p className="border-b border-gray-400 h-8 mt-3 mb-5">아파트 이름</p>
+
+            <label className="text-customGreen font-bold text-lg">아파트 평수</label>
             <input
               type="text"
-              className="m-3 bg-slate-100"
-              value="original value"
+              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
+              value="28 평"
             />
-            <br />
-            <br />
-            <label className="m-3 text-customGreen">달성목표일</label>
-            <br />
+            <label className="text-customGreen font-bold text-lg">달성목표일</label>
+            <input
+              type="date"
+              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
+              value="2024-05-29"
+            />
+            <label className="text-customGreen font-bold text-lg">예상 목표 달성 금액</label>
             <input
               type="text"
-              className="m-3 bg-slate-100"
-              value="original value"
+              className="w-full border-b border-gray-400 h-8 mt-3 mb-10"
+              value="300000"
             />
-            <br />
-            <br />
-            <label className="m-3 text-customGreen">예상 목표 달성 금액</label>
-            <br />
-            <input
-              type="text"
-              className="m-3 bg-slate-100"
-              value="original value"
-            />
-            <br />
-            <br />
+            <GreenButton path={"/mypage/goal"} name={"저장"} />
           </div>
-          <GreenButton path={"/mypage"} name={"저장"} />
         </div>
       </div>
     </>

@@ -88,14 +88,20 @@ export const LifePage = () => {
       targetNm: "Apple Store",
       accountTransactionTypeNm: "쇼핑",
     },
+    {
+      amount: -68500,
+      createdAt: "2024-05-23",
+      targetNm: "후불 교통카드 이용 대금",
+      accountTransactionTypeNm: "교통",
+    },
   ];
 
   const groupedData = groupByDate(consumptionData);
 
   return (
-    <>
-      <div className="m-7">
-        <h2 className="my-t mb-5 text-xl font-bold">생활</h2>
+    <div className="bg-white">
+      <div className="px-7 pt-7 ">
+        <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b">생활</h1>
         <div className="flex justify-start items-center gap-4">
           <div onClick={handlePreviousMonth} className="cursor-pointer">
             <SlArrowLeft />
@@ -105,16 +111,15 @@ export const LifePage = () => {
             <SlArrowRight />
           </div>
         </div>
-
-        <div className="mt-5">
-          <h3 className="text-gray-500">지출 통계</h3>
+        <h3 className="text-gray-500 mt-5 font-hana-m">지출 통계</h3>
+        <div className="rounded-2xl bg-stone-100 p-3 px-5">
           <div className="grid grid-cols-7 items-center">
             <div className="col-span-4">
               <ConsumptionChart />
             </div>
             <div className="col-span-3 text-center ml-3">
-              <p className="text-sm">현재 사용액</p>
-              <p className="text-2xl font-semibold mt-1">
+              <p className="text-sm font-hana-m">현재 사용액</p>
+              <p className="text-xl font-semibold mt-1">
                 {addCommas(346500)}원
               </p>
               <p className="text-gray-400 mt-1 text-md">
@@ -122,7 +127,11 @@ export const LifePage = () => {
               </p>
             </div>
           </div>
-          <h3 className="text-gray-500 mt-5 mb-3">지출 내역</h3>
+        </div>
+      </div>
+      <div className="px-7 py-3 bg-white">
+        <div>
+          <h3 className="text-gray-500 mt-5 mb-3 font-hana-m">지출 내역</h3>
           {Object.keys(groupedData).map((date) => (
             <div key={date} className="mb-5">
               <p className="font-semibold mb-1 bg-indigo-50 p-1">
@@ -153,7 +162,7 @@ export const LifePage = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

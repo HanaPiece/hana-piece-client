@@ -16,10 +16,9 @@ export const GoalCreatePage = () => {
 
   return (
     <>
-      <div className="container m-10">
+      <div className="container ">
         <TopLine name={"목표 생성"} />
-
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center m-10">
           <div className="">
             <label className="m-3 text-customGreen">목표 카테고리</label>
             <br />
@@ -75,28 +74,29 @@ export const GoalCreatePage = () => {
             <br />
             <br />
 
-            <label className="m-3 text-customGreen">아파트 이름</label>
-            <br />
-            <input type="text" className="m-3 bg-slate-100"></input>
-            <br />
-            <br />
-            <label className="m-3 text-customGreen">아파트 평수</label>
-            <br />
-            <input type="text" className="m-3 bg-slate-100" />
-            <br />
-            <br />
-            <label className="m-3 text-customGreen">달성목표일</label>
-            <br />
-            <input type="text" className="m-3 bg-slate-100" />
-            <br />
-            <br />
-            <label className="m-3 text-customGreen">예상 목표 달성 금액</label>
-            <br />
-            <input type="text" className="m-3 bg-slate-100" />
-            <br />
-            <br />
-          </div>
-          <GreenButton path={"/mypage"} name={"목표 생성하기"} />
+            <label className="text-customGreen font-bold text-lg">아파트 이름</label>
+            <p className="border-b border-gray-400 h-8 mt-3 mb-5">아파트 이름</p>
+
+            <label className="text-customGreen font-bold text-lg">아파트 평수</label>
+            <input
+              type="text"
+              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
+              value="28 평"
+            />
+            <label className="text-customGreen font-bold text-lg">달성목표일</label>
+            <input
+              type="date"
+              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
+              value="2024-05-29"
+            />
+            <label className="text-customGreen font-bold text-lg">예상 목표 달성 금액</label>
+            <input
+              type="text"
+              className="w-full border-b border-gray-400 h-8 mt-3 mb-10"
+              value="300000"
+            />
+            <GreenButton path={"/mypage/goal"} name={"목표 생성하기"} />
+            </div>
         </div>
       </div>
     </>

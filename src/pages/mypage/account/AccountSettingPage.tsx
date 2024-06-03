@@ -8,22 +8,24 @@ export const AccountSettingPage = () => {
     <>
       <div>
         <TopLine name={"계좌 관리"} />
-        <div>
-          <div
-            onClick={() => navigate("open")}
-            className="flex cursor-pointer border border-gray-300 m-2 p-2 hover:shadow-lg"
-          >
-            <SlBookOpen className="mr-4 w-6 h-6" />
-            입출금 통장
-            <SlArrowRight className="ml-auto mt-1 w-3 h-3" />
-          </div>
-          <div
-            onClick={() => navigate("saving")}
-            className="flex cursor-pointer border border-gray-300 m-2 p-2 hover:shadow-lg"
-          >
-            <SlBookOpen className="mr-4 w-6 h-6" />
-            적금 통장
-            <SlArrowRight className="ml-auto mt-1 w-3 h-3" />
+        <div className='m-8 mt-10'>
+          <div className='divide-y divide-solid'>
+            <div
+              className='py-3 grid grid-cols-8 justify-items-stretch items-center hover:bg-gray-200 cursor-pointer'
+              onClick={() => navigate("open")}
+            >
+              <div className='justify-self-start ml-2 text-gray-600'><SlBookOpen /></div>
+              <p className='col-span-6 text-md ml-2 font-semibold'>입출금 통장</p>
+              <div className='justify-self-end mr-2 text-gray-600'><SlArrowRight /></div>
+            </div>
+            <div
+              className='py-3 grid grid-cols-8 justify-items-stretch items-center hover:bg-gray-200 cursor-pointer'
+              onClick={() => navigate("saving")}
+            >
+              <div className='justify-self-start ml-2 text-gray-600'><SlBookOpen /></div>
+              <p className='col-span-6 text-md ml-2 font-semibold'>적금 통장</p>
+              <div className='justify-self-end mr-2 text-gray-600'><SlArrowRight /></div>
+            </div>
           </div>
         </div>
       </div>
