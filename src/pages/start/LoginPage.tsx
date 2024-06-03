@@ -29,7 +29,7 @@ export const LoginPage = () => {
           const json = await response.json();
           const customer: User = {
             jwt: json["accessToken"],
-            nickname: json["name"],
+            name: json["name"],
             salary: json["salary"],
           };
 

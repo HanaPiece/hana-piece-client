@@ -8,7 +8,7 @@ import {
 
 export type User = {
   jwt: string | null;
-  nickname: string | null;
+  name: string | null;
   salary: string | null;
 };
 
@@ -29,7 +29,7 @@ type Action =
   | { type: "updateSalary"; payload: string };
 
 const UKEY = "user";
-const DefaultUser: User = { jwt: null, nickname: null, salary: null };
+const DefaultUser: User = { jwt: null, name: null, salary: null };
 
 function setStorage(user: User) {
   console.log("Setting storage:", user);
