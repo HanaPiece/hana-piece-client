@@ -8,14 +8,17 @@ export const GoalProductDetailPage = () => {
 
   return (
     <>
-      <div className="m-10">
-        <div>
-          <p className="text-gray-400 font-semibold text-sm">반갑습니다</p>
-          <h3 className="font-extrabold text-lg pt-1">{name} 님</h3>
+      <div className="bg-white px-10">
+        <img src="/logo.png" className="w-1/5" alt="하나피스" />
+      </div>
+      <div className="mx-10 my-5">
+        <div className="font-hana-r">
+          <p className='text-gray-400 text-xs'>반갑습니다</p>
+          <h3 className='font-semibold text-lg pt-1'>{name} 님</h3>
         </div>
         {isRecommend ? (
           <>
-            // {/* 상품 정보 */}
+            {/* 상품 정보 */}
             <div className="rounded-2xl hana-color text-white p-4 my-7 shadow-md">
               <p className="font-bold text-lg mb-2">하나주택청약종합저축</p>
               <div className="flex justify-between text-xs mb-2">
@@ -44,7 +47,7 @@ export const GoalProductDetailPage = () => {
                 />
               </div>
             </div>
-            // {/* 납부 내역 */}
+            {/* 납부 내역 */}
             <div>
               <div className="flex justify-between my-4">
                 <h3 className="font-extrabold text-xl">납부 내역</h3>
