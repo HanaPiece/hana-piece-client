@@ -32,6 +32,10 @@ import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
 import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
 import { LifePage } from "./pages/life/LifePage";
 import { ProductGoalPage } from "./pages/product/ProductGoalPage";
+import { SplitStartPage } from "./pages/split/SplitStartPage";
+import { SplitStartSettingPage } from "./pages/split/SplitStartSettingPage";
+import { SplitStartSplitPage } from "./pages/split/SplitStartSplitPage";
+import { SplitStartCompletePage } from "./pages/split/SplitStartCompletePage";
 
 function App() {
   return (
@@ -65,6 +69,7 @@ function App() {
             <Route index element={<SplitMainPage />} />
             <Route path="manual" element={<SplitManualPage />} />
             <Route path="auto" element={<SplitAutoPage />} />
+            <Route path="start" element={<SplitStartPage />} />
           </Route>
           <Route path="life">
             <Route index element={<LifePage />} />
@@ -98,6 +103,12 @@ function App() {
             <Route path="term" element={<AccountTermPage />} />
             <Route path="complete" element={<AccountCompletePage />} />
           </Route>
+        </Route>
+
+        <Route path="split">
+          <Route path="start/setting" element={<SplitStartSettingPage />} />
+          <Route path="start/split" element={<SplitStartSplitPage />} />
+          <Route path="start/complete" element={<SplitStartCompletePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
