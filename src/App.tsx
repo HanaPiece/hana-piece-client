@@ -30,7 +30,7 @@ import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
 import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
 import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
 import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
-// import { LifePage } from "./pages/life/LifePage";
+import { LifePage } from "./pages/life/LifePage";
 import { ProductGoalPage } from "./pages/product/ProductGoalPage";
 import { SplitStartPage } from "./pages/split/SplitStartPage";
 import { SplitStartSettingPage } from "./pages/split/SplitStartSettingPage";
@@ -48,7 +48,7 @@ function App() {
             <Route path=":id" element={<GoalProductDetailPage />} />
           </Route>
           <Route path="product">
-            <Route index element={<ProductListPage />} />
+            <Route index element={<ProductGoalPage />} />
           </Route>
           <Route path="mypage">
             <Route index element={<MypagePage />} />
@@ -72,7 +72,7 @@ function App() {
             <Route path="start" element={<SplitStartPage />} />
           </Route>
           <Route path="life">
-            {/* <Route index element={<LifePage />} /> */}
+            <Route index element={<LifePage />} />
           </Route>
         </Route>
 
@@ -85,12 +85,21 @@ function App() {
         <Route path="login" element={<LoginPage />} />
 
         <Route path="product">
-          <Route path=":id/goal" element={<ProductGoalPage />} />
-          <Route path=":id/detail" element={<ProductDetailPage />} />
-          <Route path=":id/term" element={<ProductTermPage />} />
-          <Route path=":id/term/detail" element={<ProductTermDetailPage />} />
-          <Route path=":id/signup" element={<ProductSignupPage />} />
-          <Route path=":id/complete" element={<ProductCompletePage />} />
+          <Route path=":goalId" element={<ProductListPage />} />
+          <Route path=":goalId/:productId" element={<ProductDetailPage />} />
+          <Route path=":goalId/:productId/term" element={<ProductTermPage />} />
+          <Route
+            path=":goalId/:productId/check"
+            element={<ProductTermDetailPage />}
+          />
+          <Route
+            path=":goalId/:productId/signup"
+            element={<ProductSignupPage />}
+          />
+          <Route
+            path=":goalId/:productId/complete"
+            element={<ProductCompletePage />}
+          />
         </Route>
         <Route path="mypage">
           <Route path="salary" element={<SalaryPage />} />

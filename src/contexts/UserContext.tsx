@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 
-type User = {
+export type User = {
   jwt: string | null;
   nickname: string | null;
   salary: string | null;
@@ -14,7 +14,7 @@ type User = {
 
 type UserContextProp = {
   user: User;
-  login: (jwt: string, nickname: string, salary: string) => void;
+  login: (user: User) => void;
   logout: () => void;
   updateSalary: (salary: string) => void;
 };
@@ -25,60 +25,65 @@ type ProviderProp = {
 
 type Action =
   | { type: "login"; payload: User }
-  | { type: "logout"; payload: null }
+  | { type: "logout" }
   | { type: "updateSalary"; payload: string };
 
 const UKEY = "user";
 const DefaultUser: User = { jwt: null, nickname: null, salary: null };
 
-function setStorage(user: User | null) {
+function setStorage(user: User) {
+  console.log("Setting storage:", user);
   localStorage.setItem(UKEY, JSON.stringify(user));
 }
 
-function getStorage() {
+function getStorage(): User {
   const storedUser = localStorage.getItem(UKEY);
   if (storedUser) {
+    console.log("Getting storage:", JSON.parse(storedUser));
     return JSON.parse(storedUser) as User;
   }
-  setStorage(DefaultUser);
   return DefaultUser;
 }
 
 const UserContext = createContext<UserContextProp>({
-  user: { jwt: null, nickname: null, salary: null },
+  user: DefaultUser,
   login: () => {},
   logout: () => {},
   updateSalary: () => {},
 });
 
-const reducer = (user: User, { type, payload }: Action) => {
+const reducer = (user: User, action: Action) => {
   let newer: User;
-  switch (type) {
+  switch (action.type) {
     case "login":
-      newer = { ...payload };
+      newer = { ...action.payload };
+      setStorage(newer);
+
       break;
     case "logout":
-      newer = { jwt: payload, nickname: payload, salary: payload };
+      newer = DefaultUser;
+      setStorage(newer);
       break;
     case "updateSalary":
-      newer = { ...user, salary: payload };
+      newer = { ...user, salary: action.payload };
+      setStorage(newer);
       break;
     default:
       return user;
   }
-  setStorage(newer);
   return newer;
 };
 
 export const UserProvider = ({ children }: ProviderProp) => {
   const [user, dispatch] = useReducer(reducer, getStorage());
 
-  const login = useCallback((jwt: string, nickname: string, salary: string) => {
-    dispatch({ type: "login", payload: { jwt, nickname, salary } });
+  const login = useCallback((user: User) => {
+    console.log("Dispatch login:", user);
+    dispatch({ type: "login", payload: user });
   }, []);
 
   const logout = useCallback(() => {
-    dispatch({ type: "logout", payload: null });
+    dispatch({ type: "logout" });
   }, []);
 
   const updateSalary = useCallback((salary: string) => {

@@ -1,14 +1,20 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
-import { Product } from "../types/ProductType";
+import { recommendedProducts } from "../pages/product/ProductListPage";
 
-type Goal = {
-  id: number;
-  name: string;
+export type Goal = {
+  userGoalId: number;
+  userId: number;
+  goalAlias: string;
+  goalTypeCd: string;
+  goalSpecificId: number;
+  goalBeginDate: string;
+  duration: number;
+  amount: number;
 };
 
 type GoalProducts = {
   goal: Goal;
-  products: Product[];
+  products: recommendedProducts[];
 };
 
 type GoalsProducts = {
@@ -17,10 +23,10 @@ type GoalsProducts = {
 
 type GoalsProductsContextProp = {
   goalsProducts: GoalsProducts | null;
-  set: (goals: Goal[]) => void;
+  setGoal: (goals: Goal[]) => void;
   createGoal: (goal: Goal) => void;
   updateGoal: (goalId: number) => void;
-  setProduct: (goalId: number, products: Product[]) => void;
+  setProduct: (goalId: number, products: recommendedProducts[]) => void;
   out: () => void;
 };
 
@@ -32,7 +38,10 @@ type Action =
   | { type: "setGoal"; payload: Goal[] } //goal 채우기
   | { type: "createGoal"; payload: Goal } //goal 추가하기
   | { type: "updateGoal"; payload: { goalId: number } } //goal 그대로, product 비우기
-  | { type: "setProduct"; payload: { goalId: number; products: Product[] } } //해당 goal에 대해서 product 없을 때, product 채우기
+  | {
+      type: "setProduct";
+      payload: { goalId: number; products: recommendedProducts[] };
+    } //해당 goal에 대해서 product 없을 때, product 채우기
   | { type: "out"; payload: null }; //둘 다 비우기
 
 const GPKEY = "goalsProducts";
@@ -55,7 +64,7 @@ function getStorage() {
 
 const GoalsProductsContext = createContext<GoalsProductsContextProp>({
   goalsProducts: null,
-  set: () => {},
+  setGoal: () => {},
   createGoal: () => {},
   updateGoal: () => {},
   setProduct: () => {},
@@ -81,7 +90,7 @@ const reducer = (goalsProducts: GoalsProducts, { type, payload }: Action) => {
       newer = {
         goalsProducts:
           newer.goalsProducts?.map((gp) =>
-            gp.goal.id === payload.goalId ? { ...gp, products: [] } : gp
+            gp.goal.userGoalId === payload.goalId ? { ...gp, products: [] } : gp
           ) || null,
       };
       break;
@@ -89,7 +98,7 @@ const reducer = (goalsProducts: GoalsProducts, { type, payload }: Action) => {
       newer = {
         goalsProducts:
           newer.goalsProducts?.map((gp) =>
-            gp.goal.id === payload.goalId
+            gp.goal.userGoalId === payload.goalId
               ? { ...gp, products: payload.products }
               : gp
           ) || null,
@@ -108,7 +117,7 @@ const reducer = (goalsProducts: GoalsProducts, { type, payload }: Action) => {
 export const GoalsProductsProvider = ({ children }: ProviderProp) => {
   const [goalsProducts, dispatch] = useReducer(reducer, getStorage());
 
-  const set = (goals: Goal[]) => {
+  const setGoal = (goals: Goal[]) => {
     dispatch({ type: "setGoal", payload: goals });
   };
 
@@ -120,7 +129,7 @@ export const GoalsProductsProvider = ({ children }: ProviderProp) => {
     dispatch({ type: "updateGoal", payload: { goalId } });
   };
 
-  const setProduct = (goalId: number, products: Product[]) => {
+  const setProduct = (goalId: number, products: recommendedProducts[]) => {
     dispatch({ type: "setProduct", payload: { goalId, products } });
   };
 
@@ -129,7 +138,14 @@ export const GoalsProductsProvider = ({ children }: ProviderProp) => {
   };
   return (
     <GoalsProductsContext.Provider
-      value={{ goalsProducts, set, createGoal, updateGoal, setProduct, out }}
+      value={{
+        goalsProducts,
+        setGoal,
+        createGoal,
+        updateGoal,
+        setProduct,
+        out,
+      }}
     >
       {children}
     </GoalsProductsContext.Provider>
