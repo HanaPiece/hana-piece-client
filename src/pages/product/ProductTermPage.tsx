@@ -14,13 +14,14 @@ const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
 
   return (
     <>
-      <div className="p-2 m-2 bg-slate-300 grid grid-cols-6 gap-4 cursor-pointer">
+      <div className="p-2 bg-white border-customGreen border grid grid-cols-6 gap-4 cursor-pointer">
         <div>
-          <input type="checkbox" onChange={onCheckboxChange} />
+          <input type="checkbox" onChange={onCheckboxChange} className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 peer-checked:bg-customGreen" />
+
         </div>
         <div className="col-span-5">
           <div
-            className="font-bold text-customGreen"
+            className=""
             onClick={() => {
               setModalOpen(true);
             }}
@@ -28,10 +29,9 @@ const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
             {name}
           </div>
           <PhoneModal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-            <h2 className="mt-3 text-3xl text-center">📢</h2>
             <h2 className="mt-4 text-xl font-bold text-center">{name}</h2>
-            <h2 className="mt-4 text-center break-words">{content}</h2>
-            <button onClick={() => setModalOpen(false)} className="border-2">
+            <div className="mt-4 text-center break-words overflow-auto border h-48">{content}</div>
+            <button onClick={() => setModalOpen(false)} className="green-button mt-5 mb-3">
               확인했어요
             </button>
           </PhoneModal>
@@ -84,9 +84,18 @@ export const ProductTermPage = () => {
     <>
       <div className="container">
         <TopLine name={"적금 개설"} />
-
-        <div>
-          <div className="text-3xl font-bold">적금 이름</div>
+        <div className="h-1 bg-gray-200">
+          <div className="w-3/5 hana-color h-1"></div>
+        </div>
+        <div className="mx-7 mt-10">
+          <div className="flex justify-center gap-x-3 my-10 items-center">
+            <div>
+              <div className='bg-gray-200 w-8 h-8 rounded-full grid place-items-center'>
+                  <img src='\img-hana-symbol-m.png' alt='하나은행' className='w-9/12' />
+              </div>
+            </div>
+            <p className="text-xl font-hana-cm">청년 주택드림 청약통장</p>
+          </div>
           <br />
           <div>
             <ProductTerm
@@ -102,10 +111,10 @@ export const ProductTermPage = () => {
           </div>
           <label className="text-customGreen font-semibold">이메일</label>
           <input type="text" className="m-3 bg-slate-300" /> <br />
-          <span className="text-sm">
+          <p className="text-sm">
             [필수] 입력하신 이메일로 상품 이용약관 설명서가 발송됩니다.
-          </span>
-          <button onClick={handleSubmit} className="border-2 w-3/4">
+          </p>
+          <button onClick={handleSubmit} className="green-button mt-10">
             다음
           </button>
         </div>

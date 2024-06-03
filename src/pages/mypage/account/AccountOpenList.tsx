@@ -18,7 +18,7 @@ type Props = {
 const Account = ({ count, number, state }: Props) => {
   return (
     <>
-      <div className="flex p-4 mb-2 border rounded-lg shadow-sm bg-white">
+      <div className="flex p-4 mb-2 border rounded-lg shadow-sm bg-white items-center">
         <span className="text-sm text-customGreen font-bold">계좌 {count}</span>
         <span className="ml-5">{number}</span>
         {state !== "null" && (
@@ -38,7 +38,7 @@ export const AccountOpenList = () => {
         <TopLine name={"입출금 통장 설정"} />
         <div>
           <div className="m-10">
-            <span className="text-xl font-bold">입출금 통장</span>
+            <span className="text-xl font-hana-m">입출금 통장</span>
             <div className="mt-4 space-y-4">
               {accounts.map((account, count) => (
                 <Account

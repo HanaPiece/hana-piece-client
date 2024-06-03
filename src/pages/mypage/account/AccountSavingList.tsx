@@ -16,8 +16,8 @@ type Props = {
 const Account = ({ count, number }: Props) => {
   return (
     <>
-      <div className="flex p-4 mb-2 border rounded-lg shadow-sm bg-white">
-        <span className="text-sm text-customGreen font-bold">계좌 {count}</span>
+      <div className="flex p-4 mb-2 border rounded-lg shadow-sm bg-white items-center">
+        <span className="text-sm text-customGreen font-bold">적금 {count}</span>
         <span className="ml-5">{number}</span>
       </div>
     </>
@@ -29,8 +29,8 @@ export const AccountSavingList = () => {
     <>
       <div>
         <TopLine name={"적금 설정"} />
-        <div>
-          <span className="text-xl font-bold">적금 통장</span>
+        <div className="m-10">
+          <span className="text-xl font-hana-m">적금 통장</span>
           <div className="mt-4 space-y-4">
             {accounts.map((account, count) => (
               <Account
