@@ -51,9 +51,9 @@ export const AccountOpenUpdatePage = () => {
   return (
     <>
       <div>
-        <TopLine name={"계좌 설정"} />
+        <TopLine name={"입출금 통장 설정"} />
         <div className="m-10">
-          <h3 className="text-lg font-bold mt-10">입출금 통장</h3>
+        <span className="text-xl font-hana-m">입출금 통장</span>
           <div className="mt-8">
             <div>
               <h3 className="font-bold text-gray-400 text-md">💸 월급 통장</h3>

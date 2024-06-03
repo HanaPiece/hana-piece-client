@@ -11,9 +11,9 @@ type Props = {
 const AccountTerm = ({ name, content }: Props) => {
   return (
     <>
-      <div className="p-2 m-2 bg-gray-300 grid grid-cols-6 gap-4">
+      <div className="p-2 m-2 bg-white border-customGreen border grid grid-cols-6 gap-4">
         <div className="">
-          <input type="checkbox" required />
+          <input type="checkbox" className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 peer-checked:bg-customGreen" required />
         </div>
         <div className="col-span-5">
           <div className="font-bold text-customGreen">{name}</div>
@@ -31,9 +31,12 @@ export const AccountTermPage = () => {
     <>
       <div className='container'>
         <TopLine name={"입출금 통장"} />
+        <div className="h-1 bg-gray-200">
+          <div className="w-2/3 hana-color h-1"></div>
+        </div>
 
-        <div className='m-5'>
-          <h3 className='text-center text-xl font-bold'>계좌 생성</h3>
+        <div className='m-7 mt-10'>
+          <h3 className='text-center text-xl font-hana-b'>계좌 생성</h3>
           <div className='mt-10'>
             <AccountTerm
               name="계좌생성 상품설명서"
@@ -46,9 +49,9 @@ export const AccountTermPage = () => {
           </div>
           <label className="text-customGreen font-semibold">이메일</label>
           <input type="text" className="m-3 bg-gray-300" /> <br />
-          <text className="text-sm">
+          <p className="text-sm">
             [필수] 입력하신 이메일로 상품 이용약관 설명서가 발송됩니다.
-          </text>
+          </p>
           <button
             className="green-button mt-10"
             onClick={() => setModalOpen(true)}

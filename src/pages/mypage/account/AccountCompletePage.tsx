@@ -1,12 +1,16 @@
 import { SlEnvolope, SlUser } from "react-icons/sl";
 import { GreenButton } from "../../../components/ui/GreenButton";
+import { TopLine } from "../../../components/ui/TopLine";
 
 export const AccountCompletePage = () => {
   return (
     <>
       <div className='container'>
+        <TopLine name={"입출금 통장"} />
+        <div className="h-1 bg-gray-200">
+          <div className="w-full hana-color h-1"></div>
+        </div>
         <div className='m-10'>
-          <h3 className='mt-10 text-lg font-bold text-center'>입출금 통장</h3>
           <div className='mt-20 text-3xl font-bold text-center'><span className='text-6xl'>🎊</span><br />계좌가<br />생성되었습니다</div>
           <hr className='mt-10 w-1/2 m-auto' />
           <div className='mt-10'>
