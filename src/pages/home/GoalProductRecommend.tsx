@@ -1,6 +1,9 @@
-const GoalProductRecommend = () =>{
+const GoalProductRecommend = ({goalId}:{goalId:number}) =>{
+  // goalId에 따른 추천 적금 가져오기 추가
+  
   return (
     <> 
+      {goalId}
       <div className='mt-5'>
         <h2 className='font-bold text-lg'>
           아직 하나은행 적금이 없으시네요🥲 <br />
