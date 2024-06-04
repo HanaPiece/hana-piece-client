@@ -1,6 +1,6 @@
 import { SlCreditCard } from "react-icons/sl";
 import { UserGoalTransactionResponse } from "./homeType";
-import { addCommas, dateParse, getMonthFromDateString } from "../../components/utils/formatters";
+import { addCommas, getMonthFromDateString } from "../../components/utils/formatters";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 
 export const GoalProductTransactionDetail = ({accountId}:{accountId:number}) => {
