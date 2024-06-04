@@ -1,7 +1,11 @@
+import { useLocation } from "react-router-dom";
 import { GreenButton } from "../../components/ui/GreenButton";
 import { TopLine } from "../../components/ui/TopLine";
 
 export const ProductCompletePage = () => {
+  const location = useLocation();
+  const { com } = location.state;
+
   return (
     <>
       <div className="container">
@@ -12,8 +16,12 @@ export const ProductCompletePage = () => {
         <div className="mx-7">
           <div className="flex justify-center gap-x-3 my-10 items-center">
             <div>
-              <div className='bg-gray-200 w-8 h-8 rounded-full grid place-items-center'>
-                  <img src='\img-hana-symbol-m.png' alt='하나은행' className='w-9/12' />
+              <div className="bg-gray-200 w-8 h-8 rounded-full grid place-items-center">
+                <img
+                  src="\img-hana-symbol-m.png"
+                  alt="하나은행"
+                  className="w-9/12"
+                />
               </div>
             </div>
             <p className="text-xl font-hana-cm">청년 주택드림 청약통장</p>
@@ -28,25 +36,28 @@ export const ProductCompletePage = () => {
               <label className="m-3 text-customGreen font-semibold col-span-2">
                 가입 금액
               </label>
-              <span className="m-3 col-span-2">value</span>
+              <span className="m-3 col-span-2">{com.autoDebitAmount}</span>
             </div>
+
             <div className="flex justify-between">
               <label className="m-3 text-customGreen font-semibold col-span-2">
                 자동 이체
               </label>
-              <span className="m-3 col-span-2">value</span>
+              <span className="m-3 col-span-2">{com.autoDebitDay}</span>
             </div>
+
             <div className="flex justify-between">
               <label className="m-3 text-customGreen font-semibold col-span-2">
                 만기 일자
               </label>
-              <span className="m-3 col-span-2">value</span>
+              <span className="m-3 col-span-2">{com.maturityDate}</span>
             </div>
+
             <div className="flex justify-between">
               <label className="m-3 text-customGreen font-semibold col-span-2">
                 적용 금리
               </label>
-              <span className="m-3 col-span-2">value</span>
+              <span className="m-3 col-span-2">{com.interestRate}</span>
             </div>
           </div>
           <GreenButton path={"/home"} name={"확인"} />

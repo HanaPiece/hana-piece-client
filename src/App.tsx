@@ -27,8 +27,8 @@ import { GoalListPage } from "./pages/mypage/goal/GoalListPage";
 import { GoalCreatePage } from "./pages/mypage/goal/GoalCreatePage";
 import { GoalDetailPage } from "./pages/mypage/goal/GoalDetailPage";
 import { AccountSettingPage } from "./pages/mypage/account/AccountSettingPage";
-import { AccountOpenList } from "./pages/mypage/account/AccountOpenList";
-import { AccountSavingList } from "./pages/mypage/account/AccountSavingList";
+import { AccountOpenListPage } from "./pages/mypage/account/AccountOpenListPage";
+import { AccountSavingListPage } from "./pages/mypage/account/AccountSavingListPage";
 import { AccountOpenUpdatePage } from "./pages/mypage/account/AccountOpenUpdatePage";
 import { LifePage } from "./pages/life/LifePage";
 import { ProductGoalPage } from "./pages/product/ProductGoalPage";
@@ -58,10 +58,10 @@ function App() {
               <Route path="setting">
                 <Route index element={<AccountSettingPage />} />
                 <Route path="open">
-                  <Route index element={<AccountOpenList />} />
+                  <Route index element={<AccountOpenListPage />} />
                   <Route path="update" element={<AccountOpenUpdatePage />} />
                 </Route>
-                <Route path="saving" element={<AccountSavingList />} />
+                <Route path="saving" element={<AccountSavingListPage />} />
               </Route>
             </Route>
           </Route>
@@ -89,7 +89,7 @@ function App() {
           <Route path=":goalId/:productId" element={<ProductDetailPage />} />
           <Route path=":goalId/:productId/term" element={<ProductTermPage />} />
           <Route
-            path=":goalId/:productId/check"
+            path=":goalId/:productId/term/detail"
             element={<ProductTermDetailPage />}
           />
           <Route

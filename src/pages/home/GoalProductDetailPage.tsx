@@ -4,7 +4,7 @@ import GoalProductRecommend from "./GoalProductRecommend";
 
 export const GoalProductDetailPage = () => {
   const name = "김하나";
-  const isRecommend = true;
+  const isRecommend = false;
   // const [isRecommend, setRecommend] = useState<boolean>(true);
 
   return (
@@ -14,8 +14,8 @@ export const GoalProductDetailPage = () => {
       </div>
       <div className="mx-10 my-5">
         <div className="font-hana-r">
-          <p className='text-gray-400 text-xs'>반갑습니다</p>
-          <h3 className='font-semibold text-lg pt-1'>{name} 님</h3>
+          <p className="text-gray-400 text-xs">반갑습니다</p>
+          <h3 className="font-semibold text-lg pt-1">{name} 님</h3>
         </div>
         {isRecommend ? (
           <>
