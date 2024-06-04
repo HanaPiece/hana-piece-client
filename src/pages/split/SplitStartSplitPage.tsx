@@ -1,15 +1,116 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
 import { Ratio } from "./SplitMainPage";
+import { useState } from "react";
+import { useUser } from "../../contexts/UserContext";
+import { FetchOptions } from "../../hooks/fetch";
 
 export const SplitStartSplitPage = () => {
-  const ratio: Ratio = {
+  const navigate = useNavigate();
+  const {user} = useUser();
+  const salary = Number(user.salary);
+
+  //통장 설정 페이지에서 받아온 값
+  const location = useLocation();
+  const { selectedAccounts } = location.state || {};
+
+  const [ratio, setRatio] = useState<Ratio>({
+    saving: 50,
+    life: 23,
+    reserve: 27,
+  });
+  
+  // 추천 받은 비율 저장
+  const recommendRatio:Ratio ={
     saving: 50,
     life: 23,
     reserve: 27,
   };
 
-  const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(true);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setRatio((prevRatio) => ({
+      ...prevRatio,
+      [name]: Number(value),
+    }));
+  };
+
+  const calcAmount = (ratio:number, salary:number) : number => {
+    return 0.01*ratio*salary;
+  };
+
+  const setCancle = () => {
+    setRatio(recommendRatio);
+    setIsEditing(false);
+  };
+
+  const adjustComplete = () => {
+    const sum = ratio.saving + ratio.life + ratio.reserve;
+    if(sum!=100){
+      setIsCorrect(false);
+      return false;
+    }
+    setAccountType();
+    setAutoDebit();
+    navigate("/split/start/complete");
+  };
+
+  // 통장 쪼개기 (자동이체 설정)
+  const setAutoDebit = async () => {
+    const postOptions: FetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.jwt}`,
+      },
+      body: JSON.stringify({
+        savingAccountAutoDebitId: selectedAccounts.saving,
+        savingAutoDebitAmount:calcAmount(ratio.saving,salary),
+        lifeAccountAutoDebitId: selectedAccounts.spending,
+        lifeAutoDebitAmount:calcAmount(ratio.life,salary),
+        spareAccountAutoDebitId: selectedAccounts.reserve,
+        spareAutoDebitAmount:calcAmount(ratio.reserve,salary)
+      }),
+    };
+
+    try {
+      const response = await fetch('http://43.201.157.250:8080/api/v1/accounts/auto-debit/adjust', postOptions);
+      if (!response.ok) {
+        console.error('Failed to set account types');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  // 계좌 타입 요청
+  const setAccountType = async () => {
+    const postOptions: FetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.jwt}`,
+      },
+      body: JSON.stringify({
+        salaryAccountId: selectedAccounts.salary,
+        savingAccountId: selectedAccounts.saving,
+        lifeAccountId: selectedAccounts.spending,
+        spareAccountId: selectedAccounts.reserve,
+      }),
+    };
+
+    try {
+      const response = await fetch('http://43.201.157.250:8080/api/v1/accounts/account-type-reg', postOptions);
+      if (!response.ok) {
+        console.error('Failed to set account types');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   return (
     <>
@@ -73,13 +174,27 @@ export const SplitStartSplitPage = () => {
                 비율
               </div>
               <div className="col-span-2 text-2xl font-bold">
-                {ratio.saving}%
+              {!isEditing?(
+                  `${ratio.saving}%`
+              ):(
+                <>
+                    <input
+                      type="number"
+                      name="saving"
+                      value={ratio.saving}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="100"
+                      className="p-2 border rounded w-2/3 h-10" /> %
+                </>
+              )}
               </div>
+              
               <div className="font-semibold text-gray-400 text-sm text-right">
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                900,000원
+                {calcAmount(ratio.saving,salary).toLocaleString()}원
               </div>
             </div>
           </div>
@@ -91,12 +206,27 @@ export const SplitStartSplitPage = () => {
               <div className="font-semibold text-gray-400 text-sm  align-bottom">
                 비율
               </div>
-              <div className="col-span-2 text-2xl font-bold">{ratio.life}%</div>
+              <div className="col-span-2 text-2xl font-bold">
+              {!isEditing?(
+                  `${ratio.life}%`
+              ):(
+                <>
+                    <input
+                      type="number"
+                      name="life"
+                      value={ratio.life}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="100"
+                      className="p-2 border rounded w-2/3 h-10" /> %
+                </>
+              )}  
+              </div>
               <div className="font-semibold text-gray-400 text-sm text-right">
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                414,000원
+              {calcAmount(ratio.life,salary).toLocaleString()}원
               </div>
             </div>
           </div>
@@ -109,21 +239,47 @@ export const SplitStartSplitPage = () => {
                 비율
               </div>
               <div className="col-span-2 text-2xl font-bold">
-                {ratio.reserve}%
+              {!isEditing?(
+                  `${ratio.reserve}%`
+              ):(
+                <>
+                    <input
+                      type="number"
+                      name="reserve"
+                      value={ratio.reserve}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="100"
+                      className="p-2 border rounded w-2/3 h-10" /> %
+                </>
+              )}
               </div>
               <div className="font-semibold text-gray-400 text-sm text-right">
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                486,000원
+                {calcAmount(ratio.reserve,salary).toLocaleString()}원
               </div>
             </div>
           </div>
         </div>
-        <hr className="bg-gray-200 border-0 w-16 mx-auto my-8 h-px" />
+        <hr className="bg-gray-200 border-0 w-16 mx-auto mt-8 mb-5 h-px" />
+        {isCorrect?(
+          null
+        ):(<>
+            <div className="text-red-600 text-xs my-4 mb-10">
+              총합을 100%로 맞춰주세요
+            </div>
+          </>
+        )}
         <div className="flex justify-between gap-x-2 font-bold">
-          <button className="py-2 bg-slate-200 rounded-md text-gray-600 w-1/2">조정하기</button>
-          <button className="py-2 bg-customGreen rounded-md text-white w-1/2" onClick={()=>navigate("/split/start/complete")}>완료하기</button>
+          {!isEditing?(
+            <button className="py-2 bg-slate-200 rounded-md text-gray-600 w-1/2" onClick={()=>setIsEditing(true)}>조정하기</button>
+          ):(
+            <button className="py-2 bg-slate-200 rounded-md text-gray-600 w-1/2" onClick={()=>setCancle()}>취소하기</button>
+          )}
+          
+          <button className="py-2 bg-customGreen rounded-md text-white w-1/2" onClick={()=>adjustComplete()}>완료하기</button>
         </div>
         </div>
       </div>
