@@ -21,7 +21,7 @@ export const GoalProductDetailPage = () => {
   };
 
   const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(
-    `http://localhost:8080/api/v1/accounts/user-goal/${id}`,
+    `http://43.201.157.250:8080/api/v1/accounts/user-goal/${id}`,
     fetchOptions
   );
 

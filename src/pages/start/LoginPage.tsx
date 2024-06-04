@@ -14,7 +14,7 @@ export const LoginPage = () => {
     const loginRequest = async () => {
       try {
         const response = await fetch(
-          "http://172.16.20.217:8080/api/v1/users/login",
+          "http://43.201.157.250:8080/api/v1/users/login",
           {
             method: "post",
             headers: {

@@ -24,7 +24,7 @@ export const ProductTermDetailPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/products/${productId}`,
+            `http://43.201.157.250:8080/api/v1/products/${productId}`,
             {
               method: "get",
               headers: {

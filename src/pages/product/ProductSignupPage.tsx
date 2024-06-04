@@ -26,7 +26,7 @@ export const ProductSignupPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/accounts/saving`,
+            `http://43.201.157.250:8080/api/v1/accounts/saving`,
             {
               method: "get",
               headers: {
@@ -48,7 +48,7 @@ export const ProductSignupPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/products/${productId}`,
+            `http://43.201.157.250:8080/api/v1/products/${productId}`,
             {
               method: "get",
               headers: {
@@ -102,7 +102,7 @@ export const ProductSignupPage = () => {
         (async function () {
           try {
             const response = await fetch(
-              `http://172.16.20.217:8080/api/v1/products/enroll`,
+              `http://43.201.157.250:8080/api/v1/products/enroll`,
               {
                 method: "post",
                 headers: {
