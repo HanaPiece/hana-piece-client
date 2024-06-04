@@ -3,6 +3,7 @@ import { addCommas, getMonthFromDateString, getYearFromDateString, goalDateParse
 import { FaPlus } from "react-icons/fa";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalGetResponse } from "./homeType";
+import { useUser } from "../../contexts/UserContext";
 
 const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
   const navigate = useNavigate();
@@ -71,17 +72,17 @@ const calcTotalAmount = (goals: UserGoalGetResponse[] = []) => {
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxNzQwMjU3OSwiZXhwIjoxNzIxMDAyNTc5fQ.41IRi3shVsUxj7NGN8INd7OmU5wSDbV3yD0TMwYAa9I';
+  const { user } = useUser();
+
   const fetchOptions: FetchOptions = {
-    method:'GET',
-    headers:{
-      'Authorization': `Bearer ${token}`,
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${user.jwt}`,
     },
   };
 
-  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(`http://localhost:8080/api/v1/user-goals`, fetchOptions);
-    
-  const name = '김하나';
+  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(`http://43.201.157.250:8080/api/v1/user-goals`, fetchOptions);
+
   const totalAmount = calcTotalAmount(data || []);
 
   if (loading) return <div>Loading...</div>;
@@ -96,7 +97,7 @@ export const HomePage = () => {
       <div className="mx-10 my-5">
         <div className="font-hana-r">
           <p className="text-gray-400 text-xs">반갑습니다</p>
-          <h3 className="font-semibold text-lg pt-1">{name} 님</h3>
+          <h3 className="font-semibold text-lg pt-1">{user.name} 님</h3>
         </div>
 
         <div className='px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end'>
