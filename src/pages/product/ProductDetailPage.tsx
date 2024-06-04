@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 
-type ProductDetailResponse = {
+export type ProductDetailResponse = {
   productId: number;
   productNm: string;
   interestTypeCd: string;

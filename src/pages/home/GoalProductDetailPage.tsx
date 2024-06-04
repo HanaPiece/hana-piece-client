@@ -11,19 +11,23 @@ export const GoalProductDetailPage = () => {
   const [isRecommend, setRecommend] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
 
-  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxNzQwMjU3OSwiZXhwIjoxNzIxMDAyNTc5fQ.41IRi3shVsUxj7NGN8INd7OmU5wSDbV3yD0TMwYAa9I';
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxNzQwMjU3OSwiZXhwIjoxNzIxMDAyNTc5fQ.41IRi3shVsUxj7NGN8INd7OmU5wSDbV3yD0TMwYAa9I";
   const fetchOptions: FetchOptions = {
-    method:'GET',
-    headers:{
-      'Authorization': `Bearer ${token}`,
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   };
 
-  const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(`http://localhost:8080/api/v1/accounts/user-goal/${id}`, fetchOptions);
+  const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(
+    `http://localhost:8080/api/v1/accounts/user-goal/${id}`,
+    fetchOptions
+  );
 
   useEffect(() => {
     if (!loading && data) {
-      console.log('Data fetched:', data);
+      console.log("Data fetched:", data);
       if (data.length === 0) {
         setRecommend(true);
       } else {
@@ -42,8 +46,8 @@ export const GoalProductDetailPage = () => {
       </div>
       <div className="mx-10 my-5">
         <div className="font-hana-r">
-          <p className='text-gray-400 text-xs'>반갑습니다</p>
-          <h3 className='font-semibold text-lg pt-1'>{name} 님</h3>
+          <p className="text-gray-400 text-xs">반갑습니다</p>
+          <h3 className="font-semibold text-lg pt-1">{name} 님</h3>
         </div>
         {isRecommend ? (
           <GoalProductRecommend goalId={Number(id)} />
