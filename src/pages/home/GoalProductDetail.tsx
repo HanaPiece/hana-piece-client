@@ -1,4 +1,3 @@
-import { SlCreditCard } from "react-icons/sl";
 import { UserGoalAccountGetResponse } from "./homeType";
 import { addCommas } from "../../components/utils/formatters";
 
@@ -31,27 +30,6 @@ export const GoalProductDetail = ({data}:{data:UserGoalAccountGetResponse}) => {
                   alt="하나주택청약종합저축"
                   className="w-2/5"
                 />
-              </div>
-            </div>
-            {/* 납부 내역 */}
-            <div>
-              <div className="flex justify-between my-4">
-                <h3 className="font-extrabold text-xl">납부 내역</h3>
-                <button className="border-none text-blue-700 text-sm">
-                  최신순
-                </button>
-              </div>
-              <div className="grid grid-cols-6 gap-2">
-                <div className="bg-gray-300 w-10 rounded-full grid place-items-center">
-                  <SlCreditCard className="nav-icon" />
-                </div>
-                <div className="col-span-3">
-                  <p className="font-semibold">하나오픈월부금</p>
-                  <p className="text-xs text-gray-400">5월 1일 월요일</p>
-                </div>
-                <div className="col-span-2 text-right font-semibold">
-                  +300,000원
-                </div>
               </div>
             </div>
     </>

@@ -1,49 +1,36 @@
-import { SlCreditCard } from "react-icons/sl";
 import GoalProductRecommend from "./GoalProductRecommend";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserGoalAccountGetResponse } from "./homeType";
 import { GoalProductDetail } from "./GoalProductDetail";
 import { GoalProductTransactionDetail } from "./GoalProductTransactionDetail";
+import { FetchOptions, useFetch } from "../../hooks/fetch";
 
 export const GoalProductDetailPage = () => {
   const name = "김하나";
-  const [userGoals, setUserGoals] = useState<UserGoalAccountGetResponse[]>([]);
-  const [isRecommend, setRecommend] = useState<boolean>(true);
-  const [loading, setLoading] = useState(false);
-  const { userGoalId } = useParams<{ userGoalId: string }>();
-  const [error, setError] = useState<string | null>(null);
+  const [isRecommend, setRecommend] = useState<boolean>(false);
+  const { id } = useParams<{ id: string }>();
 
-  const fetchUserGoals = async (userGoalId: string): Promise<UserGoalAccountGetResponse[]> => {
-    const response = await fetch(`/api/v1/accounts/user-goal/${userGoalId}`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data: UserGoalAccountGetResponse[] = await response.json();
-    return data;
+  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxNzQwMjU3OSwiZXhwIjoxNzIxMDAyNTc5fQ.41IRi3shVsUxj7NGN8INd7OmU5wSDbV3yD0TMwYAa9I';
+  const fetchOptions: FetchOptions = {
+    method:'GET',
+    headers:{
+      'Authorization': `Bearer ${token}`,
+    },
   };
 
+  const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(`http://localhost:8080/api/v1/accounts/user-goal/${id}`, fetchOptions);
+
   useEffect(() => {
-    const fetchData = async () => {
-      if (userGoalId) {
-        try {
-          const data = await fetchUserGoals(userGoalId);
-          // 목표와 연결된 적금이 있으면 적금 상세 보여주기
-          if (data.length !== 0) setRecommend(false);
-          setUserGoals(data);
-        } catch (err) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError('An unknown error occurred');
-          }
-        } finally {
-          setLoading(false);
-        }
+    if (!loading && data) {
+      console.log('Data fetched:', data);
+      if (data.length === 0) {
+        setRecommend(true);
+      } else {
+        setRecommend(false); // 추가: 데이터가 있는 경우 추천 상태를 false로 설정
       }
-    };
-    fetchData();
-  }, [userGoalId]);
+    }
+  }, [loading, data]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -59,16 +46,14 @@ export const GoalProductDetailPage = () => {
           <h3 className='font-semibold text-lg pt-1'>{name} 님</h3>
         </div>
         {isRecommend ? (
-          <>
-            {userGoals?.map((data)=>{
-              <>
-                <GoalProductDetail key={data.accountNumber} data={data} />
-                <GoalProductTransactionDetail accountId={data.accountId} />
-              </>
-            })}
-          </>
+          <GoalProductRecommend goalId={Number(id)} />
         ) : (
-          <GoalProductRecommend />
+          data?.map((account) => (
+            <div key={account.accountNumber}>
+              <GoalProductDetail data={account} />
+              <GoalProductTransactionDetail accountId={account.accountId} />
+            </div>
+          ))
         )}
       </div>
     </>
