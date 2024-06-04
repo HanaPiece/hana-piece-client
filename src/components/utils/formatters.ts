@@ -19,3 +19,16 @@ export const getMonthFromDateString = (dateString: string): string => {
   const parts = dateString.split("-");
   return parts[1];
 }
+
+export const dateParse = (date: string): string => {
+  const dateObject = new Date(date);
+  const year = dateObject.getFullYear();
+  const month = dateObject.getMonth() + 1;
+  const day = dateObject.getDate();
+  const dayOfWeek = dateObject.getDay();
+
+  const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+  const dayName = daysOfWeek[dayOfWeek];
+
+  return `${year}년 ${month}월 ${day}일 ${dayName}`;
+};

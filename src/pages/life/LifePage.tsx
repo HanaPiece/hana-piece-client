@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import ConsumptionChart from './ConsumptionChart';
-import { addCommas } from '../../components/utils/formatters';
+import { addCommas, dateParse } from '../../components/utils/formatters';
 
 type consumptionDetail = {
   amount: number;
@@ -18,19 +18,6 @@ const AdjustMonth = (date: Date, adjustValue: number): Date => {
   const newDate = new Date(date);
   newDate.setMonth(newDate.getMonth() + adjustValue);
   return newDate;
-};
-
-const DateParse = (date: string): string => {
-  const dateObject = new Date(date);
-  const year = dateObject.getFullYear();
-  const month = dateObject.getMonth() + 1;
-  const day = dateObject.getDate();
-  const dayOfWeek = dateObject.getDay();
-
-  const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-  const dayName = daysOfWeek[dayOfWeek];
-
-  return `${year}년 ${month}월 ${day}일 ${dayName}`;
 };
 
 const groupByDate = (data: consumptionDetail[]): { [key: string]: consumptionDetail[] } => {
@@ -116,7 +103,7 @@ export const LifePage = () => {
           <h3 className="text-gray-500 mt-5 mb-3 font-hana-m">지출 내역</h3>
           {Object.keys(groupedData).map(date => (
             <div key={date} className="mb-5">
-              <p className='font-semibold mb-1 bg-indigo-50 p-1'>{DateParse(date)}</p>
+              <p className='font-semibold mb-1 bg-indigo-50 p-1'>{dateParse(date)}</p>
               <div className="inline-block px-2 text-sm font-semibold text-red-500 bg-gray-200 rounded-full">
                 {addCommas(calculateTotalAmount(groupedData[date]))}원
               </div>
