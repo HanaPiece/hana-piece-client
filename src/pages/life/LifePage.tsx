@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import ConsumptionChart from './ConsumptionChart';
 import { addCommas, dateParse } from '../../components/utils/formatters';
+import { FetchOptions, useFetch } from '../../hooks/fetch';
+import { useUser } from '../../contexts/UserContext';
 
 
 type consumptionDetail = {
@@ -40,6 +42,34 @@ const calculateTotalAmount = (data: consumptionDetail[]): number => {
 
 export const LifePage = () => {
   const [date, setDate] = useState<Date>(TodayDate());
+  const [accountId, setAccountId] = useState<number>(1); // 작업 후 0 으로 바꾸기
+  const { user } = useUser();
+
+  const getLifeAccount = () => {
+    // 모든 계좌 조회 fetch
+    const fetchOptions: FetchOptions = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${user.jwt}`,
+      },
+    };
+  
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data } = useFetch<AccountGetResponse[]>(`http://43.201.157.250:8080/api/v1/accounts/checking`, fetchOptions);
+  
+    // type life 찾아서 accountId 세팅
+    data?.forEach((account)=>{
+      if(account.accountTypeCd === 'LIFE'){
+        setAccountId(accountId);
+      }})
+  }
+
+  useEffect(() => {
+    if(accountId==0){
+      getLifeAccount();
+    }
+  }, []);
+
 
   const handlePreviousMonth = () => {
     setDate(AdjustMonth(date, -1));
