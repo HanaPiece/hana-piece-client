@@ -65,7 +65,7 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
 const calcTotalAmount = (goals: UserGoalGetResponse[] = []) => {
   let totalAmount = 0;
   goals.forEach((goal)=>{
-    totalAmount+=goal.amount;
+    totalAmount+=goal.savingMoney;
   })
   return totalAmount;
 }
