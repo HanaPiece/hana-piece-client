@@ -6,6 +6,7 @@ import { FetchOptions, useFetch } from "../../hooks/fetch";
 
 export const SplitStartSettingPage = () => {
   const { user } = useUser();
+  const [isCheck, setIsCheck] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const fetchOptions: FetchOptions = {
@@ -52,6 +53,10 @@ export const SplitStartSettingPage = () => {
   };
 
   const setAccountType = async () => {
+    if (Object.values(selectedAccounts).includes(null)){
+      setIsCheck(false);
+      return false;
+    }
     navigate("/split/start/split", { state: { selectedAccounts } });
   };
 
@@ -171,6 +176,14 @@ export const SplitStartSettingPage = () => {
             </div>
           </div>
         </div>
+        {isCheck?(
+          null
+        ):(<>
+            <div className="text-red-600 text-xs my-4 mb-10">
+              모든 계좌를 선택해 주세요
+            </div>
+          </>
+        )}
         <div className="mt-10">
           <button onClick={()=>setAccountType()} className="green-button font-hana-m text-lg">설정하기</button>
         </div>
