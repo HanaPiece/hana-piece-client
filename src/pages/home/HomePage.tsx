@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { addCommas, getMonthFromDateString, getYearFromDateString, goalDateParse } from "../../components/utils/formatters";
+import { getMonthFromDateString, getYearFromDateString, goalDateParse } from "../../components/utils/formatters";
 import { FaPlus } from "react-icons/fa";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalGetResponse } from "./homeType";
@@ -51,7 +51,7 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
           <div className="col-start-1 col-end-3">현재 저축 금액</div>
         </div>
         <div className='flex justify-between'>
-          <div className='text-2xl font-semibold'>{addCommas(goal.savingMoney / 10000)} 만원</div>
+          <div className='text-2xl font-semibold'>{goal.savingMoney.toLocaleString()} 원</div>
 
           <div className="absolute -right-3 -bottom-4 bg-white rounded-full w-20 h-20 border-4 border-customGreen text-center text-5xl">
             <div className="pt-2 pl-1">{icon}</div>
@@ -102,7 +102,7 @@ export const HomePage = () => {
 
         <div className='px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end'>
           <h2 className='font-hana-b text-lg'>💰현재 저축액 :</h2>
-          <h2 className='font-hana-b text-xl'>{addCommas(totalAmount/10000)} <span className="text-lg">만원</span></h2>
+          <h2 className='font-hana-b text-xl'>{Math.ceil(totalAmount/10000).toLocaleString()} <span className="text-lg">만원</span></h2>
         </div>
 
         {data?.map((goal)=>(
