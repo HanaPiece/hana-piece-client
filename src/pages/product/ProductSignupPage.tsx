@@ -26,7 +26,7 @@ export const ProductSignupPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/accounts/saving`,
+            `http://43.201.157.250:8080/api/v1/accounts/saving`,
             {
               method: "get",
               headers: {
@@ -48,7 +48,7 @@ export const ProductSignupPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/products/${productId}`,
+            `http://43.201.157.250:8080/api/v1/products/${productId}`,
             {
               method: "get",
               headers: {
@@ -102,7 +102,7 @@ export const ProductSignupPage = () => {
         (async function () {
           try {
             const response = await fetch(
-              `http://172.16.20.217:8080/api/v1/products/enroll`,
+              `http://43.201.157.250:8080/api/v1/products/enroll`,
               {
                 method: "post",
                 headers: {
@@ -141,7 +141,7 @@ export const ProductSignupPage = () => {
       <div className="container">
         <TopLine name={"적금 개설"} />
         <div className="h-1 bg-gray-200">
-          <div className="w-4/5 hana-color h-1"></div>
+          <div className="w-3/4 hana-color h-1"></div>
         </div>
         <div className="mx-7">
           <div className="flex justify-center gap-x-3 my-10 items-center">
@@ -202,7 +202,7 @@ export const ProductSignupPage = () => {
             </div>
           </div>
 
-          <button onClick={buttonClicked}>적금 개설하기</button>
+          <button onClick={buttonClicked} className="green-button">적금 개설하기</button>
         </div>
       </div>
     </>

@@ -35,10 +35,7 @@ export const ProductGoalPage = () => {
   return (
     <>
       <div>
-        <TopLine name={"적금 개설"} />
-        <div className="h-1 bg-gray-200">
-          <div className="w-1/5 hana-color h-1"></div>
-        </div>
+        <TopLine name={"목표 선택"} />
         <div className="m-10">
           <div className="text-center">
             <p className="text-3xl mb-2 ml-3">🚩</p>

@@ -27,7 +27,7 @@ export const ProductDetailPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/products/${productId}`,
+            `http://43.201.157.250:8080/api/v1/products/${productId}`,
             {
               method: "get",
               headers: {
@@ -53,7 +53,7 @@ export const ProductDetailPage = () => {
       <div className="container">
         <TopLine name={"적금 상세 설명"} />
         <div className="h-1 bg-gray-200">
-          <div className="w-2/5 hana-color h-1"></div>
+          <div className="w-1/4 hana-color h-1"></div>
         </div>
         <br />
 
@@ -93,17 +93,17 @@ export const ProductDetailPage = () => {
             </div>
           </div>
           <div className="h-[400px] overflow-y-auto p-5 mb-5 rounded-xl border bg-white shadow-lg">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="font-bold text-customGreen">내용</div>
-              <div>{product?.info}</div>
-              <div className="font-bold text-customGreen">이자율</div>
-              <div>{product?.interestRate}%</div>
-              <div className="font-bold text-customGreen">주의사항</div>
-              <div>{product?.cautions}</div>
-              <div className="font-bold text-customGreen">예금자 보호법</div>
-              <div>{product?.depositProtection}</div>
-              <div className="font-bold text-customGreen">적금 약관동의</div>
-              <div>{product?.contractTerms}</div>
+            <div className="grid grid-cols-7 gap-4">
+              <div className="col-span-2 font-bold text-customGreen">내용</div>
+              <div className="col-span-5">{product?.info}</div>
+              <div className="col-span-2 font-bold text-customGreen">이자율</div>
+              <div className="col-span-5">{product?.interestRate}%</div>
+              <div className="col-span-2 font-bold text-customGreen">주의사항</div>
+              <div className="col-span-5">{product?.cautions}</div>
+              <div className="col-span-2 font-bold text-customGreen">예금자<br />보호법</div>
+              <div className="col-span-5">{product?.depositProtection}</div>
+              <div className="col-span-2 font-bold text-customGreen">적금<br />약관동의</div>
+              <div className="col-span-5">{product?.contractTerms}</div>
             </div>
           </div>
 
