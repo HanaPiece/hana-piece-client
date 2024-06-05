@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { addCommas, getMonthFromDateString, getYearFromDateString, goalDateParse } from "../../components/utils/formatters";
+import { getMonthFromDateString, getYearFromDateString, goalDateParse } from "../../components/utils/formatters";
 import { FaPlus } from "react-icons/fa";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalGetResponse } from "./homeType";
@@ -43,7 +43,7 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
           </div>
           <div className="col-span-2">
             <div className="text-xs font-medium text-right">{beginDate(goal.goalBeginDate)} ~</div>
-            <div className="text-right">{goal.goalSpecificId}</div>
+            <div className="text-right">{goal.productNames?(goal.productNames[0]):(null)}</div>
 
           </div>
         </div>
@@ -51,7 +51,7 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
           <div className="col-start-1 col-end-3">현재 저축 금액</div>
         </div>
         <div className='flex justify-between'>
-          <div className='text-2xl font-semibold'>{addCommas(goal.amount / 10000)} 만원</div>
+          <div className='text-2xl font-semibold'>{goal.savingMoney.toLocaleString()} 원</div>
 
           <div className="absolute -right-3 -bottom-4 bg-white rounded-full w-20 h-20 border-4 border-customGreen text-center text-5xl">
             <div className="pt-2 pl-1">{icon}</div>
@@ -65,7 +65,7 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
 const calcTotalAmount = (goals: UserGoalGetResponse[] = []) => {
   let totalAmount = 0;
   goals.forEach((goal)=>{
-    totalAmount+=goal.amount;
+    totalAmount+=goal.savingMoney;
   })
   return totalAmount;
 }
@@ -81,7 +81,7 @@ export const HomePage = () => {
     },
   };
 
-  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(`http://43.201.157.250:8080/api/v1/user-goals`, fetchOptions);
+  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(`http://43.201.157.250:8080/api/v1/user-goals/list`, fetchOptions);
 
   const totalAmount = calcTotalAmount(data || []);
 
@@ -102,7 +102,7 @@ export const HomePage = () => {
 
         <div className='px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end'>
           <h2 className='font-hana-b text-lg'>💰현재 저축액 :</h2>
-          <h2 className='font-hana-b text-xl'>{addCommas(totalAmount/10000)} <span className="text-lg">만원</span></h2>
+          <h2 className='font-hana-b text-xl'>{Math.ceil(totalAmount/10000).toLocaleString()} <span className="text-lg">만원</span></h2>
         </div>
 
         {data?.map((goal)=>(
