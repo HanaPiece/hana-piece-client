@@ -3,7 +3,6 @@ import { recommendedProducts } from "../pages/product/ProductListPage";
 
 export type Goal = {
   userGoalId: number;
-  userId: number;
   goalAlias: string;
   goalTypeCd: string;
   goalSpecificId: number;
@@ -25,7 +24,7 @@ type GoalsProductsContextProp = {
   goalsProducts: GoalsProducts | null;
   setGoal: (goals: Goal[]) => void;
   createGoal: (goal: Goal) => void;
-  updateGoal: (goalId: number) => void;
+  updateGoal: (goal: Goal) => void;
   setProduct: (goalId: number, products: recommendedProducts[]) => void;
   out: () => void;
 };
@@ -37,7 +36,7 @@ type ProviderProp = {
 type Action =
   | { type: "setGoal"; payload: Goal[] } //goal 채우기
   | { type: "createGoal"; payload: Goal } //goal 추가하기
-  | { type: "updateGoal"; payload: { goalId: number } } //goal 그대로, product 비우기
+  | { type: "updateGoal"; payload: Goal } //goal 그대로, product 비우기
   | {
       type: "setProduct";
       payload: { goalId: number; products: recommendedProducts[] };
@@ -90,7 +89,9 @@ const reducer = (goalsProducts: GoalsProducts, { type, payload }: Action) => {
       newer = {
         goalsProducts:
           newer.goalsProducts?.map((gp) =>
-            gp.goal.userGoalId === payload.goalId ? { ...gp, products: [] } : gp
+            gp.goal.userGoalId === payload.userGoalId
+              ? { goal: payload, products: [] }
+              : gp
           ) || null,
       };
       break;
@@ -125,8 +126,8 @@ export const GoalsProductsProvider = ({ children }: ProviderProp) => {
     dispatch({ type: "createGoal", payload: goal });
   };
 
-  const updateGoal = (goalId: number) => {
-    dispatch({ type: "updateGoal", payload: { goalId } });
+  const updateGoal = (goal: Goal) => {
+    dispatch({ type: "updateGoal", payload: goal });
   };
 
   const setProduct = (goalId: number, products: recommendedProducts[]) => {

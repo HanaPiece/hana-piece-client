@@ -104,8 +104,8 @@ function App() {
         <Route path="mypage">
           <Route path="salary" element={<SalaryPage />} />
           <Route path="goal">
-            <Route path=":id" element={<GoalDetailPage />} />
-            <Route path="create" element={<GoalCreatePage />} />
+            <Route path=":goalId" element={<GoalDetailPage />} />
+            <Route path=":goalId/create" element={<GoalCreatePage />} />
           </Route>
           <Route path="account">
             <Route path="add" element={<AccountAddPage />} />

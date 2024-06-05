@@ -3,6 +3,7 @@ import { SlArrowRight } from "react-icons/sl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGoalsProducts } from "../../contexts/ProductContext";
 import { useUser } from "../../contexts/UserContext";
+import { TopLine } from "../../components/ui/TopLine";
 
 export type Product = {
   id: number;
@@ -91,8 +92,6 @@ export const ProductListPage = () => {
     (gp) => gp.goal.userGoalId === +goalId
   );
   useEffect(() => {
-    console.log(goalId);
-    console.log(goalProduct);
     if (goalProduct && goalProduct.products.length === 0) {
       if (user.jwt) {
         (async function () {
@@ -126,6 +125,7 @@ export const ProductListPage = () => {
   return (
     <>
       <div className="p-4 container">
+        <TopLine name={"적금 상품 추천"} />
         <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b">상품</h1>
         <div className="flex justify-between rounded-2xl bg-white shadow-md p-3 px-5 mb-8">
           <div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { TopLine } from "../../../components/ui/TopLine";
 import { useUser } from "../../../contexts/UserContext";
+import { FetchOptions, useFetch } from "../../../hooks/fetch";
 
 type AccountGetResponse = {
   accountId: number;
@@ -27,32 +28,26 @@ const Account = ({ count, number }: Props) => {
 export const AccountSavingListPage = () => {
   const { user } = useUser();
   const [accounts, setAccounts] = useState<AccountGetResponse[] | null>(null);
+
+  const fetchOptions: FetchOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${user.jwt}`,
+    },
+  };
+  const { data, error, loading } = useFetch<AccountGetResponse[]>(
+    `http://43.201.157.250:8080/api/v1/accounts/installment-saving`,
+    fetchOptions
+  );
+
   useEffect(() => {
-    if (user.jwt) {
-      (async function () {
-        try {
-          const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/accounts/installment-saving`,
-            {
-              method: "get",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${user.jwt}`,
-              },
-            }
-          );
-          if (response.ok) {
-            const json = await response.json();
-            setAccounts(json);
-          }
-        } catch (err) {
-          if (err instanceof Error) {
-            alert(`에러가 발생했습니다. ${err}`);
-          }
-        }
-      })();
+    if (data) {
+      setAccounts(data);
     }
-  }, [user.jwt]);
+  }, [data]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
