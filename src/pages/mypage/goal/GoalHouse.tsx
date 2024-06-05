@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { GreenButton } from "../../../components/ui/GreenButton";
 import { House, UserGoalDetailGetResponse } from "./GoalDetailPage";
 
@@ -8,9 +8,9 @@ type Props = {
 };
 
 export const GoalHouse = ({ goal, goalDetail }: Props) => {
-  const [apartmentNm, setApartmentNm] = useState<string>();
-  const [apartmentPrice, setApartmentPrice] = useState<number>();
-  const [duration, setDuration] = useState<number>();
+  // const [apartmentNm, setApartmentm] = useState<string>();
+  // const [apartmentPrice, setApartmentPrice] = useState<number>();
+  // const [duration, setDuration] = useState<number>();
   return (
     <>
       <div className="mx-10 mb-5">
@@ -36,7 +36,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
           type="text"
           className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
           value={goal.duration}
-          onClick={setDuration()}
+          // onClick={setDuration()}
         />
         개월
         <GreenButton path={"/mypage/goal"} name={"저장"} />
