@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { TopLine } from "../../../components/ui/TopLine";
-import { GreenButton } from "../../../components/ui/GreenButton";
+// import { GreenButton } from "../../../components/ui/GreenButton";
 import { useGoalsProducts } from "../../../contexts/ProductContext";
 
 type Props = {
@@ -24,6 +24,8 @@ const Goal = ({ id, count, name }: Props) => {
 
 export const GoalListPage = () => {
   const { goalsProducts } = useGoalsProducts();
+  const navigate = useNavigate();
+  const goalId = 0;
 
   return (
     <div>
@@ -40,7 +42,10 @@ export const GoalListPage = () => {
             />
           ))}
         </div>
-        <GreenButton path="create" name="+ 목표 추가" />
+        <button onClick={() => navigate(`${goalId}/create`)}>
+          + 목표 추가
+        </button>
+        {/* <GreenButton path=`{}/create` name="+ 목표 추가" /> */}
       </div>
     </div>
   );

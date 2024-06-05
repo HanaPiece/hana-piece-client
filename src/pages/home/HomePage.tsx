@@ -99,16 +99,15 @@ export const HomePage = () => {
   const fetchOptions: FetchOptions = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${user.jwt}`,
     },
   };
 
   const { data, error, loading } = useFetch<UserGoalGetResponse[]>(
-    `http://localhost:8080/api/v1/user-goals`,
+    `http://43.201.157.250:8080/api/v1/user-goals`,
     fetchOptions
   );
 
-  const name = "김하나";
   const totalAmount = calcTotalAmount(data || []);
 
   if (loading) return <div>Loading...</div>;

@@ -7,16 +7,16 @@ import { GoalHouse } from "./GoalHouse";
 import { GoalCar } from "./GoalCar";
 import { GoalWish } from "./GoalWish";
 
-export type Car = {
-  carNm: string;
-  carPrice: number;
-};
-
 export type House = {
   apartmentNm: string;
   apartmentPrice: number;
   regionNm: string;
   exclusiveArea: number;
+};
+
+export type Car = {
+  carNm: string;
+  carPrice: number;
 };
 
 export type Wish = {
@@ -63,6 +63,7 @@ export const GoalDetailPage = () => {
   useEffect(() => {
     if (data) {
       setGoal(data);
+      console.log(data);
     }
   }, [data]);
 
@@ -87,10 +88,10 @@ export const GoalDetailPage = () => {
           {goal?.goalTypeCd === "HOUSE" && (
             <GoalHouse goal={goal} goalDetail={goal.detail as House} />
           )}
-          {goal?.goalTypeCd === "Car" && (
+          {goal?.goalTypeCd === "CAR" && (
             <GoalCar goal={goal} goalDetail={goal.detail as Car} />
           )}
-          {goal?.goalTypeCd === "Wish" && (
+          {goal?.goalTypeCd === "WISH" && (
             <GoalWish goal={goal} goalDetail={goal.detail as Wish} />
           )}
         </div>

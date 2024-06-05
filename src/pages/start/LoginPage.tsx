@@ -8,7 +8,7 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState<string>("");
   const { user, login } = useUser();
-  const { setGoal } = useGoalsProducts();
+  const { goalsProducts, setGoal } = useGoalsProducts();
 
   useEffect(() => {
     const loginRequest = async () => {
@@ -67,6 +67,8 @@ export const LoginPage = () => {
             const json = await response.json();
             console.log(json);
             setGoal(json);
+            console.log(goalsProducts?.goalsProducts);
+            navigate("/home");
           }
         } catch (err) {
           if (err instanceof Error) {
@@ -74,7 +76,6 @@ export const LoginPage = () => {
           }
         }
       })();
-      navigate("/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, navigate]);

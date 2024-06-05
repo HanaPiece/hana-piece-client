@@ -1,10 +1,14 @@
-import { GreenButton } from "../../../components/ui/GreenButton";
+// import { GreenButton } from "../../../components/ui/GreenButton";
 import { TopLine } from "../../../components/ui/TopLine";
 import { useState } from "react";
 import { SlArrowDown } from "react-icons/sl";
+import { GoalCar } from "./GoalCar";
+import { House, Car, Wish, UserGoalDetailGetResponse } from "./GoalDetailPage";
+import { GoalHouse } from "./GoalHouse";
+import { GoalWish } from "./GoalWish";
 
 export const GoalCreatePage = () => {
-  const [category, setCategory] = useState<string>("카테고리 선택하삼");
+  const [category, setCategory] = useState<string>("카테고리를 선택해주세요.");
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -13,6 +17,38 @@ export const GoalCreatePage = () => {
     setCategory(category);
     setIsOpen(false);
   };
+
+  const houseInit: UserGoalDetailGetResponse = {
+    goalAlias: "",
+    goalTypeCd: "HOUSE",
+    goalSpecificId: 0,
+    goalBeginDate: "",
+    duration: 0,
+    detail: {
+      apartmentNm: "",
+      apartmentPrice: 0,
+      regionNm: "",
+      exclusiveArea: 0,
+    },
+  };
+  const carInit: UserGoalDetailGetResponse = {
+    goalAlias: "",
+    goalTypeCd: "Car",
+    goalSpecificId: 0,
+    goalBeginDate: "",
+    duration: 0,
+    detail: { carNm: "", carPrice: 0 },
+  };
+  const wishInit: UserGoalDetailGetResponse = {
+    goalAlias: "",
+    goalTypeCd: "Wish",
+    goalSpecificId: 0,
+    goalBeginDate: "",
+    duration: 0,
+    detail: { wishNm: "", wishPrice: 0 },
+  };
+
+  const [goal, setGoal] = useState<UserGoalDetailGetResponse>(wishInit);
 
   return (
     <>
@@ -49,21 +85,30 @@ export const GoalCreatePage = () => {
                     <span
                       className="block px-4 py-2 text-sm cursor-pointer"
                       role="menuitem"
-                      onClick={() => handleCategorySelect("집")}
+                      onClick={() => {
+                        setGoal(houseInit);
+                        handleCategorySelect("집");
+                      }}
                     >
                       집
                     </span>
                     <span
                       className="block px-4 py-2 text-sm cursor-pointer"
                       role="menuitem"
-                      onClick={() => handleCategorySelect("차")}
+                      onClick={() => {
+                        setGoal(carInit);
+                        handleCategorySelect("차");
+                      }}
                     >
                       차
                     </span>
                     <span
                       className="block px-4 py-2 text-sm cursor-pointer"
                       role="menuitem"
-                      onClick={() => handleCategorySelect("소원")}
+                      onClick={() => {
+                        setGoal(wishInit);
+                        handleCategorySelect("소원");
+                      }}
                     >
                       소원
                     </span>
@@ -74,29 +119,17 @@ export const GoalCreatePage = () => {
             <br />
             <br />
 
-            <label className="text-customGreen font-bold text-lg">아파트 이름</label>
-            <p className="border-b border-gray-400 h-8 mt-3 mb-5">아파트 이름</p>
-
-            <label className="text-customGreen font-bold text-lg">아파트 평수</label>
-            <input
-              type="text"
-              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
-              value="28 평"
-            />
-            <label className="text-customGreen font-bold text-lg">달성목표일</label>
-            <input
-              type="date"
-              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
-              value="2024-05-29"
-            />
-            <label className="text-customGreen font-bold text-lg">예상 목표 달성 금액</label>
-            <input
-              type="text"
-              className="w-full border-b border-gray-400 h-8 mt-3 mb-10"
-              value="300000"
-            />
-            <GreenButton path={"/mypage/goal"} name={"목표 생성하기"} />
-            </div>
+            {category === "집" && (
+              <GoalHouse goal={goal} goalDetail={goal.detail as House} />
+            )}
+            {category === "차" && (
+              <GoalCar goal={goal} goalDetail={goal.detail as Car} />
+            )}
+            {category === "소원" && (
+              <GoalWish goal={goal} goalDetail={goal.detail as Wish} />
+            )}
+            {/* <GreenButton path={"/mypage/goal"} name={"목표 생성하기"} /> */}
+          </div>
         </div>
       </div>
     </>

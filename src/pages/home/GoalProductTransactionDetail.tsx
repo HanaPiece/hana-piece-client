@@ -17,12 +17,12 @@ export const GoalProductTransactionDetail = ({
   const fetchOptions: FetchOptions = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${user.jwt}`,
     },
   };
 
   const { data, error, loading } = useFetch<UserGoalTransactionResponse[]>(
-    `http://localhost:8080/api/v1/accounts/${accountId}/transactions/goal-installment-saving`,
+    `http://43.201.157.250:8080/api/v1/accounts/${accountId}/transactions/goal-installment-saving`,
     fetchOptions
   );
 
