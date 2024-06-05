@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 export interface FetchOptions {
   method: "GET" | "POST" | "PUT" | "DELETE";
   headers?: Record<string, string>;
-  body?: unknown;
+  body?: BodyInit | null;
 }
 
 export const useFetch = <T>(

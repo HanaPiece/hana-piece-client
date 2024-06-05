@@ -58,7 +58,7 @@ const Product = ({ product }: Props) => {
         <div>
           <div className="bg-gray-200 w-8 h-8 rounded-full grid place-items-center">
             <img
-              src="src\assets\img-hana-symbol-m.png"
+              src="/img-hana-symbol-m.png"
               alt="하나은행"
               className="w-9/12"
             />
@@ -71,8 +71,8 @@ const Product = ({ product }: Props) => {
           </p>
         </div>
         <div className="col-span-2 flex justify-between place-items-center">
-          <p className="text-red-500 font-semibold">
-            최고 {product.interestRate}%
+          <p className="text-red-500 font-semibold text-sm">
+            최고{product.interestRate}%
           </p>
           <SlArrowRight className="h-3" />
         </div>
@@ -133,7 +133,7 @@ export const ProductListPage = () => {
               적금 상품 추천
             </p>
             <p className="text-sm mt-2">
-              김하나님의 목표에 따라서
+              {user.name}님의 목표에 따라서
               <br />
               적합한 적금을 추천해 드릴게요!
             </p>

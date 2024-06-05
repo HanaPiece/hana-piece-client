@@ -2,22 +2,24 @@ import { useState } from "react";
 import { GreenButton } from "../../components/ui/GreenButton";
 import PhoneModal from "../../components/ui/PhoneModal";
 import { addCommas } from "../../components/utils/formatters";
-
-type user = {
-  name:string;
-  age:number;
-  sex:string;
-  salary:number;
-}
+import { useUser } from "../../contexts/UserContext";
+import { FetchOptions, useFetch } from "../../hooks/fetch";
 
 export const SplitStartPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const user:user = {
-    name:"김하나",
-    age:27,
-    sex:"여성",
-    salary:1800000
-  }
+  const { user } = useUser();
+
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${user.jwt}`,
+    },
+  };
+
+  const { data, error, loading } = useFetch<UserGetResponse>('http://43.201.157.250:8080/api/v1/users', fetchOptions);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -49,13 +51,13 @@ export const SplitStartPage = () => {
           </div>
           <div className="grid grid-cols-4 text-md mb-8 px-10">
             <div className="text-customGreen text-left">나이</div>
-            <div className="col-span-3 text-right">{user.age} 세</div>
+            <div className="col-span-3 text-right">{data?.age} 세</div>
 
             <div className="text-customGreen text-left">성별</div>
-            <div className="col-span-3 text-right">{user.sex}</div>
+            <div className="col-span-3 text-right">{data?.sex == 'M' ? '남' : '여'}</div>
 
             <div className="text-customGreen text-left">월급</div>
-            <div className="col-span-3 text-right">{addCommas(user.salary)} 원</div>
+            <div className="col-span-3 text-right">{data?.salary !== undefined ? `${addCommas(data.salary)} 원` : '정보 없음'}</div>
           </div>
           <GreenButton path={"setting"} name={"통장 쪼개러 가기"} />
         </div>

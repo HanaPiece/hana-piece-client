@@ -141,7 +141,7 @@ export const ProductSignupPage = () => {
       <div className="container">
         <TopLine name={"적금 개설"} />
         <div className="h-1 bg-gray-200">
-          <div className="w-4/5 hana-color h-1"></div>
+          <div className="w-3/4 hana-color h-1"></div>
         </div>
         <div className="mx-7">
           <div className="flex justify-center gap-x-3 my-10 items-center">
@@ -202,7 +202,7 @@ export const ProductSignupPage = () => {
             </div>
           </div>
 
-          <button onClick={buttonClicked}>적금 개설하기</button>
+          <button onClick={buttonClicked} className="green-button">적금 개설하기</button>
         </div>
       </div>
     </>

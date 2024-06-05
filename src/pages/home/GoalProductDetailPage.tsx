@@ -5,18 +5,18 @@ import { UserGoalAccountGetResponse } from "./homeType";
 import { GoalProductDetail } from "./GoalProductDetail";
 import { GoalProductTransactionDetail } from "./GoalProductTransactionDetail";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
+import { useUser } from "../../contexts/UserContext";
 
 export const GoalProductDetailPage = () => {
-  const name = "김하나";
   const [isRecommend, setRecommend] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
 
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxNzQwMjU3OSwiZXhwIjoxNzIxMDAyNTc5fQ.41IRi3shVsUxj7NGN8INd7OmU5wSDbV3yD0TMwYAa9I";
+  const { user } = useUser();
+
   const fetchOptions: FetchOptions = {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${user.jwt}`,
     },
   };
 
@@ -47,7 +47,7 @@ export const GoalProductDetailPage = () => {
       <div className="mx-10 my-5">
         <div className="font-hana-r">
           <p className="text-gray-400 text-xs">반갑습니다</p>
-          <h3 className="font-semibold text-lg pt-1">{name} 님</h3>
+          <h3 className="font-semibold text-lg pt-1">{user.name} 님</h3>
         </div>
         {isRecommend ? (
           <GoalProductRecommend goalId={Number(id)} />
