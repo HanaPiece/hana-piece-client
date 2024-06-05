@@ -24,7 +24,7 @@ export const GoalProductDetailPage = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      console.log('Data fetched:', data);
+      console.log("Data fetched:", data);
       if (data.length === 0) {
         setRecommend(true);
       } else {
@@ -45,6 +45,7 @@ export const GoalProductDetailPage = () => {
         <div className="font-hana-r">
           <p className='text-gray-400 text-xs'>반갑습니다</p>
           <h3 className='font-semibold text-lg pt-1'>{user.name} 님</h3>
+
         </div>
         {isRecommend ? (
           <GoalProductRecommend goalId={Number(id)} />

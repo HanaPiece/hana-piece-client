@@ -1,16 +1,58 @@
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GreenButton } from "../../components/ui/GreenButton";
 import PhoneModal from "../../components/ui/PhoneModal";
-import { Term } from "./ProductTermPage";
+import { useUser } from "../../contexts/UserContext";
+
+type Term = {
+  id: number;
+  name: string;
+  content: string;
+};
 
 export const ProductTermDetailPage = () => {
-  const id = 4;
+  const { goalId, productId } = useParams();
+  const { user } = useUser();
+  const [terms, setTerms] = useState<Term[]>([
+    { id: 1, name: "적금 약관 동의", content: "empty" },
+  ]);
+  const [name, setName] = useState<string>();
 
-  const location = useLocation();
-  const { terms } = location.state;
-  console.log(terms);
+  useEffect(() => {
+    if (user.jwt) {
+      (async function () {
+        try {
+          const response = await fetch(
+            `http://172.16.20.217:8080/api/v1/products/${productId}`,
+            {
+              method: "get",
+              headers: {
+                Authorization: `Bearer ${user.jwt}`,
+              },
+            }
+          );
+          if (response.ok) {
+            const json = await response.json();
+            const jsonTerm: Term[] = [
+              { id: 1, name: "적금 약관 동의", content: json["contractTerms"] },
+              {
+                id: 1,
+                name: "예금자 보호법",
+                content: json["depositProtection"],
+              },
+            ];
+            setTerms(jsonTerm);
+            setName(json["productNm"]);
+          }
+        } catch (err) {
+          if (err instanceof Error) {
+            alert(`에러가 발생했습니다. (${err}`);
+          }
+        }
+      })();
+    }
+  }, [user.jwt, productId]);
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -25,11 +67,15 @@ export const ProductTermDetailPage = () => {
           <div className="text-lg font-bold mt-10">
             <div className="flex justify-center gap-x-3 my-10 items-center">
               <div>
-                <div className='bg-gray-200 w-8 h-8 rounded-full grid place-items-center'>
-                    <img src='\img-hana-symbol-m.png' alt='하나은행' className='w-9/12' />
+                <div className="bg-gray-200 w-8 h-8 rounded-full grid place-items-center">
+                  <img
+                    src="\img-hana-symbol-m.png"
+                    alt="하나은행"
+                    className="w-9/12"
+                  />
                 </div>
               </div>
-              <p className="text-xl font-hana-cm">청년 주택드림 청약통장</p>
+              <p className="text-xl font-hana-cm">{name}</p>
             </div>
           </div>
           <div className="bg-slate-200 h-[450px] overflow-y-auto border p-2">
@@ -44,7 +90,12 @@ export const ProductTermDetailPage = () => {
             ))}
           </div>
 
-          <button onClick={() => setModalOpen(true)} className="green-button mt-5">약관 동의</button>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="green-button mt-5"
+          >
+            약관 동의
+          </button>
 
           <PhoneModal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
             <h2 className="mt-3 text-3xl text-center">✔️</h2>
@@ -52,7 +103,10 @@ export const ProductTermDetailPage = () => {
               정말로 가입하시겠습니까?
             </h2>
             <div className="mb-5 mt-10">
-              <GreenButton path={`/product/${id}/signup`} name={"확인했어요"} />
+              <GreenButton
+                path={`/product/${goalId}/${productId}/signup`}
+                name={"확인했어요"}
+              />
             </div>
           </PhoneModal>
         </div>

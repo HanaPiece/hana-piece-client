@@ -1,7 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneModal from "../../components/ui/PhoneModal";
+import { useUser } from "../../contexts/UserContext";
+import { ProductDetailResponse } from "./ProductDetailPage";
 
 type Props = {
   name: string;
@@ -16,8 +18,11 @@ const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
     <>
       <div className="p-2 bg-white border-customGreen border grid grid-cols-6 gap-4 cursor-pointer">
         <div>
-          <input type="checkbox" onChange={onCheckboxChange} className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 peer-checked:bg-customGreen" />
-
+          <input
+            type="checkbox"
+            onChange={onCheckboxChange}
+            className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 peer-checked:bg-customGreen"
+          />
         </div>
         <div className="col-span-5">
           <div
@@ -30,8 +35,13 @@ const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
           </div>
           <PhoneModal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
             <h2 className="mt-4 text-xl font-bold text-center">{name}</h2>
-            <div className="mt-4 text-center break-words overflow-auto border h-48">{content}</div>
-            <button onClick={() => setModalOpen(false)} className="green-button mt-5 mb-3">
+            <div className="mt-4 text-center break-words overflow-auto border h-48">
+              {content}
+            </div>
+            <button
+              onClick={() => setModalOpen(false)}
+              className="green-button mt-5 mb-3"
+            >
               확인했어요
             </button>
           </PhoneModal>
@@ -42,29 +52,40 @@ const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
   );
 };
 
-export type Term = {
-  id: number;
-  name: string;
-  content: string;
-};
-const terms: Term[] = [
-  {
-    id: 1,
-    name: "적금 약관동의",
-    content:
-      "product.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_t",
-  },
-  {
-    id: 2,
-    name: "예금자 보호법",
-    content:
-      "product.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_terms\nproduct.contract_termsproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_tproduct.contract_terms\nproduct.contract_t",
-  },
-];
-
 export const ProductTermPage = () => {
   const navigate = useNavigate();
   const [termsChecked, setTermsChecked] = useState<boolean[]>([false, false]);
+
+  const { user } = useUser();
+  const { productId } = useParams();
+  const [product, setProduct] = useState<ProductDetailResponse>();
+
+  useEffect(() => {
+    if (user.jwt) {
+      (async function () {
+        try {
+          const response = await fetch(
+            `http://172.16.20.217:8080/api/v1/products/${productId}`,
+            {
+              method: "get",
+              headers: {
+                Authorization: `Bearer ${user.jwt}`,
+              },
+            }
+          );
+          if (response.ok) {
+            const json = await response.json();
+            console.log(json);
+            setProduct(json);
+          }
+        } catch (err) {
+          if (err instanceof Error) {
+            alert(`에러가 발생했습니다. (${err}`);
+          }
+        }
+      })();
+    }
+  }, [productId, user.jwt]);
 
   const handleCheckboxChange = (index: number) => {
     const updatedChecked = [...termsChecked];
@@ -74,12 +95,12 @@ export const ProductTermPage = () => {
 
   const handleSubmit = () => {
     if (termsChecked.every((checked) => checked)) {
-      navigate(`/product/${id}/term/detail`, { state: { terms } });
+      navigate(`detail`);
     } else {
       alert("체크하렴"); //modal!!!!!!!!!!
     }
   };
-  const id = 4;
+
   return (
     <>
       <div className="container">
@@ -90,22 +111,26 @@ export const ProductTermPage = () => {
         <div className="mx-7 mt-10">
           <div className="flex justify-center gap-x-3 my-10 items-center">
             <div>
-              <div className='bg-gray-200 w-8 h-8 rounded-full grid place-items-center'>
-                  <img src='\img-hana-symbol-m.png' alt='하나은행' className='w-9/12' />
+              <div className="bg-gray-200 w-8 h-8 rounded-full grid place-items-center">
+                <img
+                  src="\img-hana-symbol-m.png"
+                  alt="하나은행"
+                  className="w-9/12"
+                />
               </div>
             </div>
-            <p className="text-xl font-hana-cm">청년 주택드림 청약통장</p>
+            <p className="text-xl font-hana-cm">{product?.productNm}</p>
           </div>
           <br />
           <div>
             <ProductTerm
-              name={terms[0].name}
-              content={terms[0].content}
+              name="적금 약관 동의"
+              content={product?.contractTerms ?? "약관 내용"}
               onCheckboxChange={() => handleCheckboxChange(0)}
             />
             <ProductTerm
-              name={terms[1].name}
-              content={terms[1].content}
+              name="예금자 보호법"
+              content={product?.depositProtection ?? "예금자 보호법 내용"}
               onCheckboxChange={() => handleCheckboxChange(1)}
             />
           </div>
