@@ -52,6 +52,9 @@ export const GoalProductTransactionDetail = ({
             <div className="col-span-2 text-right font-semibold">
               {transaction.amount < 0 ? "" : "+"}
               {addCommas(transaction.amount)}원
+            <div className="col-span-2">
+              <p className="font-semibold">{getMonthFromDateString(transaction.transactionDate)}월 납부금</p>
+              <p className="text-xs text-gray-400">{transaction.transactionDate}</p>
             </div>
           </div>
         ))}

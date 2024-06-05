@@ -14,13 +14,14 @@ export interface UserGoalTransactionResponse {
 }
 
 export interface UserGoalGetResponse {
-	userGoalId: number;
-	userId: number;
+  userGoalId: number;
 	goalAlias: string;
 	goalTypeCd: 'CAR'|'HOUSE'|'WISH';
 	goalSpecificId: number;
 	goalBeginDate: string;
 	duration: number;
 	amount: number;
+	productNames: string[];
+	savingMoney: number;
 }
 

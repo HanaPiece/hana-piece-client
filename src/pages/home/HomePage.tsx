@@ -5,6 +5,11 @@ import {
   getYearFromDateString,
   goalDateParse,
 } from "../../components/utils/formatters";
+import {
+  getMonthFromDateString,
+  getYearFromDateString,
+  goalDateParse,
+} from "../../components/utils/formatters";
 import { FaPlus } from "react-icons/fa";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalGetResponse } from "./homeType";
