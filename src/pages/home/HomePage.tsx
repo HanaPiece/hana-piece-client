@@ -43,7 +43,7 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
           </div>
           <div className="col-span-2">
             <div className="text-xs font-medium text-right">{beginDate(goal.goalBeginDate)} ~</div>
-            <div className="text-right">{goal.goalSpecificId}</div>
+            <div className="text-right">{goal.productNames?(goal.productNames[0]):(null)}</div>
 
           </div>
         </div>
@@ -51,7 +51,7 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
           <div className="col-start-1 col-end-3">현재 저축 금액</div>
         </div>
         <div className='flex justify-between'>
-          <div className='text-2xl font-semibold'>{addCommas(goal.amount / 10000)} 만원</div>
+          <div className='text-2xl font-semibold'>{addCommas(goal.savingMoney / 10000)} 만원</div>
 
           <div className="absolute -right-3 -bottom-4 bg-white rounded-full w-20 h-20 border-4 border-customGreen text-center text-5xl">
             <div className="pt-2 pl-1">{icon}</div>
@@ -81,7 +81,7 @@ export const HomePage = () => {
     },
   };
 
-  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(`http://43.201.157.250:8080/api/v1/user-goals`, fetchOptions);
+  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(`http://43.201.157.250:8080/api/v1/user-goals/list`, fetchOptions);
 
   const totalAmount = calcTotalAmount(data || []);
 
