@@ -20,7 +20,7 @@ export const SplitStartSplitPage = () => {
     reserve: 27,
   });
   
-  // 추천 받은 비율 저장
+  // 추천 받은 비율 저장 -> 추천 비율 받아오는 fetch 후 useEffect로 setRecommendRatio 설정 필요!!!!!!!!!!!!!!!!!!!!!!!!!
   const recommendRatio:Ratio ={
     saving: 50,
     life: 23,
@@ -55,7 +55,7 @@ export const SplitStartSplitPage = () => {
     }
     setAccountType();
     setAutoDebit();
-    navigate("/split/start/complete");
+    navigate("/split/start/complete",{ state: { splitRatio: ratio } });
   };
 
   // 통장 쪼개기 (자동이체 설정)
