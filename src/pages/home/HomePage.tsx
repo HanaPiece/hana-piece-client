@@ -1,57 +1,80 @@
 import { useNavigate } from "react-router-dom";
-import { addCommas, getMonthFromDateString, getYearFromDateString, goalDateParse } from "../../components/utils/formatters";
+import {
+  getMonthFromDateString,
+  getYearFromDateString,
+  goalDateParse,
+} from "../../components/utils/formatters";
 import { FaPlus } from "react-icons/fa";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalGetResponse } from "./homeType";
 import { useUser } from "../../contexts/UserContext";
 
-const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
+const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
   const navigate = useNavigate();
-  const goToDetail = (userGoalId:number) => {
+  const goToDetail = (userGoalId: number) => {
     navigate(`${userGoalId}`);
   };
 
-  const beginDate = (date:string) => {
+  const beginDate = (date: string) => {
     const goalDate = goalDateParse(date);
-    return getYearFromDateString(goalDate)+'.'+getMonthFromDateString(goalDate)
+    return (
+      getYearFromDateString(goalDate) + "." + getMonthFromDateString(goalDate)
+    );
   };
 
-  const gradientClass = goal.goalTypeCd === 'CAR'
-    ? 'bg-violet-50'
-    : goal.goalTypeCd === 'HOUSE'
-    ? 'bg-sky-50'
-    : goal.goalTypeCd === 'WISH'
-    ? 'bg-lime-50'
-    : 'bg-stone-50';
-  
-  const icon = goal.goalTypeCd === 'CAR'
-    ? '🚗'
-    : goal.goalTypeCd === 'HOUSE'
-    ? '🏠'
-    : goal.goalTypeCd === 'WISH'
-    ? '🙏'
-    : '💰';
-  
-  return (<>
-      <div className={`relative ${gradientClass} border-2 border-customGreen rounded-2xl p-3 mt-5 mb-7 shadow-xl cursor-pointer`} onClick={() => goToDetail(goal.userGoalId)}>
-        <div className="absolute top-0 left-0 bg-customGreen w-1/5 text-white p-1 text-sm text-center font-hana-r rounded-br-xl rounded-tl-xl">목표 {goal.userGoalId}</div>
-        <div className='grid grid-cols-5 text-md font-semibold mb-8 mt-3'>
+  const gradientClass =
+    goal.goalTypeCd === "CAR"
+      ? "bg-violet-50"
+      : goal.goalTypeCd === "HOUSE"
+      ? "bg-sky-50"
+      : goal.goalTypeCd === "WISH"
+      ? "bg-lime-50"
+      : "bg-stone-50";
+
+  const icon =
+    goal.goalTypeCd === "CAR"
+      ? "🚗"
+      : goal.goalTypeCd === "HOUSE"
+      ? "🏠"
+      : goal.goalTypeCd === "WISH"
+      ? "🙏"
+      : "💰";
+
+  return (
+    <>
+      <div
+        className={`relative ${gradientClass} border-2 border-customGreen rounded-2xl p-3 mt-5 mb-7 shadow-xl cursor-pointer`}
+        onClick={() => goToDetail(goal.userGoalId)}
+      >
+        <div className="absolute top-0 left-0 bg-customGreen w-1/5 text-white p-1 text-sm text-center font-hana-r rounded-br-xl rounded-tl-xl">
+          목표 {goal.userGoalId}
+        </div>
+        <div className="grid grid-cols-5 text-md font-semibold mb-8 mt-3">
           <div className="align-bottom col-span-3 flex">
             <div className="text-lg self-center">
-              <span className={`bg-gradient-to-t from-yellow-200 from-50% to-${gradientClass} to-50%`}>{goal.goalAlias}</span>
+              <span
+                className={`bg-gradient-to-t from-yellow-200 from-50% to-${gradientClass} to-50%`}
+              >
+                {goal.goalAlias}
+              </span>
             </div>
           </div>
           <div className="col-span-2">
-            <div className="text-xs font-medium text-right">{beginDate(goal.goalBeginDate)} ~</div>
-            <div className="text-right">{goal.goalSpecificId}</div>
-
+            <div className="text-xs font-medium text-right">
+              {beginDate(goal.goalBeginDate)} ~
+            </div>
+            <div className="text-right">
+              {goal.productNames ? goal.productNames[0] : null}
+            </div>
           </div>
         </div>
         <div className="flex justify-between text-xs">
           <div className="col-start-1 col-end-3">현재 저축 금액</div>
         </div>
-        <div className='flex justify-between'>
-          <div className='text-2xl font-semibold'>{addCommas(goal.amount / 10000)} 만원</div>
+        <div className="flex justify-between">
+          <div className="text-2xl font-semibold">
+            {goal.savingMoney.toLocaleString()} 원
+          </div>
 
           <div className="absolute -right-3 -bottom-4 bg-white rounded-full w-20 h-20 border-4 border-customGreen text-center text-5xl">
             <div className="pt-2 pl-1">{icon}</div>
@@ -64,30 +87,32 @@ const GoalBox = ({goal}:{goal:UserGoalGetResponse}) => {
 
 const calcTotalAmount = (goals: UserGoalGetResponse[] = []) => {
   let totalAmount = 0;
-  goals.forEach((goal)=>{
-    totalAmount+=goal.amount;
-  })
+  goals.forEach((goal) => {
+    totalAmount += goal.savingMoney;
+  });
   return totalAmount;
-}
+};
 
 export const HomePage = () => {
   const navigate = useNavigate();
   const { user } = useUser();
 
   const fetchOptions: FetchOptions = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Authorization': `Bearer ${user.jwt}`,
+      Authorization: `Bearer ${user.jwt}`,
     },
   };
 
-  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(`http://43.201.157.250:8080/api/v1/user-goals`, fetchOptions);
+  const { data, error, loading } = useFetch<UserGoalGetResponse[]>(
+    `http://43.201.157.250:8080/api/v1/user-goals/list`,
+    fetchOptions
+  );
 
   const totalAmount = calcTotalAmount(data || []);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
 
   return (
     <>
@@ -100,19 +125,24 @@ export const HomePage = () => {
           <h3 className="font-semibold text-lg pt-1">{user.name} 님</h3>
         </div>
 
-        <div className='px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end'>
-          <h2 className='font-hana-b text-lg'>💰현재 저축액 :</h2>
-          <h2 className='font-hana-b text-xl'>{addCommas(totalAmount/10000)} <span className="text-lg">만원</span></h2>
+        <div className="px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end">
+          <h2 className="font-hana-b text-lg">💰현재 저축액 :</h2>
+          <h2 className="font-hana-b text-xl">
+            {Math.ceil(totalAmount / 10000).toLocaleString()}{" "}
+            <span className="text-lg">만원</span>
+          </h2>
         </div>
 
-        {data?.map((goal)=>(
+        {data?.map((goal) => (
           <div key={goal.userGoalId}>
             <GoalBox goal={goal} />
           </div>
         ))}
-        
-        <div className="py-5 bg-white rounded-2xl p-3 mt-5 mb-7 shadow-xl cursor-pointer text-center"
-            onClick={()=>navigate("/mypage/goal/create")}>
+
+        <div
+          className="py-5 bg-white rounded-2xl p-3 mt-5 mb-7 shadow-xl cursor-pointer text-center"
+          onClick={() => navigate("/mypage/goal/create")}
+        >
           <div className="m-auto mb-5 w-14 h-14 rounded-full bg-slate-300 flex justify-center items-center">
             <FaPlus className="text-customGreen text-xl" />
           </div>

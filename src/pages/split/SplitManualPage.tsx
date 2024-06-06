@@ -1,15 +1,94 @@
-import { GreenButton } from "../../components/ui/GreenButton";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
+import { useEffect, useState } from "react";
+import { Ratio } from "./SplitMainPage";
+import { useUser } from "../../contexts/UserContext";
+import { FetchOptions } from "../../hooks/fetch";
 
 export const SplitManualPage = () => {
+  const {user} = useUser();
+  const navigate = useNavigate();
+  const salary = Number(user.salary);
+  const [ratio, setRatio] = useState<Ratio>({ saving: 0, life: 0, reserve: 0 });
+  const [isCorrect, setIsCorrect] = useState<boolean>(true);
+
+  //통장 쪼개기 메인 페이지에서 받아온 값 - 현재 쪼개기 비율
+  const location = useLocation();
+  const { splitRatio } = location.state || {};
+  const { splitAccounts } = location.state || {};
+
+  useEffect(()=>{
+    if(splitRatio){
+      setRatio(splitRatio);
+    }
+  }, [splitRatio]);
+
+  const handleRatioChange = (field: keyof Ratio, value: string) => {
+    const newValue = parseFloat(value) || 0;
+    setRatio((prevRatio) => ({
+      ...prevRatio,
+      [field]: newValue,
+    }));
+  };
+
+  const calcTotalAmount = ():number => {
+    const savingAmount = salary*ratio.saving*0.01;
+    const lifeAmount = salary*ratio.life*0.01;
+    const reserveAmount = salary*ratio.reserve*0.01;
+
+    return savingAmount+lifeAmount+reserveAmount;
+  }
+
+  const adjustComplete = () => {
+    const sum = ratio.saving + ratio.life + ratio.reserve;
+    if(sum!=100){
+      setIsCorrect(false);
+      return false;
+    }
+    setAutoDebit();
+    navigate("/split");
+  };
+
+  const calcAmount = (ratio:number, salary:number) : number => {
+    return 0.01*ratio*salary;
+  };
+
+  // 통장 쪼개기 (자동이체 설정)
+  const setAutoDebit = async () => {
+    const postOptions: FetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.jwt}`,
+      },
+      body: JSON.stringify({
+        savingAccountAutoDebitId: splitAccounts.saving,
+        savingAutoDebitAmount:calcAmount(ratio.saving,salary),
+        lifeAccountAutoDebitId: splitAccounts.life,
+        lifeAutoDebitAmount:calcAmount(ratio.life,salary),
+        spareAccountAutoDebitId: splitAccounts.reserve,
+        spareAutoDebitAmount:calcAmount(ratio.reserve,salary)
+      }),
+    };
+
+    try {
+      const response = await fetch('http://43.201.157.250:8080/api/v1/accounts/auto-debit/adjust', postOptions);
+      if (!response.ok) {
+        console.error('Failed to set account types');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   return (
     <>
-      <TopLine name={""} />
+      <TopLine name={"통장쪼개기 수동 설정"} />
       <div className="m-10">
         <div>
           <h3 className="font-bold text-xl">통장 쪼개기</h3>
           <p className="text-xs mt-3 font-semibold">
-            월 소득 <span className="text-lg">1,800,000</span>원
+            월 소득 <span className="text-lg">{salary.toLocaleString()}</span>원
           </p>
         </div>
 
@@ -20,11 +99,14 @@ export const SplitManualPage = () => {
               <div className="font-semibold text-gray-400 text-sm  align-bottom mb-1">
                 비율
               </div>
-              <div className="col-span-2 text-2xl font-bold">
+              <div className="col-span-2 text-xl font-bold">
                 <input
-                  type="text"
-                  className="w-8 border-b-2 border-black focus:outline-none"
-                  value="23"
+                  type="number"
+                  className="border rounded w-14 h-10 pl-2"
+                  value={ratio.saving}
+                  min="0"
+                  max="100"
+                  onChange={(e) => handleRatioChange("saving", e.target.value)}
                 />{" "}
                 %
               </div>
@@ -32,11 +114,9 @@ export const SplitManualPage = () => {
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                <input
-                  type="text"
-                  className="w-24 border-b-2 text-center border-black focus:outline-none"
-                  value="900000"
-                />
+                <span className="w-24 text-center border-black focus:outline-none">
+                  {(salary*ratio.saving*0.01).toLocaleString()}
+                </span>
                 원
               </div>
             </div>
@@ -49,11 +129,14 @@ export const SplitManualPage = () => {
               <div className="font-semibold text-gray-400 text-sm  align-bottom mb-1">
                 비율
               </div>
-              <div className="col-span-2 text-2xl font-bold">
+              <div className="col-span-2 text-xl font-bold">
                 <input
-                  type="text"
-                  className="w-8 border-b-2 border-black focus:outline-none"
-                  value="27"
+                  type="number"
+                  className="border rounded w-14 h-10 pl-2"
+                  value={ratio.life}
+                  min="0"
+                  max="100"
+                  onChange={(e) => handleRatioChange("life", e.target.value)}
                 />{" "}
                 %
               </div>
@@ -61,11 +144,9 @@ export const SplitManualPage = () => {
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                <input
-                  type="text"
-                  className="w-24 border-b-2 text-center border-black focus:outline-none"
-                  value="414000"
-                />
+                <span className="w-24 text-center border-black focus:outline-none">
+                  {(salary*ratio.life*0.01).toLocaleString()}
+                </span>
                 원
               </div>
             </div>
@@ -78,11 +159,14 @@ export const SplitManualPage = () => {
               <div className="font-semibold text-gray-400 text-sm  align-bottom mb-1">
                 비율
               </div>
-              <div className="col-span-2 text-2xl font-bold">
+              <div className="col-span-2 text-xl font-bold">
                 <input
-                  type="text"
-                  className="w-8 border-b-2 border-black focus:outline-none"
-                  value="50"
+                  type="number"
+                  className="border rounded w-14 h-10 pl-2"
+                  value={ratio.reserve}
+                  min="0"
+                  max="100"
+                  onChange={(e) => handleRatioChange("reserve", e.target.value)}
                 />{" "}
                 %
               </div>
@@ -90,11 +174,9 @@ export const SplitManualPage = () => {
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                <input
-                  type="text"
-                  className="w-24 border-b-2 text-center border-black focus:outline-none"
-                  value="486000"
-                />
+                <span className="w-24 text-center border-black focus:outline-none">
+                  {(salary*ratio.reserve*0.01).toLocaleString()}
+                </span>
                 원
               </div>
             </div>
@@ -102,16 +184,22 @@ export const SplitManualPage = () => {
         </div>
         <div className="flex justify-between mt-5 text-sm">
           <div>
-            합 <span>100</span>%
+            합 <span>{ratio.saving+ratio.life+ratio.reserve}</span>%
           </div>
           <div>
-            총 <span>1,800,000</span>원
+            총 <span>{calcTotalAmount().toLocaleString()}</span>원
           </div>
         </div>
-        <div className="text-red-600 text-xs my-4 mb-10">
-          총합을 100%로 맞춰주세요
+        {isCorrect?(null):(
+          <div className="text-red-600 text-xs my-4">
+            총합을 100%로 맞춰주세요
+          </div>
+        )}
+        <div className="mt-10">
+          <button className="green-button" onClick={()=>adjustComplete()}>
+            변경하기
+          </button>
         </div>
-        <GreenButton name={"변경하기"} path={"/split"} />
       </div>
     </>
   );

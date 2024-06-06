@@ -1,21 +1,74 @@
-import { useLocation } from "react-router-dom";
-import { GreenButton } from "../../../components/ui/GreenButton";
+import { useLocation, useParams } from "react-router-dom";
 import { TopLine } from "../../../components/ui/TopLine";
-import { useState } from "react";
-import { SlArrowDown } from "react-icons/sl";
+import { useEffect, useState } from "react";
+import { useUser } from "../../../contexts/UserContext";
+import { FetchOptions, useFetch } from "../../../hooks/fetch";
+import { GoalHouse } from "./GoalHouse";
+import { GoalCar } from "./GoalCar";
+import { GoalWish } from "./GoalWish";
+
+export type House = {
+  apartmentNm: string;
+  apartmentPrice: number;
+  regionNm: string;
+  exclusiveArea: number;
+};
+
+export type Car = {
+  carNm: string;
+  carPrice: number;
+};
+
+export type Wish = {
+  wishNm: string;
+  wishPrice: number;
+};
+
+export type UserGoalDetailGetResponse = {
+  goalAlias: string;
+  goalTypeCd: string;
+  goalSpecificId: number;
+  goalBeginDate: string;
+  duration: number;
+  detail: Car | House | Wish;
+};
 
 export const GoalDetailPage = () => {
   const location = useLocation();
   const { count } = location.state;
-  const [category, setCategory] = useState<string>("fetch한 카테고리");
-  const [isOpen, setIsOpen] = useState(false);
+  const { goalId } = useParams();
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
-
-  const handleCategorySelect = (category: string) => {
-    setCategory(category);
-    setIsOpen(false);
+  const { user } = useUser();
+  const init: UserGoalDetailGetResponse = {
+    goalAlias: "",
+    goalTypeCd: "",
+    goalSpecificId: 0,
+    goalBeginDate: "",
+    duration: 0,
+    detail: { wishNm: "", wishPrice: 0 },
   };
+  const [goal, setGoal] = useState<UserGoalDetailGetResponse>(init);
+
+  const fetchOptions: FetchOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${user.jwt}`,
+    },
+  };
+  const { data, error, loading } = useFetch<UserGoalDetailGetResponse>(
+    `http://43.201.157.250:8080/api/v1/user-goals/${goalId}`,
+    fetchOptions
+  );
+
+  useEffect(() => {
+    if (data) {
+      setGoal(data);
+      console.log(data);
+    }
+  }, [data]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -27,86 +80,20 @@ export const GoalDetailPage = () => {
               목표 {count}
             </p>
             <span className="flex justify-center text-xl text-customGreen font-bold">
+              {goal?.goalAlias}
+              <br />
               🚗🏠🙏🧙🪄
             </span>
           </div>
-
-          <div className="mx-10 mb-5">
-            <label className="text-customGreen font-bold text-lg">목표 카테고리</label>
-            <div className="relative inline-block text-left">
-              <div>
-                <button
-                  type="button"
-                  className="inline-flex w-80 justify-center rounded-md bg-white px-3 py-2 text-sm shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100"
-                  id="menu-button"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  onClick={toggleDropdown}
-                >
-                  {category}
-                  <SlArrowDown className="ml-auto m-1" />
-                </button>
-              </div>
-
-              {isOpen && (
-                <div
-                  className="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="menu-button"
-                >
-                  <div className="py-1" role="none">
-                    <span
-                      className="block px-4 py-2 text-sm cursor-pointer"
-                      role="menuitem"
-                      onClick={() => handleCategorySelect("집")}
-                    >
-                      집
-                    </span>
-                    <span
-                      className="block px-4 py-2 text-sm cursor-pointer"
-                      role="menuitem"
-                      onClick={() => handleCategorySelect("차")}
-                    >
-                      차
-                    </span>
-                    <span
-                      className="block px-4 py-2 text-sm cursor-pointer"
-                      role="menuitem"
-                      onClick={() => handleCategorySelect("소원")}
-                    >
-                      소원
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-            <br />
-            <br />
-
-            <label className="text-customGreen font-bold text-lg">아파트 이름</label>
-            <p className="border-b border-gray-400 h-8 mt-3 mb-5">아파트 이름</p>
-
-            <label className="text-customGreen font-bold text-lg">아파트 평수</label>
-            <input
-              type="text"
-              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
-              value="28 평"
-            />
-            <label className="text-customGreen font-bold text-lg">달성목표일</label>
-            <input
-              type="date"
-              className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
-              value="2024-05-29"
-            />
-            <label className="text-customGreen font-bold text-lg">예상 목표 달성 금액</label>
-            <input
-              type="text"
-              className="w-full border-b border-gray-400 h-8 mt-3 mb-10"
-              value="300000"
-            />
-            <GreenButton path={"/mypage/goal"} name={"저장"} />
-          </div>
+          {goal?.goalTypeCd === "HOUSE" && (
+            <GoalHouse goal={goal} goalDetail={goal.detail as House} />
+          )}
+          {goal?.goalTypeCd === "CAR" && (
+            <GoalCar goal={goal} goalDetail={goal.detail as Car} />
+          )}
+          {goal?.goalTypeCd === "WISH" && (
+            <GoalWish goal={goal} goalDetail={goal.detail as Wish} />
+          )}
         </div>
       </div>
     </>

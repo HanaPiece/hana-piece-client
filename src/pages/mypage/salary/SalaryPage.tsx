@@ -13,13 +13,16 @@ type GetSalaryResponse = {
 export const SalaryPage = () => {
   const navigate = useNavigate();
   const { user, updateSalary } = useUser();
-  const [salary, setSalary] = useState<GetSalaryResponse | null>(null);
+  const [salaryInfo, setSalaryInfo] = useState<GetSalaryResponse | null>(null);
+  const [newSalary, setNewSalary] = useState<string>("");
+  const [newSalaryDay, setNewSalaryDay] = useState<string>("");
+
   useEffect(() => {
     if (user.jwt) {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/accounts/salary`,
+            `http://43.201.157.250:8080/api/v1/accounts/salary`,
             {
               method: "get",
               headers: {
@@ -35,7 +38,9 @@ export const SalaryPage = () => {
               salary: json["salary"],
               salaryDay: json["salaryDay"],
             };
-            setSalary(res);
+            setSalaryInfo(res);
+            setNewSalary(res.salary.toString());
+            setNewSalaryDay(res.salaryDay.toString());
           }
         } catch (err) {
           if (err instanceof Error) {
@@ -47,16 +52,11 @@ export const SalaryPage = () => {
   }, [user.jwt]);
 
   const buttonClicked = () => {
-    const salaryElement = document.getElementById("salary") as HTMLInputElement;
-    const salaryDayElement = document.getElementById(
-      "salaryDay"
-    ) as HTMLInputElement;
-
     if (user.jwt) {
       (async function () {
         try {
           const response = await fetch(
-            `http://172.16.20.217:8080/api/v1/users/salary`,
+            `http://43.201.157.250:8080/api/v1/users/salary`,
             {
               method: "post",
               headers: {
@@ -64,13 +64,13 @@ export const SalaryPage = () => {
                 Authorization: `Bearer ${user.jwt}`,
               },
               body: JSON.stringify({
-                newSalary: salaryElement.value,
-                newSalaryDay: salaryDayElement.value,
+                newSalary: newSalary,
+                newSalaryDay: newSalaryDay,
               }),
             }
           );
           if (response.ok) {
-            updateSalary(salaryElement.value);
+            updateSalary(newSalary);
             navigate(`/mypage`);
           }
         } catch (err) {
@@ -81,6 +81,7 @@ export const SalaryPage = () => {
       })();
     }
   };
+
   return (
     <>
       <div className="container m-10">
@@ -98,7 +99,7 @@ export const SalaryPage = () => {
               계좌 번호
             </label>
             <span className="m-3 bg-slate-100 col-span-2">
-              {salary?.accountNumber}
+              {salaryInfo?.accountNumber}
             </span>
 
             <label className="m-3 text-customGreen font-semibold col-span-1">
@@ -107,8 +108,9 @@ export const SalaryPage = () => {
             <input
               type="text"
               className="m-3 bg-slate-100 col-span-2"
-              value={salary?.salary}
+              value={newSalary}
               id="salary"
+              onChange={(e) => setNewSalary(e.target.value)}
             />
 
             <label className="m-3 text-customGreen font-semibold col-span-1">
@@ -117,8 +119,9 @@ export const SalaryPage = () => {
             <input
               type="text"
               className="m-3 bg-slate-100 col-span-2"
-              value={salary?.salaryDay}
+              value={newSalaryDay}
               id="salaryDay"
+              onChange={(e) => setNewSalaryDay(e.target.value)}
             />
             <div className="col-span-3 mt-10">
               <button onClick={buttonClicked}>저장</button>

@@ -14,13 +14,16 @@ export const GoalProductDetailPage = () => {
   const { user } = useUser();
 
   const fetchOptions: FetchOptions = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Authorization': `Bearer ${user.jwt}`,
+      Authorization: `Bearer ${user.jwt}`,
     },
   };
 
-  const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(`http://43.201.157.250:8080/api/v1/accounts/user-goal/${id}`, fetchOptions);
+  const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(
+    `http://43.201.157.250:8080/api/v1/accounts/user-goal/${id}`,
+    fetchOptions
+  );
 
   useEffect(() => {
     if (!loading && data) {
@@ -43,9 +46,8 @@ export const GoalProductDetailPage = () => {
       </div>
       <div className="mx-10 my-5">
         <div className="font-hana-r">
-          <p className='text-gray-400 text-xs'>반갑습니다</p>
-          <h3 className='font-semibold text-lg pt-1'>{user.name} 님</h3>
-
+          <p className="text-gray-400 text-xs">반갑습니다</p>
+          <h3 className="font-semibold text-lg pt-1">{user.name} 님</h3>
         </div>
         {isRecommend ? (
           <GoalProductRecommend goalId={Number(id)} />
