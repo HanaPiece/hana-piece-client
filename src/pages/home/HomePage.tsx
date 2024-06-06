@@ -8,6 +8,7 @@ import { FaPlus } from "react-icons/fa";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalGetResponse } from "./homeType";
 import { useUser } from "../../contexts/UserContext";
+import { API_BASE_URL } from "../../constants";
 
 const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ export const HomePage = () => {
   };
 
   const { data, error, loading } = useFetch<UserGoalGetResponse[]>(
-    `http://43.201.157.250:8080/api/v1/user-goals/list`,
+    `${API_BASE_URL}/api/v1/user-goals/list`,
     fetchOptions
   );
 
