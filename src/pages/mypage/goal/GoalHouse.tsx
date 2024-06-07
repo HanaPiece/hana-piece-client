@@ -5,6 +5,7 @@ import { FetchOptions, useFetch } from "../../../hooks/fetch";
 import { useUser } from "../../../contexts/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
+import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -25,11 +26,14 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
   const [apartments, setApartments] = useState<ApartmentGetResponse[]>([]);
   const [selectedApartment, setSelectedApartment] =
     useState<ApartmentGetResponse | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
   const [search, setSearch] = useState<string>(goalDetail.apartmentNm);
   const [alias, setAlias] = useState<string>(goal.goalAlias);
   const [duration, setDuration] = useState<number>(goal.duration);
   const [price, setPrice] = useState<number>(goalDetail.apartmentPrice);
-
+  const [begin, setBegin] = useState<string>(
+    formatDateToYyyyMmDd(goal.goalBeginDate)
+  );
   const { goalId } = useParams();
   const { user } = useUser();
   const fetchOptions: FetchOptions = {
@@ -48,6 +52,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
 
   // 아파트 리스트
   useEffect(() => {
+    console.log(begin);
     if (data) {
       setApartments(data);
       console.log(apartments);
@@ -56,8 +61,10 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
       );
       if (defaultApartment) {
         setSelectedApartment(defaultApartment);
+        setSelectedRegion(defaultApartment.regionNm);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, goalDetail.apartmentNm]);
 
   // 아파트 시세
@@ -69,6 +76,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
         {
           method: "POST",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${user.jwt}`,
           },
           body: JSON.stringify({
@@ -76,13 +84,14 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
             apartmentNm: selectedApartment.apartmentNm,
             price: selectedApartment.apartmentPrice,
             area: selectedApartment.exclusiveArea,
-            date: "2030-06",
+            duration: duration,
           }),
         }
       );
       if (!response.ok) throw new Error("Failed to fetch predicted price");
-      const result = await response.json();
-      setPrice(result.predictedPrice); // 새로운 아파트 선택 시 가격 업데이트
+      const json = await response.json();
+      setPrice(json["price"]); // 새로운 아파트 선택 시 가격 업데이트
+      console.log(price);
     } catch (error) {
       console.error("Error fetching predicted price:", error);
     }
@@ -94,13 +103,26 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
     fetchPredictedPrice();
   };
 
+  const handleRegionSelect = (region: string) => {
+    setSelectedRegion(region);
+    setSearch(""); // 지역 선택 시 검색창 초기화
+    setSelectedApartment(null); // 지역 선택 시 아파트 선택 초기화
+  };
+
   useEffect(() => {
     fetchPredictedPrice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedApartment, duration]);
 
-  const filteredApartments = apartments.filter((apartment) =>
-    apartment.apartmentNm.toLowerCase().includes(search.toLowerCase())
+  const filteredApartments = apartments.filter(
+    (apartment) =>
+      apartment.regionNm === selectedRegion &&
+      apartment.apartmentNm.toLowerCase().includes(search.toLowerCase())
   );
+
+  const regions = [
+    ...new Set(apartments.map((apartment) => apartment.regionNm)),
+  ];
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -122,7 +144,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
                 goalAlias: alias,
                 goalTypeCd: "HOUSE",
                 goalSpecificId: selectedApartment?.apartmentId,
-                goalBeginDate: "20240612",
+                goalBeginDate: formatDateToYyyymmdd(begin),
                 duration: duration,
                 amount: price,
               }),
@@ -168,6 +190,23 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
         />
         <br />
         <label className="text-customGreen font-bold text-lg">
+          아파트 지역
+        </label>
+        <br />
+        <select
+          className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
+          value={selectedRegion}
+          onChange={(e) => handleRegionSelect(e.target.value)}
+        >
+          <option value="">지역 선택</option>
+          {regions.map((region) => (
+            <option key={region} value={region}>
+              {region}
+            </option>
+          ))}
+        </select>
+        <br />
+        <label className="text-customGreen font-bold text-lg">
           아파트 이름
         </label>
         <br />
@@ -205,10 +244,20 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
         </label>
         <input
           type="number"
-          className="w-full border-b border-gray-400 h-8 mt-3 mb-10"
+          className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
           value={price}
           onChange={(e) => setPrice(Number(e.target.value))}
         />
+
+        <label className="text-customGreen font-bold text-lg">시작 날짜</label>
+        <input
+          type="date"
+          className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
+          value={begin}
+          onChange={(e) => goalId === "0" && setBegin(e.target.value)}
+          disabled={goalId !== "0"}
+        />
+        <br />
 
         <button onClick={buttonClicked}>
           {Number(goalId) === 0 ? "생성" : "수정"}

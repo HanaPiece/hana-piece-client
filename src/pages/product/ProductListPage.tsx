@@ -92,7 +92,7 @@ export const ProductListPage = () => {
     (gp) => gp.goal.userGoalId === +goalId
   );
   useEffect(() => {
-    if (goalProduct && goalProduct.products.length === 0) {
+    if (goalProduct && goalProduct.products.recommendedProducts.length === 0) {
       if (user.jwt) {
         (async function () {
           try {
@@ -107,9 +107,7 @@ export const ProductListPage = () => {
             );
             if (response.ok) {
               const json: ProductGetResponse = await response.json();
-              console.log(json);
-              const products: recommendedProducts[] = json.recommendedProducts;
-              setProduct(+goalId, products);
+              setProduct(+goalId, json);
             }
           } catch (err) {
             if (err instanceof Error) {
@@ -137,6 +135,13 @@ export const ProductListPage = () => {
               <br />
               적합한 적금을 추천해 드릴게요!
             </p>
+            <p className="text-sm mt-2">
+              이미 가입된 상품 목록입니다.
+              <br />
+              {goalProduct?.products.enrolledProducts.map(
+                (product: enrolledProducts) => product.productNm + ", "
+              )}
+            </p>
           </div>
           <div className="flex justify-center items-cneter text-4xl place-items-center font-hana-b">
             ☝️
@@ -144,9 +149,11 @@ export const ProductListPage = () => {
         </div>
 
         <div className="h-[500px] overflow-y-auto p-2">
-          {goalProduct?.products.map((product) => (
-            <Product key={product.productId} product={product} />
-          ))}
+          {goalProduct?.products.recommendedProducts.map(
+            (product: recommendedProducts) => (
+              <Product key={product.productId} product={product} />
+            )
+          )}
         </div>
       </div>
     </>

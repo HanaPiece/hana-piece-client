@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useGoalsProducts } from "../../contexts/ProductContext";
 import { useUser } from "../../contexts/UserContext";
-import {
-  ProductGetResponse,
-  recommendedProducts,
-} from "../product/ProductListPage";
+import { ProductGetResponse } from "../product/ProductListPage";
 
 const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
   const { user } = useUser();
@@ -14,7 +11,7 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
   );
 
   useEffect(() => {
-    if (goalProduct && goalProduct.products.length === 0) {
+    if (goalProduct && goalProduct.products.recommendedProducts.length === 0) {
       if (user.jwt) {
         (async function () {
           try {
@@ -30,8 +27,7 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
             if (response.ok) {
               const json: ProductGetResponse = await response.json();
               console.log(json);
-              const products: recommendedProducts[] = json.recommendedProducts;
-              setProduct(+goalId, products);
+              setProduct(+goalId, json);
             }
           } catch (err) {
             if (err instanceof Error) {
@@ -58,7 +54,8 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
         </p>
         <p className="text-sm font-bold">오늘 가입한다면?</p>
       </div>
-      {goalProduct?.products && goalProduct.products.length > 0 ? (
+      {goalProduct?.products &&
+      goalProduct.products.recommendedProducts.length > 0 ? (
         <>
           <div>
             <div className="shadow-xl p-4 my-3 rounded-2xl bg-white">
@@ -71,25 +68,29 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
                   />
                 </div>
                 <div className="col-span-5 pt-1 hana-text-color font-bold">
-                  {goalProduct.products[0]?.productNm || "상품명이 없습니다"}
+                  {goalProduct.products.recommendedProducts[0]?.productNm ||
+                    "상품명이 없습니다"}
                 </div>
               </div>
               <div className="grid grid-cols-5 gap-1 my-4 gap-y-2">
                 <div className="text-xs text-lime-600">기간</div>
                 <div className="col-span-4 text-xs">
-                  {goalProduct.products[0]?.termYear || "기간 정보 없음"}년
+                  {goalProduct.products.recommendedProducts[0]?.termYear ||
+                    "기간 정보 없음"}
+                  년
                 </div>
                 <div className="text-xs text-lime-600">이자</div>
                 <div className="col-span-4 text-xs">
                   <span className="text-red-600">
-                    {goalProduct.products[0]?.interestRate || "이자율 없음"}
+                    {goalProduct.products.recommendedProducts[0]
+                      ?.interestRate || "이자율 없음"}
                   </span>
                   %
                 </div>
               </div>
             </div>
           </div>
-          {goalProduct.products[1] && (
+          {goalProduct.products.recommendedProducts[1] && (
             <div>
               <div className="shadow-xl p-4 my-3 rounded-2xl bg-white">
                 <div className="grid grid-cols-6 gap-1">
@@ -101,18 +102,22 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
                     />
                   </div>
                   <div className="col-span-5 pt-1 hana-text-color font-bold">
-                    {goalProduct.products[1]?.productNm || "상품명이 없습니다"}
+                    {goalProduct.products.recommendedProducts[1]?.productNm ||
+                      "상품명이 없습니다"}
                   </div>
                 </div>
                 <div className="grid grid-cols-5 gap-1 my-4 gap-y-2">
                   <div className="text-xs text-lime-600">기간</div>
                   <div className="col-span-4 text-xs">
-                    {goalProduct.products[1]?.termYear || "기간 정보 없음"}년
+                    {goalProduct.products.recommendedProducts[1]?.termYear ||
+                      "기간 정보 없음"}
+                    년
                   </div>
                   <div className="text-xs text-lime-600">이자</div>
                   <div className="col-span-4 text-xs">
                     <span className="text-red-600">
-                      {goalProduct.products[1]?.interestRate || "이자율 없음"}
+                      {goalProduct.products.recommendedProducts[1]
+                        ?.interestRate || "이자율 없음"}
                     </span>
                     %
                   </div>
