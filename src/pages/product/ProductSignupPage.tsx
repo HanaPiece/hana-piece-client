@@ -3,6 +3,7 @@ import { Checkbox } from "../../components/ui/Checkbox";
 import { TopLine } from "../../components/ui/TopLine";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
+import { useGoalsProducts } from "../../contexts/ProductContext";
 
 type Complete = {
   autoDebitAmount: number;
@@ -20,6 +21,7 @@ export const ProductSignupPage = () => {
   const [productNm, setProductNm] = useState<string>("");
   const [termYear, setTermYear] = useState<number>(1);
   const [interestRate, setInterestRate] = useState<number>(1);
+  const { updateProduct } = useGoalsProducts();
 
   useEffect(() => {
     if (user.jwt) {
@@ -122,6 +124,7 @@ export const ProductSignupPage = () => {
               }
             );
             if (response.ok) {
+              updateProduct(Number(goalId));
               navigate(`/product/${goalId}/${productId}/complete`, {
                 state: { com },
               });
@@ -202,7 +205,9 @@ export const ProductSignupPage = () => {
             </div>
           </div>
 
-          <button onClick={buttonClicked} className="green-button">적금 개설하기</button>
+          <button onClick={buttonClicked} className="green-button">
+            적금 개설하기
+          </button>
         </div>
       </div>
     </>

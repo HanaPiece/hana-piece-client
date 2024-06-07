@@ -3,6 +3,8 @@ import { useUser } from "../../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../../hooks/fetch";
 import { Car, UserGoalDetailGetResponse } from "./GoalDetailPage";
 import { useNavigate, useParams } from "react-router-dom";
+import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
+import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -19,6 +21,7 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
   const navigate = useNavigate();
   const { goalId } = useParams<{ goalId: string }>();
   const { user } = useUser();
+  const { createGoal, updateGoal } = useGoalsProducts();
 
   const [cars, setCars] = useState<CarGetResponse[]>([]);
   const [search, setSearch] = useState<string>(goalDetail.carNm);
@@ -26,6 +29,9 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
   const [alias, setAlias] = useState<string>(goal.goalAlias);
   const [duration, setDuration] = useState<number>(goal.duration);
   const [price, setPrice] = useState<number>(goalDetail.carPrice);
+  const [begin, setBegin] = useState<string>(
+    formatDateToYyyyMmDd(goal.goalBeginDate)
+  );
 
   const fetchOptions: FetchOptions = {
     method: "GET",
@@ -79,7 +85,7 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
                 goalAlias: alias,
                 goalTypeCd: "CAR",
                 goalSpecificId: selectedCar?.carId,
-                goalBeginDate: "20240612",
+                goalBeginDate: formatDateToYyyymmdd(begin),
                 duration: duration,
                 amount: price,
               }),
@@ -87,7 +93,20 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
           );
           if (response.ok) {
             const json = await response.json();
-            console.log(json);
+            const goal: Goal = {
+              userGoalId: json["userGoalId"],
+              goalAlias: json["goalAlias"],
+              goalTypeCd: json["goalTypeCd"],
+              goalSpecificId: json["goalSpecificId"],
+              goalBeginDate: json["goalBeginDate"],
+              duration: json["duration"],
+              amount: json["amount"],
+            };
+            if (goalId === "0") {
+              createGoal(goal);
+            } else {
+              updateGoal(goal);
+            }
             navigate("/mypage/goal");
           }
         } catch (err) {
@@ -143,10 +162,19 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
         <label className="text-customGreen font-bold text-lg">차 가격</label>
         <input
           type="text"
-          className="w-full border-b border-gray-400 h-8 mt-3 mb-10"
+          className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
           value={price}
           onChange={(e) => setPrice(Number(e.target.value))}
         />
+        <label className="text-customGreen font-bold text-lg">시작 날짜</label>
+        <input
+          type="date"
+          className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
+          value={begin}
+          onChange={(e) => goalId === "0" && setBegin(e.target.value)}
+          disabled={goalId !== "0"}
+        />
+        <br />
         <button onClick={buttonClicked}>
           {Number(goalId) === 0 ? "생성" : "수정"}
         </button>

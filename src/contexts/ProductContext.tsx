@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
-import { recommendedProducts } from "../pages/product/ProductListPage";
+import { ProductGetResponse } from "../pages/product/ProductListPage";
 
 export type Goal = {
   userGoalId: number;
@@ -13,7 +13,7 @@ export type Goal = {
 
 type GoalProducts = {
   goal: Goal;
-  products: recommendedProducts[];
+  products: ProductGetResponse;
 };
 
 type GoalsProducts = {
@@ -25,7 +25,8 @@ type GoalsProductsContextProp = {
   setGoal: (goals: Goal[]) => void;
   createGoal: (goal: Goal) => void;
   updateGoal: (goal: Goal) => void;
-  setProduct: (goalId: number, products: recommendedProducts[]) => void;
+  setProduct: (goalId: number, products: ProductGetResponse) => void;
+  updateProduct: (goalId: number) => void;
   out: () => void;
 };
 
@@ -39,8 +40,9 @@ type Action =
   | { type: "updateGoal"; payload: Goal } //goal 그대로, product 비우기
   | {
       type: "setProduct";
-      payload: { goalId: number; products: recommendedProducts[] };
+      payload: { goalId: number; products: ProductGetResponse };
     } //해당 goal에 대해서 product 없을 때, product 채우기
+  | { type: "updateProduct"; payload: number }
   | { type: "out"; payload: null }; //둘 다 비우기
 
 const GPKEY = "goalsProducts";
@@ -67,6 +69,7 @@ const GoalsProductsContext = createContext<GoalsProductsContextProp>({
   createGoal: () => {},
   updateGoal: () => {},
   setProduct: () => {},
+  updateProduct: () => {},
   out: () => {},
 });
 
@@ -75,14 +78,28 @@ const reducer = (goalsProducts: GoalsProducts, { type, payload }: Action) => {
   switch (type) {
     case "setGoal":
       newer = {
-        goalsProducts: payload.map((goal) => ({ goal, products: [] })),
+        goalsProducts: payload.map((goal) => ({
+          goal,
+          products: { recommendedProducts: [], enrolledProducts: [] },
+        })),
       };
       break;
     case "createGoal":
       newer = {
         goalsProducts: newer.goalsProducts
-          ? [...newer.goalsProducts, { goal: payload, products: [] }]
-          : [{ goal: payload, products: [] }],
+          ? [
+              ...newer.goalsProducts,
+              {
+                goal: payload,
+                products: { recommendedProducts: [], enrolledProducts: [] },
+              },
+            ]
+          : [
+              {
+                goal: payload,
+                products: { recommendedProducts: [], enrolledProducts: [] },
+              },
+            ],
       };
       break;
     case "updateGoal":
@@ -90,7 +107,10 @@ const reducer = (goalsProducts: GoalsProducts, { type, payload }: Action) => {
         goalsProducts:
           newer.goalsProducts?.map((gp) =>
             gp.goal.userGoalId === payload.userGoalId
-              ? { goal: payload, products: [] }
+              ? {
+                  goal: payload,
+                  products: { recommendedProducts: [], enrolledProducts: [] },
+                }
               : gp
           ) || null,
       };
@@ -101,6 +121,19 @@ const reducer = (goalsProducts: GoalsProducts, { type, payload }: Action) => {
           newer.goalsProducts?.map((gp) =>
             gp.goal.userGoalId === payload.goalId
               ? { ...gp, products: payload.products }
+              : gp
+          ) || null,
+      };
+      break;
+    case "updateProduct":
+      newer = {
+        goalsProducts:
+          newer.goalsProducts?.map((gp) =>
+            gp.goal.userGoalId === payload
+              ? {
+                  ...gp,
+                  products: { recommendedProducts: [], enrolledProducts: [] },
+                }
               : gp
           ) || null,
       };
@@ -130,8 +163,12 @@ export const GoalsProductsProvider = ({ children }: ProviderProp) => {
     dispatch({ type: "updateGoal", payload: goal });
   };
 
-  const setProduct = (goalId: number, products: recommendedProducts[]) => {
+  const setProduct = (goalId: number, products: ProductGetResponse) => {
     dispatch({ type: "setProduct", payload: { goalId, products } });
+  };
+
+  const updateProduct = (goalId: number) => {
+    dispatch({ type: "updateProduct", payload: goalId });
   };
 
   const out = () => {
@@ -145,6 +182,7 @@ export const GoalsProductsProvider = ({ children }: ProviderProp) => {
         createGoal,
         updateGoal,
         setProduct,
+        updateProduct,
         out,
       }}
     >
