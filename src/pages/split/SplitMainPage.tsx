@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { addCommas } from '../../components/utils/formatters';
+import { API_BASE_URL } from '../../constants';
 
 export type Ratio = {
   saving: number;
@@ -37,11 +38,11 @@ const calcSplitAmount = (data: AccountAutoDebitAdjustGetResponse[]): Ratio =>{
 
   data.forEach((account) => {
     if (account.accountType === 'SAVING') {
-      saving = account.autoDebitAmount;
+      saving = Math.abs(account.autoDebitAmount);
     } else if (account.accountType === 'LIFE') {
-      life = account.autoDebitAmount;
+      life = Math.abs(account.autoDebitAmount);
     } else if (account.accountType === 'SPARE') {
-      reserve = account.autoDebitAmount;
+      reserve = Math.abs(account.autoDebitAmount);
     }
   });
 
@@ -88,13 +89,14 @@ export const SplitMainPage = () => {
     },
   };
 
-  const { data, error, loading } = useFetch<AccountAutoDebitAdjustGetResponse[]>('http://43.201.157.250:8080/api/v1/accounts/auto-debit/adjust', fetchOptions);
+  const { data, error, loading } = useFetch<AccountAutoDebitAdjustGetResponse[]>(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, fetchOptions);
 
   const onAdjust = () => {
     navigate("manual", { state: { splitRatio: ratio, splitAccounts: accounts } });
   };
 
   useEffect(()=>{
+    console.log(data);
     // 자동이체 기록이 없거나 3개가 등록되어 있지 않을 때 -> 통장 쪼개기 처음 화면으로
     if(data && data.length>2){
       const salary = user.salary ? user.salary : "0";

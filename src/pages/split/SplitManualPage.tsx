@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Ratio } from "./SplitMainPage";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions } from "../../hooks/fetch";
+import { API_BASE_URL } from "../../constants";
 
 export const SplitManualPage = () => {
   const {user} = useUser();
@@ -72,7 +73,7 @@ export const SplitManualPage = () => {
     };
 
     try {
-      const response = await fetch('http://43.201.157.250:8080/api/v1/accounts/auto-debit/adjust', postOptions);
+      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, postOptions);
       if (!response.ok) {
         console.error('Failed to set account types');
       }
