@@ -4,6 +4,7 @@ import { Ratio } from "./SplitMainPage";
 import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions } from "../../hooks/fetch";
+import { API_BASE_URL } from "../../constants";
 
 export const SplitStartSplitPage = () => {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ export const SplitStartSplitPage = () => {
 
   // 통장 쪼개기 (자동이체 설정)
   const setAutoDebit = async () => {
+    console.log(selectedAccounts.saving, calcAmount(ratio.saving,salary))
     const postOptions: FetchOptions = {
       method: 'POST',
       headers: {
@@ -77,7 +79,7 @@ export const SplitStartSplitPage = () => {
     };
 
     try {
-      const response = await fetch('http://43.201.157.250:8080/api/v1/accounts/auto-debit/adjust', postOptions);
+      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, postOptions);
       if (!response.ok) {
         console.error('Failed to set account types');
       }
@@ -103,7 +105,7 @@ export const SplitStartSplitPage = () => {
     };
 
     try {
-      const response = await fetch('http://43.201.157.250:8080/api/v1/accounts/account-type-reg', postOptions);
+      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/account-type-reg`, postOptions);
       if (!response.ok) {
         console.error('Failed to set account types');
       }

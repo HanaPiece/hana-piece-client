@@ -4,6 +4,7 @@ import PhoneModal from "../../components/ui/PhoneModal";
 import { addCommas } from "../../components/utils/formatters";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
+import { API_BASE_URL } from "../../constants";
 
 export const SplitStartPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -16,7 +17,7 @@ export const SplitStartPage = () => {
     },
   };
 
-  const { data, error, loading } = useFetch<UserGetResponse>('http://43.201.157.250:8080/api/v1/users', fetchOptions);
+  const { data, error, loading } = useFetch<UserGetResponse>(`${API_BASE_URL}/api/v1/users`, fetchOptions);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
