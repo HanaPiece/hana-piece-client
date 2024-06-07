@@ -107,7 +107,6 @@ export const LifePage = () => {
       setMonthlyData(data);
       setAmountByType(data.amountByType);
       setDailyTransaction(data.dailyTransactionList);
-      console.log(data);
     } catch (error) {
       console.error('Fetch error:', error);
     }
@@ -120,7 +119,6 @@ export const LifePage = () => {
       getLifeAccount(user.jwt, setAccountId);
     }else{
       getAccountTransaction(dateToYYYYMM(date));
-      console.log(dailyTransaction);
     }
   }, [accountId, date]);
 
