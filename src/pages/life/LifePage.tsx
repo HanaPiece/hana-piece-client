@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import ConsumptionChart from './ConsumptionChart';
-import { addCommas, dateParse } from '../../components/utils/formatters';
-import { FetchOptions, useFetch } from '../../hooks/fetch';
+import { addCommas, dateToYYYYMM, getDateParseForLifePage } from '../../components/utils/formatters';
 import { useUser } from '../../contexts/UserContext';
+import { API_BASE_URL } from '../../constants';
 
-
-type consumptionDetail = {
-  amount: number;
-  createdAt: string;
-  targetNm: string;
-  accountTransactionTypeNm: string;
-};
 
 const TodayDate = (): Date => {
   return new Date();
@@ -23,53 +16,113 @@ const AdjustMonth = (date: Date, adjustValue: number): Date => {
   return newDate;
 };
 
+const icon = (transactionType: string): string => {
+  switch (transactionType) {
+    case "SHOPPING":
+      return "🛍️";
+    case "FOOD":
+      return "🍔";
+    case "TRANSPORT":
+      return "🚌";
+    case "LEISURE":
+      return "🎮";
+    default:
+      return "💸"; 
+  }
+};
+
+const transactionTypeKor = (transactionType: string): string => {
+  switch (transactionType) {
+    case "SHOPPING":
+      return "쇼핑";
+    case "FOOD":
+      return "음식";
+    case "TRANSPORT":
+      return "교통";
+    case "LEISURE":
+      return "문화";
+    default:
+      return "소비";
+  }
+};
+
 const groupByDate = (
-  data: consumptionDetail[]
-): { [key: string]: consumptionDetail[] } => {
+  data: DailyTransaction[]
+): { [key: string]: DailyTransaction[] } => {
   return data.reduce((acc, curr) => {
-    const date = curr.createdAt;
+    const date = curr.transactionDay;
     if (!acc[date]) {
       acc[date] = [];
     }
     acc[date].push(curr);
     return acc;
-  }, {} as { [key: string]: consumptionDetail[] });
+  }, {} as { [key: string]: DailyTransaction[] });
 };
 
-const calculateTotalAmount = (data: consumptionDetail[]): number => {
+const calculateTotalAmount = (data: DailyTransaction[]): number => {
   return data.reduce((acc, curr) => acc + curr.amount, 0);
 };
 
-export const LifePage = () => {
-  const [date, setDate] = useState<Date>(TodayDate());
-  const [accountId, setAccountId] = useState<number>(1); // 작업 후 0 으로 바꾸기
-  const { user } = useUser();
-
-  const getLifeAccount = () => {
-    // 모든 계좌 조회 fetch
-    const fetchOptions: FetchOptions = {
+const getLifeAccount = async (jwt: string|null, setAccountId: (id: number) => void) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/v1/accounts/checking`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${user.jwt}`,
+        'Authorization': `Bearer ${jwt}`,
       },
-    };
-  
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data } = useFetch<AccountGetResponse[]>(`http://43.201.157.250:8080/api/v1/accounts/checking`, fetchOptions);
-  
-    // type life 찾아서 accountId 세팅
-    data?.forEach((account)=>{
-      if(account.accountTypeCd === 'LIFE'){
-        setAccountId(accountId);
-      }})
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data: AccountGetResponse[] = await response.json();
+    const lifeAccount = data.find(account => account.accountTypeCd === 'LIFE');
+    if (lifeAccount) {
+      setAccountId(lifeAccount.accountId);
+    }
+  } catch (error) {
+    console.error('Fetch error:', error);
   }
+}
+
+export const LifePage = () => {
+  const [date, setDate] = useState<Date>(TodayDate());
+  const [accountId, setAccountId] = useState<number>(0);
+  const [monthlyData, setMonthlyData] = useState<MonthlyTransaction>();
+  const [amountByType, setAmountByType] = useState<AmountByType>({});
+  const [dailyTransaction, setDailyTransaction] = useState<DailyTransaction[]>([]);
+  const { user } = useUser();
+
+  const getAccountTransaction = async (yearMonth:string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/${accountId}/transactions?transactionYearMonth=${yearMonth}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user.jwt}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: MonthlyTransaction = await response.json();
+      setMonthlyData(data);
+      setAmountByType(data.amountByType);
+      setDailyTransaction(data.dailyTransactionList);
+      console.log(data);
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+  };
+
+
 
   useEffect(() => {
-    if(accountId==0){
-      getLifeAccount();
+    if (accountId === 0) {
+      getLifeAccount(user.jwt, setAccountId);
+    }else{
+      getAccountTransaction(dateToYYYYMM(date));
+      console.log(dailyTransaction);
     }
-  }, []);
-
+  }, [accountId, date]);
 
   const handlePreviousMonth = () => {
     setDate(AdjustMonth(date, -1));
@@ -79,34 +132,8 @@ export const LifePage = () => {
     setDate(AdjustMonth(date, 1));
   };
 
-  const consumptionData: consumptionDetail[] = [
-    {
-      amount: -13800,
-      createdAt: "2024-05-24",
-      targetNm: "Apple Store",
-      accountTransactionTypeNm: "쇼핑",
-    },
-    {
-      amount: -15000,
-      createdAt: "2024-05-24",
-      targetNm: "Apple Store",
-      accountTransactionTypeNm: "음악",
-    },
-    {
-      amount: -10000,
-      createdAt: "2024-05-23",
-      targetNm: "Apple Store",
-      accountTransactionTypeNm: "쇼핑",
-    },
-    {
-      amount: -68500,
-      createdAt: "2024-05-23",
-      targetNm: "후불 교통카드 이용 대금",
-      accountTransactionTypeNm: "교통",
-    },
-  ];
-
-  const groupedData = groupByDate(consumptionData);
+  const groupedData = groupByDate(dailyTransaction);
+  const sortedDates = Object.keys(groupedData).sort((a, b) => parseInt(b) - parseInt(a));
 
   return (
     <div className="bg-white">
@@ -125,15 +152,24 @@ export const LifePage = () => {
         <div className="rounded-2xl bg-stone-100 p-3 px-5">
           <div className="grid grid-cols-7 items-center">
             <div className="col-span-4">
-              <ConsumptionChart />
+              {dailyTransaction.length!=0?(
+                <ConsumptionChart amountByType={amountByType} />
+              ):(
+                <img src="byul2.png" alt="transaction_is_none" className='m-auto w-2/3' />
+              )}
+              
             </div>
             <div className="col-span-3 text-center ml-3">
               <p className="text-sm font-hana-m">현재 사용액</p>
               <p className="text-xl font-semibold mt-1">
-                {addCommas(346500)}원
+              {monthlyData?.monthlyTotalSpending ? (
+                  Math.abs(monthlyData?.monthlyTotalSpending).toLocaleString()
+                ):0}원
               </p>
               <p className="text-gray-400 mt-1 text-md">
-                / {addCommas(600000)}원
+                / {monthlyData?.autoDebitTotalAmount ? (
+                  Math.abs(monthlyData?.autoDebitTotalAmount).toLocaleString()
+                ):0}원
               </p>
             </div>
           </div>
@@ -142,33 +178,39 @@ export const LifePage = () => {
       <div className="px-7 py-3 bg-white">
         <div>
           <h3 className="text-gray-500 mt-5 mb-3 font-hana-m">지출 내역</h3>
-          {Object.keys(groupedData).map((date) => (
-            <div key={date} className="mb-5">
-              <p className='font-semibold mb-1 bg-indigo-50 p-1'>{dateParse(date)}</p>
-
-              <div className="inline-block px-2 text-sm font-semibold text-red-500 bg-gray-200 rounded-full">
-                {addCommas(calculateTotalAmount(groupedData[date]))}원
-              </div>
-              {groupedData[date].map((item, index) => (
-                <div key={index} className="mt-5 grid grid-cols-7 items-center">
-                  <div className="bg-gray-200 w-8 h-8 rounded-full grid place-items-center">
-                    <img
-                      src="/src/assets/img-hana-symbol-m.png"
-                      alt="하나은행"
-                      className="w-9/12"
-                    />
-                  </div>
-                  <div className="col-span-4">
-                    <p className="font-bold">{item.targetNm}</p>
-                    <p className="text-sm">{item.accountTransactionTypeNm}</p>
-                  </div>
-                  <div className="col-span-2 font-bold">
-                    {addCommas(item.amount)}원
-                  </div>
+          {dailyTransaction.length!=0?(
+            <>
+            {sortedDates.map((day) => (
+              <div key={day} className="mb-10">
+                <p className='font-semibold mb-1 bg-indigo-50 p-1'>{getDateParseForLifePage(date, day)}</p>
+                <div className="inline-block px-2 text-sm font-semibold text-red-500 bg-gray-200 rounded-full">
+                  {addCommas(calculateTotalAmount(groupedData[day]))}원
                 </div>
-              ))}
-            </div>
-          ))}
+                {groupedData[day].map((item, index) => (
+                  <div key={index} className="mt-5 grid grid-cols-7 items-center">
+                    <div className="bg-gray-200 w-10 h-10 rounded-full flex justify-center items-center">
+                        <p className='text-lg mb-2'>{icon(item.accountTransactionType)}</p>
+                      </div>
+                    <div className="col-span-4 ml-3">
+                      <p className="font-bold">{item.targetNm}</p>
+                      <p className="text-sm">{transactionTypeKor(item.accountTransactionType)}</p>
+                    </div>
+                    <div className="col-span-2 font-bold text-right mr-4">
+                      {addCommas(item.amount)}원
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+            </>
+          ):(
+            <>
+              <div className='text-red-400 text-center font-hana-m my-10'>
+                이번 달 소비내역이 없습니다.
+              </div>
+            </>
+          )}
+          
         </div>
       </div>
     </div>

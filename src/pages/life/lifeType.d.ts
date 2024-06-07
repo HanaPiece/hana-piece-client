@@ -5,8 +5,8 @@ interface AccountGetResponse {
 }
 
 interface MonthlyTransaction{
-  sumAutoDebitAmount:number;
-  monthlyNegativeSum:number;
+  autoDebitTotalAmount:number;
+  monthlyTotalSpending:number;
   amountByType:AmountByType;
   amountByDay:AmountByDay;
   dailyTransactionList:DailyTransaction[];
@@ -16,10 +16,11 @@ interface DailyTransaction{
   transactionDay:number;
   amount:number;
   accountTransactionType:string;
+  targetNm:string;
 }
 
-interface AmountByType {
-  [key: string]: number;
+type AmountByType = {
+  [key : string]: number;
 }
 
 interface AmountByDay {

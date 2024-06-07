@@ -15,6 +15,12 @@ export const currentTime = (): string => {
   return `${hours}:${formattedMinutes}`;
 }
 
+export const dateToYYYYMM = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  return `${year}${month}`;
+};
+
 // 'YYYY-MM-DD' to 'YYYY'
 export const getYearFromDateString = (dateString: string): string => {
   const parts = dateString.split("-");
@@ -48,4 +54,19 @@ export const goalDateParse = (date:string):string => {
   const day = date.substring(6, 8);
   
   return `${year}-${month}-${day}`;
+};
+
+// date와 일자 to 'YYYY년 MM월 DD일 W요일'
+export const getDateParseForLifePage = (date: Date, day: string): string => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+
+  const dateStr = `${year}-${month}-${day}`;
+  const dateObject = new Date(dateStr);
+  const dayOfWeek = dateObject.getDay();
+
+  const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+  const dayName = daysOfWeek[dayOfWeek];
+
+  return `${year}년 ${month}월 ${day}일 ${dayName}`;
 };
