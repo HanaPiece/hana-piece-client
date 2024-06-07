@@ -21,8 +21,8 @@ const calcSplitRatio = (amount: Ratio, userSalary: string): Ratio => {
   const salary = Number(userSalary);
   
   const saving = amount.saving/salary*100;
-  const life = amount.saving/salary*100;
-  const reserve = amount.saving/salary*100;
+  const life = amount.life/salary*100;
+  const reserve = amount.reserve/salary*100;
 
   return {
     saving: saving,
