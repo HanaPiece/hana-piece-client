@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { TopLine } from "../../components/ui/TopLine";
 import { Ratio } from "./SplitMainPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions } from "../../hooks/fetch";
 import { API_BASE_URL } from "../../constants";
@@ -10,6 +10,7 @@ export const SplitStartSplitPage = () => {
   const navigate = useNavigate();
   const {user} = useUser();
   const salary = Number(user.salary);
+  const [accountAutoDebitId, setAccountAutoDebitId] = useState<Ratio>({ saving: 0, life: 0, reserve: 0 });
 
   //통장 설정 페이지에서 받아온 값
   const location = useLocation();
@@ -48,6 +49,7 @@ export const SplitStartSplitPage = () => {
     setIsEditing(false);
   };
 
+  // 완료 버튼 -----------
   const adjustComplete = () => {
     const sum = ratio.saving + ratio.life + ratio.reserve;
     if(sum!=100){
@@ -55,9 +57,15 @@ export const SplitStartSplitPage = () => {
       return false;
     }
     setAccountType();
-    setAutoDebit();
-    navigate("/split/start/complete",{ state: { splitRatio: ratio } });
   };
+
+  useEffect(() => {
+    if (accountAutoDebitId.saving !== 0 && accountAutoDebitId.life !== 0 && accountAutoDebitId.reserve !== 0) {
+      setAutoDebit();
+      console.log(accountAutoDebitId);
+      navigate("/split/start/complete",{ state: { splitRatio: ratio } });
+    }
+  }, [accountAutoDebitId]);
 
   // 통장 쪼개기 (자동이체 설정)
   const setAutoDebit = async () => {
@@ -69,11 +77,11 @@ export const SplitStartSplitPage = () => {
         'Authorization': `Bearer ${user.jwt}`,
       },
       body: JSON.stringify({
-        savingAccountAutoDebitId: selectedAccounts.saving,
+        savingAccountAutoDebitId: accountAutoDebitId.saving,
         savingAutoDebitAmount:calcAmount(ratio.saving,salary),
-        lifeAccountAutoDebitId: selectedAccounts.spending,
+        lifeAccountAutoDebitId: accountAutoDebitId.life,
         lifeAutoDebitAmount:calcAmount(ratio.life,salary),
-        spareAccountAutoDebitId: selectedAccounts.reserve,
+        spareAccountAutoDebitId: accountAutoDebitId.reserve,
         spareAutoDebitAmount:calcAmount(ratio.reserve,salary)
       }),
     };
@@ -108,11 +116,55 @@ export const SplitStartSplitPage = () => {
       const response = await fetch(`${API_BASE_URL}/api/v1/accounts/account-type-reg`, postOptions);
       if (!response.ok) {
         console.error('Failed to set account types');
+      } else{
+        getAccounts();
       }
     } catch (error) {
       console.error('Error:', error);
     }
   }
+
+
+  // 사용자 계좌 가져오기
+  const getAccounts = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user.jwt}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: AccountAutoDebitAdjustGetResponse[] = await response.json();
+      const testData = setAccountId(data);
+      setAccountAutoDebitId(testData);
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+  }
+
+  // 타입별 통장 번호 저장
+  const setAccountId = (accounts: AccountAutoDebitAdjustGetResponse[]): Ratio => {
+    let saving = 0;
+    let life = 0;
+    let reserve = 0;
+    accounts.forEach((account) => {
+      if (account.accountType === "SAVING") {
+        saving = account.accountAutoDebitId;
+      } else if (account.accountType === "LIFE") {
+        life = account.accountAutoDebitId;
+      } else if (account.accountType === "SPARE") {
+        reserve = account.accountAutoDebitId;
+      }
+    });
+    return {
+      saving: saving,
+      life: life,
+      reserve: reserve
+    };
+  };
 
   return (
     <>

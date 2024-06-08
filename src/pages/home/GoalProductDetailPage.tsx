@@ -6,6 +6,7 @@ import { GoalProductDetail } from "./GoalProductDetail";
 import { GoalProductTransactionDetail } from "./GoalProductTransactionDetail";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { useUser } from "../../contexts/UserContext";
+import { API_BASE_URL } from "../../constants";
 
 export const GoalProductDetailPage = () => {
   const [isRecommend, setRecommend] = useState<boolean>(false);
@@ -21,7 +22,7 @@ export const GoalProductDetailPage = () => {
   };
 
   const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(
-    `http://43.201.157.250:8080/api/v1/accounts/user-goal/${id}`,
+    `${API_BASE_URL}/api/v1/accounts/user-goal/${id}`,
     fetchOptions
   );
 

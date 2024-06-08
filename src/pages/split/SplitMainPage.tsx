@@ -21,8 +21,8 @@ const calcSplitRatio = (amount: Ratio, userSalary: string): Ratio => {
   const salary = Number(userSalary);
   
   const saving = amount.saving/salary*100;
-  const life = amount.saving/salary*100;
-  const reserve = amount.saving/salary*100;
+  const life = amount.life/salary*100;
+  const reserve = amount.reserve/salary*100;
 
   return {
     saving: saving,
@@ -96,20 +96,22 @@ export const SplitMainPage = () => {
   };
 
   useEffect(()=>{
-    console.log(data);
-    // 자동이체 기록이 없거나 3개가 등록되어 있지 않을 때 -> 통장 쪼개기 처음 화면으로
-    if(data && data.length>2){
-      const salary = user.salary ? user.salary : "0";
-      const settedAccounts = setSplitAccounts(data);
-      setAccounts(settedAccounts);
-      const calculatedAmount = calcSplitAmount(data);
-      setAmount(calculatedAmount);
-      const calculatedRatio = calcSplitRatio(calculatedAmount, salary);
-      setRatio(calculatedRatio);
-    }else{
-      navigate("start");
+    if (!loading){
+      console.log(data);
+      // 자동이체 기록이 없거나 3개가 등록되어 있지 않을 때 -> 통장 쪼개기 처음 화면으로
+      if(data && data.length>2){
+        const salary = user.salary ? user.salary : "0";
+        const settedAccounts = setSplitAccounts(data);
+        setAccounts(settedAccounts);
+        const calculatedAmount = calcSplitAmount(data);
+        setAmount(calculatedAmount);
+        const calculatedRatio = calcSplitRatio(calculatedAmount, salary);
+        setRatio(calculatedRatio);
+      }else{
+        navigate("start");
+      }
     }
-  },[data, navigate, user.salary]);
+  },[data, navigate, user.salary, loading]);
 
 
 

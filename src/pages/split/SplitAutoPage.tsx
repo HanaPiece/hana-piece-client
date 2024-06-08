@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { GreenButton } from "../../components/ui/GreenButton";
 import { TopLine } from "../../components/ui/TopLine";
 import { Ratio } from "./SplitMainPage";
+import { Checkbox } from "../../components/ui/Checkbox";
 
 export const SplitAutoPage = () => {
+  const [mode, setMode] = useState<boolean>(true);
   const ratio: Ratio = {
     saving: 50,
     life: 23,
@@ -12,7 +15,7 @@ export const SplitAutoPage = () => {
   return (
     <>
       <TopLine name={""} />
-      <div className="m-10">
+      <div className="mb-10 mx-10 mt-5">
         <div>
           <div className="flex justify-between items-center">
             <h3 className="font-bold text-xl">
@@ -62,22 +65,36 @@ export const SplitAutoPage = () => {
             <div className="text-xs">예비비</div>
           </div>
         </div>
-        <div className="mt-8">
+        <div className="mt-6">
+          <div className="grid grid-cols-2 gap-x-2 rounded-xl text-center font-hana-m">
+            <div
+              className={`flex items-center p-1 place-content-center border-2 rounded-xl cursor-pointer ${
+                mode === true ? " border-customGreen bg-green-50" : " border-gray-300"
+              }`}
+              onClick={() => setMode(true)}
+            >
+              <Checkbox checked={mode} onChange={setMode} name={""} />럭셔리 모드
+            </div>
+            <div
+              className={`flex items-center p-1 place-content-center border-2 rounded-xl cursor-pointer ${
+                mode === false ? "border-customGreen bg-green-50" : "border-gray-300"
+              }`}
+              onClick={() => setMode(false)}
+            ><Checkbox checked={!mode} onChange={setMode} name={""} />
+              짠돌이 모드
+            </div>
+          </div>
+        </div>
+        <div className="mt-6">
           <div>
             <h3 className="font-bold text-gray-400 text-md">💰저축 통장</h3>
             <div className="grid grid-cols-7 items-end mt-1">
-              <div className="font-semibold text-gray-400 text-sm  align-bottom">
+              <div className="font-semibold text-gray-400 text-sm align-bottom">
                 비율
               </div>
-              <div className="col-span-2 text-2xl font-bold">
-                {ratio.saving}%
-              </div>
-              <div className="font-semibold text-gray-400 text-sm text-right">
-                매달
-              </div>
-              <div className="col-span-3 text-2xl font-bold text-right">
-                900,000원
-              </div>
+              <div className="col-span-2 text-2xl font-bold">{ratio.saving}%</div>
+              <div className="font-semibold text-gray-400 text-sm text-right">매달</div>
+              <div className="col-span-3 text-2xl font-bold text-right">900,000원</div>
             </div>
           </div>
         </div>
@@ -85,16 +102,10 @@ export const SplitAutoPage = () => {
           <div>
             <h3 className="font-bold text-gray-400 text-md">💳소비 통장</h3>
             <div className="grid grid-cols-7 items-end mt-1">
-              <div className="font-semibold text-gray-400 text-sm  align-bottom">
-                비율
-              </div>
+              <div className="font-semibold text-gray-400 text-sm align-bottom">비율</div>
               <div className="col-span-2 text-2xl font-bold">{ratio.life}%</div>
-              <div className="font-semibold text-gray-400 text-sm text-right">
-                매달
-              </div>
-              <div className="col-span-3 text-2xl font-bold text-right">
-                414,000원
-              </div>
+              <div className="font-semibold text-gray-400 text-sm text-right">매달</div>
+              <div className="col-span-3 text-2xl font-bold text-right">414,000원</div>
             </div>
           </div>
         </div>
@@ -102,18 +113,10 @@ export const SplitAutoPage = () => {
           <div>
             <h3 className="font-bold text-gray-400 text-md">💡예비 통장</h3>
             <div className="grid grid-cols-7 items-end mt-1">
-              <div className="font-semibold text-gray-400 text-sm  align-bottom">
-                비율
-              </div>
-              <div className="col-span-2 text-2xl font-bold">
-                {ratio.reserve}%
-              </div>
-              <div className="font-semibold text-gray-400 text-sm text-right">
-                매달
-              </div>
-              <div className="col-span-3 text-2xl font-bold text-right">
-                486,000원
-              </div>
+              <div className="font-semibold text-gray-400 text-sm align-bottom">비율</div>
+              <div className="col-span-2 text-2xl font-bold">{ratio.reserve}%</div>
+              <div className="font-semibold text-gray-400 text-sm text-right">매달</div>
+              <div className="col-span-3 text-2xl font-bold text-right">486,000원</div>
             </div>
           </div>
         </div>
