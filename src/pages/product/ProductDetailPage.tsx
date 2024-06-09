@@ -54,7 +54,7 @@ export const ProductDetailPage = () => {
       <div className="container">
         <TopLine name={"적금 상세 설명"} />
         <div className="h-1 bg-gray-200">
-          <div className="w-1/4 hana-color h-1"></div>
+          <div className="w-3/6 hana-color h-1"></div>
         </div>
         <br />
 

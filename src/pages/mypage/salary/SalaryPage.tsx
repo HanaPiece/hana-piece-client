@@ -125,7 +125,7 @@ export const SalaryPage = () => {
               onChange={(e) => setNewSalaryDay(e.target.value)}
             />
             <div className="col-span-3 mt-10">
-              <button onClick={buttonClicked}>저장</button>
+              <button onClick={buttonClicked} className="green-button">저장</button>
             </div>
           </div>
         </div>

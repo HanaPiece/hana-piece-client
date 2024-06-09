@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
 import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
 import { API_BASE_URL } from "../../../constants";
+import { IoClose } from "react-icons/io5";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -121,7 +122,7 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
 
   return (
     <>
-      <div className="mx-10 mb-5">
+      <div className={`mb-5 ${Number(goalId) !== 0 ? 'mx-10' : ''}`}>
         <label className="text-customGreen font-bold text-lg">목표 이름</label>
         <input
           type="text"
@@ -139,7 +140,12 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
           onChange={(e) => setSearch(e.target.value)}
         />
         {search && filteredCars.length > 0 && search !== selectedCar?.carNm && (
-          <div className="border border-gray-400 mt-2 max-h-24 overflow-y-auto">
+          <div className="absolute bg-white border w-2/3 border-gray-400 mt-2 max-h-48 overflow-y-auto">
+            <div className="sticky top-0 bg-white flex justify-end">
+              <div onClick={()=>setSearch("")} className="cursor-pointer">
+                <IoClose className="text-xl" />
+              </div>
+            </div>
             {filteredCars.map((car) => (
               <div
                 key={car.carId}
@@ -151,6 +157,7 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
             ))}
           </div>
         )}
+        <br />
         <br />
         <label className="text-customGreen font-bold text-lg">목표 기간</label>
         <input
@@ -164,8 +171,8 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
         <input
           type="text"
           className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
+          value={price.toLocaleString()}
+          onChange={(e) => setPrice(Number(e.target.value.replace(/,/g, "")))}
         />
         <label className="text-customGreen font-bold text-lg">시작 날짜</label>
         <input
@@ -176,7 +183,7 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
           disabled={goalId !== "0"}
         />
         <br />
-        <button onClick={buttonClicked}>
+        <button onClick={buttonClicked} className="green-button">
           {Number(goalId) === 0 ? "생성" : "수정"}
         </button>
       </div>
