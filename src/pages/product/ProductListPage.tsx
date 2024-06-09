@@ -122,8 +122,8 @@ export const ProductListPage = () => {
 
   return (
     <>
+      <TopLine name={"적금 상품 추천"} />
       <div className="p-4 container">
-        <TopLine name={"적금 상품 추천"} />
         <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b">상품</h1>
         <div className="flex justify-between rounded-2xl bg-white shadow-md p-3 px-5 mb-8">
           <div>
@@ -135,13 +135,13 @@ export const ProductListPage = () => {
               <br />
               적합한 적금을 추천해 드릴게요!
             </p>
-            <p className="text-sm mt-2">
+            {/* <p className="text-sm mt-2">
               이미 가입된 상품 목록입니다.
               <br />
               {goalProduct?.products.enrolledProducts.map(
                 (product: enrolledProducts) => product.productNm + ", "
               )}
-            </p>
+            </p> */}
           </div>
           <div className="flex justify-center items-cneter text-4xl place-items-center font-hana-b">
             ☝️
