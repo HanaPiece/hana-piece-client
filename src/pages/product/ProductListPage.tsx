@@ -124,8 +124,11 @@ export const ProductListPage = () => {
   return (
     <>
       <TopLine name={"적금 상품 추천"} />
+      <div className="h-1 bg-gray-200">
+          <div className="w-2/6 hana-color h-1"></div>
+      </div>
       <div className="p-4 container">
-        <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b">상품</h1>
+        <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b mt-5">상품</h1>
         <div className="flex justify-between rounded-2xl bg-white shadow-md p-3 px-5 mb-8">
           <div>
             <p className="font-bold" style={{ fontSize: "16px" }}>
