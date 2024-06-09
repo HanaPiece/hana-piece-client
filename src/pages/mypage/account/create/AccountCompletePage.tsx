@@ -1,10 +1,10 @@
 import { SlEnvolope, SlUser } from "react-icons/sl";
-import { GreenButton } from "../../../components/ui/GreenButton";
-import { TopLine } from "../../../components/ui/TopLine";
+import { GreenButton } from "../../../../components/ui/GreenButton";
+import { TopLine } from "../../../../components/ui/TopLine";
 import { useState, useEffect } from "react";
-import { useUser } from "../../../contexts/UserContext";
-import { FetchOptions, useFetch } from "../../../hooks/fetch";
-import { API_BASE_URL } from "../../../constants";
+import { useUser } from "../../../../contexts/UserContext";
+import { FetchOptions, useFetch } from "../../../../hooks/fetch";
+import { API_BASE_URL } from "../../../../constants";
 
 type AccountGetResponse = {
   accountNumber: string;
