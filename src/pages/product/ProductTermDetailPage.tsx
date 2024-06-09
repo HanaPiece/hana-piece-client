@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { GreenButton } from "../../components/ui/GreenButton";
 import PhoneModal from "../../components/ui/PhoneModal";
 import { useUser } from "../../contexts/UserContext";
+import { API_BASE_URL } from "../../constants";
 
 type Term = {
   id: number;
@@ -24,7 +25,7 @@ export const ProductTermDetailPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://43.201.157.250:8080/api/v1/products/${productId}`,
+            `${API_BASE_URL}/api/v1/products/${productId}`,
             {
               method: "get",
               headers: {

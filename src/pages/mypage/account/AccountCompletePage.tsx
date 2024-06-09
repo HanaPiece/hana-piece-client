@@ -4,6 +4,7 @@ import { TopLine } from "../../../components/ui/TopLine";
 import { useState, useEffect } from "react";
 import { useUser } from "../../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../../hooks/fetch";
+import { API_BASE_URL } from "../../../constants";
 
 type AccountGetResponse = {
   accountNumber: string;
@@ -21,7 +22,7 @@ export const AccountCompletePage = () => {
     },
   };
   const { data, error, loading } = useFetch<AccountGetResponse>(
-    `http://43.201.157.250:8080/api/v1/accounts`,
+    `${API_BASE_URL}/api/v1/accounts`,
     fetchOptions
   );
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { TopLine } from "../../../components/ui/TopLine";
 import { useUser } from "../../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../constants";
 
 type GetSalaryResponse = {
   accountId: number;
@@ -22,7 +23,7 @@ export const SalaryPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://43.201.157.250:8080/api/v1/accounts/salary`,
+            `${API_BASE_URL}/api/v1/accounts/salary`,
             {
               method: "get",
               headers: {
@@ -56,7 +57,7 @@ export const SalaryPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://43.201.157.250:8080/api/v1/users/salary`,
+            `${API_BASE_URL}/api/v1/users/salary`,
             {
               method: "post",
               headers: {

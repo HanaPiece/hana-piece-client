@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { TopLine } from "../../../components/ui/TopLine";
 import { useUser } from "../../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../../hooks/fetch";
+import { API_BASE_URL } from "../../../constants";
 
 type AccountGetResponse = {
   accountId: number;
@@ -36,7 +37,7 @@ export const AccountSavingListPage = () => {
     },
   };
   const { data, error, loading } = useFetch<AccountGetResponse[]>(
-    `http://43.201.157.250:8080/api/v1/accounts/installment-saving`,
+    `${API_BASE_URL}/api/v1/accounts/installment-saving`,
     fetchOptions
   );
 

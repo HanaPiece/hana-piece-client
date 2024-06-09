@@ -5,6 +5,7 @@ import { Car, UserGoalDetailGetResponse } from "./GoalDetailPage";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
 import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
+import { API_BASE_URL } from "../../../constants";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -41,7 +42,7 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
   };
 
   const { data, error, loading } = useFetch<CarGetResponse[]>(
-    `http://43.201.157.250:8080/api/v1/user-goals/cars`,
+    `${API_BASE_URL}/api/v1/user-goals/cars`,
     fetchOptions
   );
 
@@ -73,7 +74,7 @@ export const GoalCar = ({ goal, goalDetail }: Props) => {
       (async function () {
         try {
           const response = await fetch(
-            "http://43.201.157.250:8080/api/v1/user-goals",
+            `${API_BASE_URL}/api/v1/user-goals`,
             {
               method: "POST",
               headers: {

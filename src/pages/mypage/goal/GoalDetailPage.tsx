@@ -6,6 +6,7 @@ import { FetchOptions, useFetch } from "../../../hooks/fetch";
 import { GoalHouse } from "./GoalHouse";
 import { GoalCar } from "./GoalCar";
 import { GoalWish } from "./GoalWish";
+import { API_BASE_URL } from "../../../constants";
 
 export type House = {
   apartmentNm: string;
@@ -56,7 +57,7 @@ export const GoalDetailPage = () => {
     },
   };
   const { data, error, loading } = useFetch<UserGoalDetailGetResponse>(
-    `http://43.201.157.250:8080/api/v1/user-goals/${goalId}`,
+    `${API_BASE_URL}/api/v1/user-goals/${goalId}`,
     fetchOptions
   );
 
