@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useGoalsProducts } from "../../contexts/ProductContext";
 import { useUser } from "../../contexts/UserContext";
 import { ProductGetResponse } from "../product/ProductListPage";
+import { API_BASE_URL } from "../../constants";
 
 const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
   const { user } = useUser();
@@ -16,7 +17,7 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
         (async function () {
           try {
             const response = await fetch(
-              `http://43.201.157.250:8080/api/v1/products/recommend/${goalId}`,
+              `${API_BASE_URL}/api/v1/products/recommend/${goalId}`,
               {
                 method: "get",
                 headers: {
