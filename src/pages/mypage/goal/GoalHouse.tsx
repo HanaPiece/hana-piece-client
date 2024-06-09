@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
 import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
 import { API_BASE_URL } from "../../../constants";
+import { IoClose } from "react-icons/io5";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -181,7 +182,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
 
   return (
     <>
-      <div className="mx-10 mb-5">
+      <div className={`mb-5 ${Number(goalId) !== 0 ? 'mx-10' : ''} h-[500px]`}>
         <label className="text-customGreen font-bold text-lg">목표 이름</label>
         <input
           type="text"
@@ -212,14 +213,19 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
         </label>
         <br />
         <input
-          className="border-b border-gray-400 h-8 mt-3"
+          className="border-b border-gray-400 h-8 mt-3 w-full"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         {search &&
           filteredApartments.length > 0 &&
           search !== selectedApartment?.apartmentNm && (
-            <div className="border border-gray-400 mt-2 max-h-24 overflow-y-auto">
+            <div className="absolute bg-white border border-gray-400 mt-2 max-h-48 overflow-y-auto">
+              <div className="sticky top-0 bg-white flex justify-end">
+                <div onClick={()=>setSearch("")} className="cursor-pointer">
+                  <IoClose className="text-xl" />
+                </div>
+              </div>
               {filteredApartments.map((apartment) => (
                 <div
                   key={apartment.apartmentId}
@@ -231,6 +237,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
               ))}
             </div>
           )}
+        <br />
         <br />
         <label className="text-customGreen font-bold text-lg">목표 기간</label>
         <input
@@ -244,10 +251,10 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
           예상 목표 달성 금액
         </label>
         <input
-          type="number"
+          type="text"
           className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
+          value={price.toLocaleString()}
+          onChange={(e) => setPrice(Number(e.target.value.replace(/,/g, "")))}
         />
 
         <label className="text-customGreen font-bold text-lg">시작 날짜</label>
@@ -260,7 +267,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
         />
         <br />
 
-        <button onClick={buttonClicked}>
+        <button onClick={buttonClicked} className="green-button">
           {Number(goalId) === 0 ? "생성" : "수정"}
         </button>
       </div>

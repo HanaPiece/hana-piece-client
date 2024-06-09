@@ -87,7 +87,9 @@ export const GoalDetailPage = () => {
             </span>
           </div>
           {goal?.goalTypeCd === "HOUSE" && (
-            <GoalHouse goal={goal} goalDetail={goal.detail as House} />
+            <div className="overflow-y-auto">
+              <GoalHouse goal={goal} goalDetail={goal.detail as House} />
+            </div>
           )}
           {goal?.goalTypeCd === "CAR" && (
             <GoalCar goal={goal} goalDetail={goal.detail as Car} />

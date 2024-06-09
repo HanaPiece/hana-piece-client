@@ -76,7 +76,7 @@ export const GoalWish = ({ goal, goalDetail }: Props) => {
 
   return (
     <>
-      <div className="mx-10 mb-5">
+      <div className={`mb-5 ${Number(goalId) !== 0 ? 'mx-10' : ''}`}>
         <label className="text-customGreen font-bold text-lg">목표 이름</label>
         <input
           type="text"
@@ -98,8 +98,8 @@ export const GoalWish = ({ goal, goalDetail }: Props) => {
         <input
           type="text"
           className="w-full border-b border-gray-400 h-8 mt-3 mb-5"
-          value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
+          value={price.toLocaleString()}
+          onChange={(e) => setPrice(Number(e.target.value.replace(/,/g, "")))}
         />
         <label className="text-customGreen font-bold text-lg">시작 날짜</label>
         <input
@@ -110,7 +110,7 @@ export const GoalWish = ({ goal, goalDetail }: Props) => {
           disabled={goalId !== "0"}
         />
         <br />
-        <button onClick={buttonClicked}>
+        <button onClick={buttonClicked} className="green-button">
           {Number(goalId) === 0 ? "생성" : "수정"}
         </button>
       </div>

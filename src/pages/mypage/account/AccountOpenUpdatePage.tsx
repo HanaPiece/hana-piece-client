@@ -227,7 +227,7 @@ export const AccountOpenUpdatePage = () => {
             </div>
           </div>
           <div className="mt-10">
-            <button onClick={() => buttonClicked()} disabled={!allSelected}>
+            <button onClick={() => buttonClicked()} disabled={!allSelected} className="green-button">
               확인
             </button>
           </div>
