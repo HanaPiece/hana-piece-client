@@ -4,6 +4,20 @@ import { useUser } from "../../contexts/UserContext";
 import { ProductGetResponse } from "../product/ProductListPage";
 import { API_BASE_URL } from "../../constants";
 
+const calcExpectedAmount = (years: number, annualInterestRate: number, monthlySavings: number): string => {
+  const months = years * 12;
+  const monthlyInterestRate = annualInterestRate / 12 / 100;
+
+  let totalAmount = 0;
+
+  for (let i = 0; i < months; i++) {
+    totalAmount += monthlySavings;
+    totalAmount *= (1 + monthlyInterestRate);
+  }
+
+  return (Math.floor(totalAmount/100)*100).toLocaleString();
+};
+
 const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
   const { user } = useUser();
   const { goalsProducts, setProduct } = useGoalsProducts();
@@ -74,26 +88,46 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
                 </div>
               </div>
               <div className="grid grid-cols-5 gap-1 my-4 gap-y-2">
-                <div className="text-xs text-lime-600">기간</div>
-                <div className="col-span-4 text-xs">
+                <div className="text-xs text-lime-600 font-bold">기간</div>
+                <div className="text-xs">
                   {goalProduct.products.recommendedProducts[0]?.termYear ||
                     "기간 정보 없음"}
                   년
                 </div>
-                <div className="text-xs text-lime-600">이자</div>
-                <div className="col-span-4 text-xs">
+                <div></div>
+                <div className="text-xs text-lime-600 font-bold">이자</div>
+                <div className="text-xs">
                   <span className="text-red-600">
                     {goalProduct.products.recommendedProducts[0]
                       ?.interestRate || "이자율 없음"}
                   </span>
                   %
                 </div>
+                <div className="text-xs text-lime-600 font-bold">예상금액</div>
+                <div className="col-span-4 text-xs">
+                <p>
+                    매달 10만원씩 적금한다면
+                    <span className="text-red-600">
+                      {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[0]?.termYear, goalProduct.products.recommendedProducts[0]
+                      ?.interestRate, 100000)}`}
+                    </span>
+                    원
+                  </p>
+                  <p>
+                    매달 100만원씩 적금한다면
+                    <span className="text-red-600">
+                      {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[0]?.termYear, goalProduct.products.recommendedProducts[0]
+                      ?.interestRate, 1000000)}`}
+                    </span>
+                    원
+                  </p>
+                </div>
               </div>
             </div>
           </div>
           {goalProduct.products.recommendedProducts[1] && (
             <div>
-              <div className="shadow-xl p-4 my-3 rounded-2xl bg-white">
+              <div className="shadow-xl p-4 my-6 rounded-2xl bg-white">
                 <div className="grid grid-cols-6 gap-1">
                   <div className="bg-gray-200 w-8 h-8 rounded-full grid place-items-center">
                     <img
@@ -108,19 +142,39 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
                   </div>
                 </div>
                 <div className="grid grid-cols-5 gap-1 my-4 gap-y-2">
-                  <div className="text-xs text-lime-600">기간</div>
-                  <div className="col-span-4 text-xs">
+                  <div className="text-xs text-lime-600 font-bold">기간</div>
+                  <div className="text-xs">
                     {goalProduct.products.recommendedProducts[1]?.termYear ||
                       "기간 정보 없음"}
                     년
                   </div>
-                  <div className="text-xs text-lime-600">이자</div>
-                  <div className="col-span-4 text-xs">
+                  <div></div>
+                  <div className="text-xs text-lime-600 font-bold">이자</div>
+                  <div className="text-xs">
                     <span className="text-red-600">
                       {goalProduct.products.recommendedProducts[1]
                         ?.interestRate || "이자율 없음"}
                     </span>
                     %
+                  </div>
+                  <div className="text-xs text-lime-600 font-bold">예상금액</div>
+                  <div className="text-xs col-span-4">
+                  <p>
+                      매달 10만원씩 적금한다면
+                      <span className="text-red-600">
+                        {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[1]?.termYear, goalProduct.products.recommendedProducts[0]
+                        ?.interestRate, 100000)}`}
+                      </span>
+                      원
+                    </p>
+                    <p>
+                      매달 100만원씩 적금한다면
+                      <span className="text-red-600">
+                        {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[1]?.termYear, goalProduct.products.recommendedProducts[0]
+                        ?.interestRate, 1000000)}`}
+                      </span>
+                      원
+                    </p>
                   </div>
                 </div>
               </div>
