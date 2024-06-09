@@ -9,6 +9,7 @@ import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalGetResponse } from "./homeType";
 import { useUser } from "../../contexts/UserContext";
 import { API_BASE_URL } from "../../constants";
+import { useEffect } from "react";
 
 const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
   const navigate = useNavigate();
@@ -109,6 +110,12 @@ export const HomePage = () => {
     `${API_BASE_URL}/api/v1/user-goals/list`,
     fetchOptions
   );
+  
+  useEffect(()=>{
+    if(data){
+      console.log(data)
+    }
+  },[data])
 
   const totalAmount = calcTotalAmount(data || []);
 

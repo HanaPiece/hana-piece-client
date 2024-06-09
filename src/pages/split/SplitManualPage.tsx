@@ -98,6 +98,7 @@ export const SplitManualPage = () => {
     if (accountAutoDebitId.saving !== 0 && accountAutoDebitId.life !== 0 && accountAutoDebitId.reserve !== 0) {
       setAutoDebit();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountAutoDebitId]);
 
   // 통장 쪼개기 (자동이체 설정)

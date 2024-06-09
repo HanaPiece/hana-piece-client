@@ -131,6 +131,7 @@ export const LifePage = () => {
     } else {
       getAccountTransaction(dateToYYYYMM(date));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountId, date, navigate, user.jwt]);
 
   const handlePreviousMonth = () => {
