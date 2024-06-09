@@ -107,7 +107,7 @@ export const ProductTermPage = () => {
       <div className="container">
         <TopLine name={"적금 개설"} />
         <div className="h-1 bg-gray-200">
-          <div className="w-2/4 hana-color h-1"></div>
+          <div className="w-4/6 hana-color h-1"></div>
         </div>
         <div className="mx-7 mt-10">
           <div className="flex justify-center gap-x-3 my-10 items-center">
