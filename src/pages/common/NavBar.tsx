@@ -27,7 +27,7 @@ export const NavBar = () => {
   return (
     <div className="nav-shadow-top-lg rounded-t-3xl w-full h-20 absolute bottom-0 bg-white">
       <div className="sticky flex justify-between bottom-0 left-0 w-full px-4">
-        <div className="flex flex-col items-center justify-center nav-item" onClick={() => handleNavigate('/product')}>
+        <div className="flex flex-col items-center justify-center nav-item" onClick={() => handleNavigate('/product/start')}>
           <SlSocialDropbox className={getIconClass('/product')} />
           <p className={getTextClass('/product')}>상품</p>
         </div>
