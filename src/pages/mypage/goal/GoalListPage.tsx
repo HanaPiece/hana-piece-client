@@ -31,7 +31,7 @@ export const GoalListPage = () => {
     <div>
       <TopLine name="목표 관리" />
       <div className="m-10">
-        <span className="text-xl font-hana-m">🚩 목표</span>
+        <span className="text-2xl font-hana-m">🚩 목표</span>
         <div className="my-4 space-y-4">
           {goalsProducts?.goalsProducts?.map((goalProduct, index) => (
             <Goal
@@ -42,7 +42,7 @@ export const GoalListPage = () => {
             />
           ))}
         </div>
-        <button onClick={() => navigate(`${goalId}/create`)}>
+        <button onClick={() => navigate(`${goalId}/create`)} className="green-button mt-2">
           + 목표 추가
         </button>
         {/* <GreenButton path=`{}/create` name="+ 목표 추가" /> */}

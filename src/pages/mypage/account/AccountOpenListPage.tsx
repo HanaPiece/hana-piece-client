@@ -17,6 +17,19 @@ type Props = {
   state: string;
 };
 
+const stateKor = (state:string) => {
+  switch(state){
+    case "SALARY":
+      return "월급";
+    case "SAVING":
+      return "저축";
+    case "LIFE":
+      return "생활";
+    case "SPARE":
+      return "예비";
+  }
+};
+
 const Account = ({ count, number, state }: Props) => {
   return (
     <>
@@ -25,7 +38,7 @@ const Account = ({ count, number, state }: Props) => {
         <span className="ml-5">{number}</span>
         {state !== "CHECKING" && (
           <span className="ml-auto px-2 py-1 text-sm text-white bg-lime-500 rounded">
-            {state}
+            {stateKor(state)}
           </span>
         )}
       </div>
