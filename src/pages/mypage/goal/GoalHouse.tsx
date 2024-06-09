@@ -6,6 +6,7 @@ import { useUser } from "../../../contexts/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
 import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
+import { API_BASE_URL } from "../../../constants";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -46,7 +47,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
   const { createGoal, updateGoal } = useGoalsProducts();
 
   const { data, error, loading } = useFetch<ApartmentGetResponse[]>(
-    `http://43.201.157.250:8080/api/v1/user-goals/apartments`,
+    `${API_BASE_URL}/api/v1/user-goals/apartments`,
     fetchOptions
   );
 
@@ -72,7 +73,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
     if (!selectedApartment || !duration) return;
     try {
       const response = await fetch(
-        `http://43.201.157.250:8080/api/v1/user-goals/apartments/predict`,
+        `${API_BASE_URL}/api/v1/user-goals/apartments/predict`,
         {
           method: "POST",
           headers: {
@@ -132,7 +133,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
       (async function () {
         try {
           const response = await fetch(
-            "http://43.201.157.250:8080/api/v1/user-goals",
+            `${API_BASE_URL}/api/v1/user-goals`,
             {
               method: "POST",
               headers: {

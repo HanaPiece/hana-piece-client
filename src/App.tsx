@@ -12,6 +12,7 @@ import { SplitMainPage } from "./pages/split/SplitMainPage";
 import { SplitManualPage } from "./pages/split/SplitManualPage";
 import { SplitAutoPage } from "./pages/split/SplitAutoPage";
 import { ProductListPage } from "./pages/product/ProductListPage";
+import { ProductStartPage } from "./pages/product/ProductStartPage";
 import { ProductDetailPage } from "./pages/product/ProductDetailPage";
 import { ProductTermPage } from "./pages/product/ProductTermPage";
 import { ProductTermDetailPage } from "./pages/product/ProductTermDetailPage";
@@ -20,9 +21,9 @@ import { ProductCompletePage } from "./pages/product/ProductCompletePage";
 import { MypagePage } from "./pages/mypage/MypagePage";
 import { SalaryPage } from "./pages/mypage/salary/SalaryPage";
 import { AccountPage } from "./pages/mypage/account/AccountPage";
-import { AccountAddPage } from "./pages/mypage/account/AccountAddPage";
-import { AccountTermPage } from "./pages/mypage/account/AccountTermPage";
-import { AccountCompletePage } from "./pages/mypage/account/AccountCompletePage";
+import { AccountAddPage } from "./pages/mypage/account/create/AccountAddPage";
+import { AccountTermPage } from "./pages/mypage/account/create/AccountTermPage";
+import { AccountCompletePage } from "./pages/mypage/account/create/AccountCompletePage";
 import { GoalListPage } from "./pages/mypage/goal/GoalListPage";
 import { GoalCreatePage } from "./pages/mypage/goal/GoalCreatePage";
 import { GoalDetailPage } from "./pages/mypage/goal/GoalDetailPage";
@@ -36,6 +37,10 @@ import { SplitStartPage } from "./pages/split/SplitStartPage";
 import { SplitStartSettingPage } from "./pages/split/SplitStartSettingPage";
 import { SplitStartSplitPage } from "./pages/split/SplitStartSplitPage";
 import { SplitStartCompletePage } from "./pages/split/SplitStartCompletePage";
+import { TutorialPage } from "./pages/start/TutorialPage";
+import { LifeStartPage } from "./pages/life/LifeStartPage";
+import { AccountCreatePage } from "./pages/mypage/account/create/AccountCreatePage";
+import { AccountTermDetailPage } from "./pages/mypage/account/create/AccountTermDetailPage";
 
 function App() {
   return (
@@ -49,6 +54,7 @@ function App() {
           </Route>
           <Route path="product">
             <Route index element={<ProductGoalPage />} />
+            <Route path="start" element={<ProductStartPage />} />
           </Route>
           <Route path="mypage">
             <Route index element={<MypagePage />} />
@@ -73,11 +79,13 @@ function App() {
           </Route>
           <Route path="life">
             <Route index element={<LifePage />} />
+            <Route path="start" element={<LifeStartPage />} />
           </Route>
         </Route>
 
         {/* NavBar 없는 화면 */}
         <Route path="splash" element={<Splash />} />
+        <Route path="tutorial" element={<TutorialPage />} />
         <Route path="tutorial1" element={<Tutorial1Page />} />
         <Route path="tutorial2" element={<Tutorial2Page />} />
         <Route path="tutorial3" element={<Tutorial3Page />} />
@@ -108,8 +116,10 @@ function App() {
             <Route path=":goalId/create" element={<GoalCreatePage />} />
           </Route>
           <Route path="account">
-            <Route path="add" element={<AccountAddPage />} />
+            <Route path="create" element={<AccountCreatePage />} />
             <Route path="term" element={<AccountTermPage />} />
+            <Route path="term/detail" element={<AccountTermDetailPage />} />
+            <Route path="add" element={<AccountAddPage />} />
             <Route path="complete" element={<AccountCompletePage />} />
           </Route>
         </Route>

@@ -4,6 +4,7 @@ import { TopLine } from "../../components/ui/TopLine";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { useGoalsProducts } from "../../contexts/ProductContext";
+import { API_BASE_URL } from "../../constants";
 
 type Complete = {
   autoDebitAmount: number;
@@ -28,7 +29,7 @@ export const ProductSignupPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://43.201.157.250:8080/api/v1/accounts/saving`,
+            `${API_BASE_URL}/api/v1/accounts/saving`,
             {
               method: "get",
               headers: {
@@ -50,7 +51,7 @@ export const ProductSignupPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://43.201.157.250:8080/api/v1/products/${productId}`,
+            `${API_BASE_URL}/api/v1/products/${productId}`,
             {
               method: "get",
               headers: {
@@ -104,7 +105,7 @@ export const ProductSignupPage = () => {
         (async function () {
           try {
             const response = await fetch(
-              `http://43.201.157.250:8080/api/v1/products/enroll`,
+              `${API_BASE_URL}/api/v1/products/enroll`,
               {
                 method: "post",
                 headers: {

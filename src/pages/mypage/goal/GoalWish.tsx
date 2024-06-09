@@ -4,6 +4,7 @@ import { useUser } from "../../../contexts/UserContext";
 import { useState } from "react";
 import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
 import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
+import { API_BASE_URL } from "../../../constants";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -28,7 +29,7 @@ export const GoalWish = ({ goal, goalDetail }: Props) => {
       (async function () {
         try {
           const response = await fetch(
-            "http://43.201.157.250:8080/api/v1/user-goals",
+            `${API_BASE_URL}/api/v1/user-goals`,
             {
               method: "POST",
               headers: {

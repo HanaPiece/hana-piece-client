@@ -6,6 +6,7 @@ import {
 } from "../../components/utils/formatters";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { useUser } from "../../contexts/UserContext";
+import { API_BASE_URL } from "../../constants";
 
 export const GoalProductTransactionDetail = ({
   accountId,
@@ -22,7 +23,7 @@ export const GoalProductTransactionDetail = ({
   };
 
   const { data, error, loading } = useFetch<UserGoalTransactionResponse[]>(
-    `http://43.201.157.250:8080/api/v1/accounts/${accountId}/transactions/goal-installment-saving`,
+    `${API_BASE_URL}/api/v1/accounts/${accountId}/transactions/goal-installment-saving`,
     fetchOptions
   );
 

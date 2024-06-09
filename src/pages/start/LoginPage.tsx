@@ -3,6 +3,7 @@ import { SlArrowLeft } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { User, useUser } from "../../contexts/UserContext";
 import { useGoalsProducts } from "../../contexts/ProductContext";
+import { API_BASE_URL } from "../../constants";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export const LoginPage = () => {
     const loginRequest = async () => {
       try {
         const response = await fetch(
-          "http://43.201.157.250:8080/api/v1/users/login",
+          `${API_BASE_URL}/api/v1/users/login`,
           {
             method: "post",
             headers: {
@@ -55,7 +56,7 @@ export const LoginPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            "http://43.201.157.250:8080/api/v1/user-goals",
+            `${API_BASE_URL}/api/v1/user-goals`,
             {
               method: "get",
               headers: {

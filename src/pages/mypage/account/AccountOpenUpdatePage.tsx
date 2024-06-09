@@ -3,6 +3,7 @@ import { TopLine } from "../../../components/ui/TopLine";
 import { useUser } from "../../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../../hooks/fetch";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../constants";
 
 type AccountGetResponse = {
   accountId: number;
@@ -33,7 +34,7 @@ export const AccountOpenUpdatePage = () => {
     },
   };
   const { data, error, loading } = useFetch<AccountGetResponse[]>(
-    `http://43.201.157.250:8080/api/v1/accounts/checking`,
+    `${API_BASE_URL}/api/v1/accounts/checking`,
     fetchOptions
   );
 
