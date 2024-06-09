@@ -128,8 +128,8 @@ export const ProductListPage = () => {
           <div className="w-2/6 hana-color h-1"></div>
       </div>
       <div className="p-4 container">
-        <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b mt-5">상품</h1>
-        <div className="flex justify-between rounded-2xl bg-white shadow-md p-3 px-5 mb-8">
+        <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b mt-3">상품</h1>
+        <div className="flex justify-between rounded-2xl bg-white shadow-md p-3 px-5 mb-3">
           <div>
             <p className="font-bold" style={{ fontSize: "16px" }}>
               적금 상품 추천
@@ -151,8 +151,20 @@ export const ProductListPage = () => {
             ☝️
           </div>
         </div>
+        {goalProduct?.products.enrolledProducts.length != 0 ? (
+          <>
+            <div className="rounded-2xl bg-white shadow-md p-3 px-5 mb-5 font-hana-m text-sm">
+              이미 가입된 적금
+              <span className="font-hana-b text-red-400 text-lg"> {goalProduct?.products.enrolledProducts.length}</span>
+              개가 존재합니다.
+            </div>
+          </>
+        ):(
+          null
+        )}
+        
 
-        <div className="h-[500px] overflow-y-auto p-2">
+        <div className="h-[470px] overflow-y-auto p-2">
           {goalProduct?.products.recommendedProducts.map(
             (product: recommendedProducts) => (
               <Product key={product.productId} product={product} />
