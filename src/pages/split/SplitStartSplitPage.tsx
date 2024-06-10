@@ -34,7 +34,7 @@ export const SplitStartSplitPage = () => {
 
   useEffect(() => {
     getRatio();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.jwt]);
 
   const getRatio = async () => {
@@ -97,7 +97,7 @@ export const SplitStartSplitPage = () => {
     ) {
       setAutoDebit();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountAutoDebitId]);
 
   // 통장 쪼개기 (자동이체 설정)

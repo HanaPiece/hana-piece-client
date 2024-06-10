@@ -47,17 +47,31 @@ export const ProductGoalPage = () => {
             <h2 className="font-bold text-xl">목표 선택</h2>
           </div>
           <div className="my-10">
-            {goalsProducts?.goalsProducts?.map((goalProduct, index) => (
-              <Goal
-                key={goalProduct.goal.userGoalId}
-                count={index + 1}
-                name={goalProduct.goal.goalAlias}
-                isSelected={index + 1 === selectedIdx}
-                onSelect={() => handleSelectGoal(index+1, goalProduct.goal.userGoalId)}
-              />
-            ))}
+            {goalsProducts?.goalsProducts?.length === 0 ? (
+              <div className="border rounded-lg shadow-md py-5">
+                <p className="text-center text-gray-700 font-hana-r text-sm">
+                  등록된 목표가 없습니다.
+                  <br />
+                  마이페이지에서 목표를 설정해주세요.
+                </p>
+              </div>
+            ) : (
+              goalsProducts?.goalsProducts?.map((goalProduct, index) => (
+                <Goal
+                  key={goalProduct.goal.userGoalId}
+                  count={index + 1}
+                  name={goalProduct.goal.goalAlias}
+                  isSelected={index + 1 === selectedIdx}
+                  onSelect={() =>
+                    handleSelectGoal(index + 1, goalProduct.goal.userGoalId)
+                  }
+                />
+              ))
+            )}
           </div>
-          <GreenButton path={`/product/${selectedGoal}`} name={"선택하기"} />
+          {goalsProducts?.goalsProducts?.length !== 0 && (
+            <GreenButton path={`/product/${selectedGoal}`} name={"선택하기"} />
+          )}
         </div>
       </div>
     </>
