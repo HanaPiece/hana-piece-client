@@ -86,6 +86,7 @@ export const ProductListPage = () => {
   const { user } = useUser();
   const { goalsProducts, setProduct } = useGoalsProducts();
   let { goalId } = useParams();
+  console.log(goalId);
   if (goalId === undefined) {
     goalId = "";
   }
@@ -109,6 +110,7 @@ export const ProductListPage = () => {
             if (response.ok) {
               const json: ProductGetResponse = await response.json();
               setProduct(+goalId, json);
+              console.log(json);
             }
           } catch (err) {
             if (err instanceof Error) {

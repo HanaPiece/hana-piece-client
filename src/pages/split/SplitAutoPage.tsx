@@ -4,6 +4,7 @@ import { TopLine } from "../../components/ui/TopLine";
 import { Ratio } from "./SplitMainPage";
 import { Checkbox } from "../../components/ui/Checkbox";
 import { useUser } from "../../contexts/UserContext";
+import { API_BASE_URL } from "../../constants";
 
 export const SplitAutoPage = () => {
   const [mode, setMode] = useState<boolean>(true);
@@ -25,7 +26,7 @@ export const SplitAutoPage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://localhost:8080/api/v1/accounts/auto-debit/suggestions/${type}`,
+            `${API_BASE_URL}/api/v1/accounts/auto-debit/suggestions/${type}`,
             {
               method: "get",
               headers: {

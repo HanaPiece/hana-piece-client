@@ -79,15 +79,20 @@ export const ProductTermDetailPage = () => {
               <p className="text-xl font-hana-cm">{name}</p>
             </div>
           </div>
-          <div className="bg-slate-200 h-[450px] overflow-y-auto border p-2">
+          <div className="h-[450px] overflow-y-auto p-2">
             {terms.map((term: Term) => (
-              <div key={term.id} className="bg-slate-200">
-                <span className="text-customGreen text-lg font-bold">
-                  {term.name}
-                </span>
-                <br />
-                <span>{term.content}</span>
-              </div>
+              <>
+                <div className="my-3 mb-5">
+                  <p className="text-customGreen text-lg font-bold mb-3">
+                  📌 {term.name}
+                  </p>
+                  <div key={term.id} className="bg-white p-4 border  text-sm">
+                  {term.content.split(',').map((item, count)=>(
+                    <p>{count+1}. {item}</p>
+                  ))}
+                  </div>
+                </div>
+              </>
             ))}
           </div>
 

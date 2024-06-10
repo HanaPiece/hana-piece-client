@@ -5,6 +5,7 @@ import PhoneModal from "../../components/ui/PhoneModal";
 import { useUser } from "../../contexts/UserContext";
 import { ProductDetailResponse } from "./ProductDetailPage";
 import { API_BASE_URL } from "../../constants";
+import Modal from "../../components/ui/Modal";
 
 type Props = {
   name: string;
@@ -35,9 +36,11 @@ const ProductTerm = ({ name, content, onCheckboxChange }: Props) => {
             {name}
           </div>
           <PhoneModal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-            <h2 className="mt-4 text-xl font-bold text-center">{name}</h2>
-            <div className="mt-4 text-center break-words overflow-auto border h-48">
-              {content}
+            <h2 className="mt-4 text-xl font-bold text-center font-hana-m">{name}</h2>
+            <div className="mt-4 p-5 text-md break-words overflow-auto border h-48">
+              {content.split(',').map((item, count)=>(
+                <p>{count+1}. {item}</p>
+              ))}
             </div>
             <button
               onClick={() => setModalOpen(false)}
@@ -60,6 +63,8 @@ export const ProductTermPage = () => {
   const { user } = useUser();
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductDetailResponse>();
+  
+  const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (user.jwt) {
@@ -98,7 +103,7 @@ export const ProductTermPage = () => {
     if (termsChecked.every((checked) => checked)) {
       navigate(`detail`);
     } else {
-      alert("체크하렴"); //modal!!!!!!!!!!
+      setModalOpen(true);
     }
   };
 
@@ -140,6 +145,17 @@ export const ProductTermPage = () => {
           <p className="text-sm">
             [필수] 입력하신 이메일로 상품 이용약관 설명서가 발송됩니다.
           </p>
+          <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+            <div className="mt-4 p-5 text-md break-words overflow-auto">
+              동의를 완료해주세요.
+            </div>
+            <button
+              onClick={() => setModalOpen(false)}
+              className="green-button mt-5 mb-3"
+            >
+              확인
+            </button>
+          </Modal>
           <button onClick={handleSubmit} className="green-button mt-10">
             다음
           </button>
