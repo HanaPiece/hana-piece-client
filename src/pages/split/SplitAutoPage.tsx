@@ -12,7 +12,11 @@ export const SplitAutoPage = () => {
   const [mode, setMode] = useState<boolean>(true);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isCheckModalOpen, setCheckModalOpen] = useState(false);
-  const [accountAutoDebitId, setAccountAutoDebitId] = useState<Ratio>({ saving: 0, life: 0, reserve: 0 });
+  const [accountAutoDebitId, setAccountAutoDebitId] = useState<Ratio>({
+    saving: 0,
+    life: 0,
+    reserve: 0,
+  });
   const navigate = useNavigate();
   const [ratio, setRatio] = useState<Ratio>({
     saving: 50,
@@ -64,25 +68,30 @@ export const SplitAutoPage = () => {
   // 사용자 계좌 가져오기
   const getAccounts = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${user.jwt}`,
-        },
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${user.jwt}`,
+          },
+        }
+      );
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const data: AccountAutoDebitAdjustGetResponse[] = await response.json();
       const testData = setAccountId(data);
       setAccountAutoDebitId(testData);
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error("Fetch error:", error);
     }
-  }
+  };
 
   // 타입별 통장 번호 저장
-  const setAccountId = (accounts: AccountAutoDebitAdjustGetResponse[]): Ratio => {
+  const setAccountId = (
+    accounts: AccountAutoDebitAdjustGetResponse[]
+  ): Ratio => {
     let saving = 0;
     let life = 0;
     let reserve = 0;
@@ -99,47 +108,54 @@ export const SplitAutoPage = () => {
     return {
       saving: saving,
       life: life,
-      reserve: reserve
+      reserve: reserve,
     };
   };
 
   useEffect(() => {
-    if (accountAutoDebitId.saving !== 0 && accountAutoDebitId.life !== 0 && accountAutoDebitId.reserve !== 0) {
+    if (
+      accountAutoDebitId.saving !== 0 &&
+      accountAutoDebitId.life !== 0 &&
+      accountAutoDebitId.reserve !== 0
+    ) {
       setAutoDebit();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountAutoDebitId]);
 
   // 통장 쪼개기 (자동이체 설정)
   const setAutoDebit = async () => {
     const postOptions: FetchOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.jwt}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.jwt}`,
       },
       body: JSON.stringify({
-        "savingAccountAutoDebitId": accountAutoDebitId.saving,
-        "savingAutoDebitAmount": calcAmount(ratio.saving, salary),
-        "lifeAccountAutoDebitId": accountAutoDebitId.life,
-        "lifeAutoDebitAmount": calcAmount(ratio.life, salary),
-        "spareAccountAutoDebitId": accountAutoDebitId.reserve,
-        "spareAutoDebitAmount": calcAmount(ratio.reserve, salary)
+        savingAccountAutoDebitId: accountAutoDebitId.saving,
+        savingAutoDebitAmount: calcAmount(ratio.saving, salary),
+        lifeAccountAutoDebitId: accountAutoDebitId.life,
+        lifeAutoDebitAmount: calcAmount(ratio.life, salary),
+        spareAccountAutoDebitId: accountAutoDebitId.reserve,
+        spareAutoDebitAmount: calcAmount(ratio.reserve, salary),
       }),
     };
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, postOptions);
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`,
+        postOptions
+      );
       if (!response.ok) {
-        console.error('Failed to set account types');
+        console.error("Failed to set account types");
       } else {
         setModalOpen(false);
         setCheckModalOpen(true);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-  }
+  };
 
   return (
     <>
@@ -153,11 +169,7 @@ export const SplitAutoPage = () => {
               통장 쪼개기 추천 비율
             </h3>
             <div>
-              <img
-                src="/byul5.png"
-                className="w-20"
-                alt="하나은행"
-              />
+              <img src="/byul5.png" className="w-20" alt="하나은행" />
             </div>
           </div>
           <p className="text-gray-400 text-xs">
@@ -279,26 +291,30 @@ export const SplitAutoPage = () => {
           </div>
         </div>
         <hr className="bg-gray-200 border-0 w-16 mx-auto my-8 h-px" />
-        <button className="green-button" onClick={()=>setModalOpen(true)}>
+        <button className="green-button" onClick={() => setModalOpen(true)}>
           이대로 설정하기
         </button>
         <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-            <h2 className="mt-3 text-3xl text-center">✔️</h2>
-            <h2 className="mt-4 mb-4 text-xl font-bold text-center">
-              정말로 변경하시겠습니까?
-            </h2>
-            <div className="mt-10">
-              <button className="green-button" onClick={()=>getAccounts()}>확인</button>
-            </div>
+          <h2 className="mt-3 text-3xl text-center">✔️</h2>
+          <h2 className="mt-4 mb-4 text-xl font-bold text-center">
+            정말로 변경하시겠습니까?
+          </h2>
+          <div className="mt-10">
+            <button className="green-button" onClick={() => getAccounts()}>
+              확인
+            </button>
+          </div>
         </Modal>
         <Modal isOpen={isCheckModalOpen} onClose={() => navigate("/split")}>
-            <h2 className="mt-3 text-3xl text-center">✔️</h2>
-            <h2 className="mt-4 mb-4 text-xl font-bold text-center">
-              변경되었습니다.
-            </h2>
-            <div className="mt-10">
-              <button className="green-button" onClick={()=>navigate("/split")}>확인</button>
-            </div>
+          <h2 className="mt-3 text-3xl text-center">✔️</h2>
+          <h2 className="mt-4 mb-4 text-xl font-bold text-center">
+            변경되었습니다.
+          </h2>
+          <div className="mt-10">
+            <button className="green-button" onClick={() => navigate("/split")}>
+              확인
+            </button>
+          </div>
         </Modal>
       </div>
     </>

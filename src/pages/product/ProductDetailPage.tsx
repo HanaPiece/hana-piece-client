@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 import { API_BASE_URL } from "../../constants";
+import { LoadingPage } from "../LoadingPage";
 
 export type ProductDetailResponse = {
   productId: number;
@@ -23,6 +24,7 @@ export const ProductDetailPage = () => {
   const { user } = useUser();
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductDetailResponse>();
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     if (user.jwt) {
       (async function () {
@@ -40,6 +42,7 @@ export const ProductDetailPage = () => {
             const json = await response.json();
             console.log(json);
             setProduct(json);
+            setLoading(false);
           }
         } catch (err) {
           if (err instanceof Error) {
@@ -49,6 +52,9 @@ export const ProductDetailPage = () => {
       })();
     }
   }, [productId, user.jwt]);
+
+  if (loading) return <LoadingPage />;
+  
   return (
     <>
       <div className="container">
@@ -96,13 +102,25 @@ export const ProductDetailPage = () => {
             <div className="grid grid-cols-7 gap-4">
               <div className="col-span-2 font-bold text-customGreen">내용</div>
               <div className="col-span-5">{product?.info}</div>
-              <div className="col-span-2 font-bold text-customGreen">이자율</div>
+              <div className="col-span-2 font-bold text-customGreen">
+                이자율
+              </div>
               <div className="col-span-5">{product?.interestRate}%</div>
-              <div className="col-span-2 font-bold text-customGreen">주의사항</div>
+              <div className="col-span-2 font-bold text-customGreen">
+                주의사항
+              </div>
               <div className="col-span-5">{product?.cautions}</div>
-              <div className="col-span-2 font-bold text-customGreen">예금자<br />보호법</div>
+              <div className="col-span-2 font-bold text-customGreen">
+                예금자
+                <br />
+                보호법
+              </div>
               <div className="col-span-5">{product?.depositProtection}</div>
-              <div className="col-span-2 font-bold text-customGreen">적금<br />약관동의</div>
+              <div className="col-span-2 font-bold text-customGreen">
+                적금
+                <br />
+                약관동의
+              </div>
               <div className="col-span-5">{product?.contractTerms}</div>
             </div>
           </div>
