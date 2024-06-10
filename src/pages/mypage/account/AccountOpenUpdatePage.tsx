@@ -5,13 +5,11 @@ import { FetchOptions, useFetch } from "../../../hooks/fetch";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../../constants";
 import Modal from "../../../components/ui/Modal";
-
 type AccountGetResponse = {
   accountId: number;
   accountNumber: string;
   accountTypeCd: string;
 };
-
 export const AccountOpenUpdatePage = () => {
   const navigate = useNavigate();
   const { user } = useUser();
@@ -28,7 +26,6 @@ export const AccountOpenUpdatePage = () => {
     LIFE: null,
     SPARE: null,
   });
-
   const fetchOptions: FetchOptions = {
     method: "GET",
     headers: {
@@ -39,7 +36,6 @@ export const AccountOpenUpdatePage = () => {
     `${API_BASE_URL}/api/v1/accounts/checking`,
     fetchOptions
   );
-
   useEffect(() => {
     if (data) {
       setAccounts(data);
@@ -55,7 +51,6 @@ export const AccountOpenUpdatePage = () => {
       const spareAccount = data.find(
         (account) => account.accountTypeCd === "SPARE"
       );
-
       setSelectedAccounts({
         SALARY: salaryAccount ? salaryAccount.accountId : null,
         SAVING: savingAccount ? savingAccount.accountId : null,
@@ -64,14 +59,11 @@ export const AccountOpenUpdatePage = () => {
       });
     }
   }, [data]);
-
   const allSelected = Object.values(selectedAccounts).every(
     (value) => value !== null
   );
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
   const handleSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
     type: string
@@ -82,27 +74,22 @@ export const AccountOpenUpdatePage = () => {
       [type]: value,
     });
   };
-
   const getFilteredAccounts = (excludeType: string) => {
     const selectedIds = Object.keys(selectedAccounts)
       .filter((key) => key !== excludeType)
       .map((key) => selectedAccounts[key as keyof typeof selectedAccounts])
       .filter((id) => id !== null);
-
     const filteredAccounts = accounts?.filter(
       (account) => !selectedIds.includes(account.accountId)
     );
-
     return filteredAccounts || [];
   };
-
   const renderSelectOptions = (type: keyof typeof selectedAccounts) => {
     const options = getFilteredAccounts(type).map((account) => (
       <option key={account.accountId} value={account.accountId}>
         {account.accountNumber}
       </option>
     ));
-
     if (!selectedAccounts[type]) {
       options.unshift(
         <option key="placeholder" value="" disabled>
@@ -110,10 +97,8 @@ export const AccountOpenUpdatePage = () => {
         </option>
       );
     }
-
     return options;
   };
-
   const buttonClicked = () => {
     if (user.jwt) {
       (async function () {
@@ -145,7 +130,6 @@ export const AccountOpenUpdatePage = () => {
       })();
     }
   };
-
   return (
     <>
       <div>
@@ -229,19 +213,27 @@ export const AccountOpenUpdatePage = () => {
             </div>
           </div>
           <div className="mt-10">
-            <button onClick={() => setModalOpen(true)} disabled={!allSelected} className="green-button">
+            <button
+              onClick={() => setModalOpen(true)}
+              disabled={!allSelected}
+              className="green-button"
+            >
               수정하기
             </button>
           </div>
         </div>
         <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-        <h2 className="mt-3 text-3xl text-center">✔️</h2>
-            <h2 className="mt-4 mb-4 text-xl font-bold text-center">
-              정말로 수정하시겠습니까?
-            </h2>
-            <p>계좌 수정 시 모든 정보가 초기화됩니다.</p>
-            <p className="text-xs text-gray-500 text-center">(통장쪼개기 자동 이체, 소비 내역 등)</p>
-            <button className="green-button mt-8" onClick={() => buttonClicked()}>확인</button>
+          <h2 className="mt-3 text-3xl text-center">✔️</h2>
+          <h2 className="mt-4 mb-4 text-xl font-bold text-center">
+            정말로 수정하시겠습니까?
+          </h2>
+          <p>계좌 수정 시 모든 정보가 초기화됩니다.</p>
+          <p className="text-xs text-gray-500 text-center">
+            (통장쪼개기 자동 이체, 소비 내역 등)
+          </p>
+          <button className="green-button mt-8" onClick={() => buttonClicked()}>
+            확인
+          </button>
         </Modal>
       </div>
     </>
