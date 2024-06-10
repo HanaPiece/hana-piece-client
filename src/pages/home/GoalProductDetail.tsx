@@ -79,7 +79,7 @@ export const GoalProductDetail = ({ accountId }: { accountId: number }) => {
             만기일 <br /> 2030.3.12
           </div>
           <img
-            src="byul1.png"
+            src="/byul1.png"
             alt="하나주택청약종합저축"
             className="w-2/5"
           />
