@@ -154,7 +154,7 @@ export const SplitAutoPage = () => {
             </h3>
             <div>
               <img
-                src="\src\assets\byul5.png"
+                src="byul5.png"
                 className="w-20"
                 alt="하나은행"
               />
