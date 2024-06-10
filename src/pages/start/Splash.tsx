@@ -9,8 +9,8 @@ function Splash() {
           SPLASHkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
         </h2> */}
         <br></br>
-        <TopLine path={"/tutorial"} name={"test"}></TopLine>
-        <GreenButton name={"확인"}></GreenButton>
+        <TopLine name={"test"}></TopLine>
+        <GreenButton path={""} name={"확인"}></GreenButton>
       </div>
     </>
   );

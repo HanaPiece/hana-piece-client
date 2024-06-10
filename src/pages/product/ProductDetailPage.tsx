@@ -11,7 +11,7 @@ export const ProductDetailPage = () => {
   return (
     <>
       <div>
-        <TopLine path={"/productList"} name={"적금 상세 설명"} />
+        <TopLine name={"적금 상세 설명"} />
 
         <div>
           <div className="h-[500px] overflow-y-auto border p-2">
@@ -29,7 +29,7 @@ export const ProductDetailPage = () => {
             </div>
           </div>
 
-          <GreenButton name={"개설하기"} />
+          <GreenButton path={""} name={"개설하기"} />
         </div>
       </div>
     </>
