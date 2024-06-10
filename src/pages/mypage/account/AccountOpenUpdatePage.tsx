@@ -4,6 +4,7 @@ import { useUser } from "../../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../../hooks/fetch";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../../constants";
+import Modal from "../../../components/ui/Modal";
 
 type AccountGetResponse = {
   accountId: number;
@@ -14,6 +15,7 @@ type AccountGetResponse = {
 export const AccountOpenUpdatePage = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [isModalOpen, setModalOpen] = useState(false);
   const [accounts, setAccounts] = useState<AccountGetResponse[] | null>(null);
   const [selectedAccounts, setSelectedAccounts] = useState<{
     SALARY: number | null;
@@ -236,6 +238,19 @@ export const AccountOpenUpdatePage = () => {
             </button>
           </div>
         </div>
+        <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+          <h2 className="mt-3 text-3xl text-center">✔️</h2>
+          <h2 className="mt-4 mb-4 text-xl font-bold text-center">
+            정말로 수정하시겠습니까?
+          </h2>
+          <p>계좌 수정 시 모든 정보가 초기화됩니다.</p>
+          <p className="text-xs text-gray-500 text-center">
+            (통장쪼개기 자동 이체, 소비 내역 등)
+          </p>
+          <button className="green-button mt-8" onClick={() => buttonClicked()}>
+            확인
+          </button>
+        </Modal>
       </div>
     </>
   );
