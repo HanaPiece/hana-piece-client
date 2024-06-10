@@ -6,6 +6,7 @@ import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalAccountGetResponse } from "./homeType";
 import { GreenButton } from "../../components/ui/GreenButton";
 import GoalProductRecommend from "./GoalProductRecommend";
+import { LoadingPage } from "../LoadingPage";
 
 type Props = {
   count: number;
@@ -68,7 +69,7 @@ export const GoalProductSelectPage = () => {
     }
   }, [data]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   return (

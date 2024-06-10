@@ -4,6 +4,7 @@ import { useUser } from "../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { addCommas } from '../../components/utils/formatters';
 import { API_BASE_URL } from '../../constants';
+import { LoadingPage } from '../LoadingPage';
 
 export type Ratio = {
   saving: number;
@@ -115,7 +116,7 @@ export const SplitMainPage = () => {
 
 
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   return (

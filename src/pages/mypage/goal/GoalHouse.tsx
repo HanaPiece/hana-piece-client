@@ -8,6 +8,7 @@ import { Goal, useGoalsProducts } from "../../../contexts/ProductContext";
 import { formatDateToYyyyMmDd, formatDateToYyyymmdd } from "./GoalUtil";
 import { API_BASE_URL } from "../../../constants";
 import { IoClose } from "react-icons/io5";
+import { LoadingPage } from "../../LoadingPage";
 
 type Props = {
   goal: UserGoalDetailGetResponse;
@@ -126,7 +127,7 @@ export const GoalHouse = ({ goal, goalDetail }: Props) => {
     ...new Set(apartments.map((apartment) => apartment.regionNm)),
   ];
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   const buttonClicked = () => {

@@ -5,6 +5,7 @@ import { FetchOptions, useFetch } from "../../../hooks/fetch";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../../constants";
 import Modal from "../../../components/ui/Modal";
+import { LoadingPage } from "../../LoadingPage";
 type AccountGetResponse = {
   accountId: number;
   accountNumber: string;
@@ -62,7 +63,7 @@ export const AccountOpenUpdatePage = () => {
   const allSelected = Object.values(selectedAccounts).every(
     (value) => value !== null
   );
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
   const handleSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
