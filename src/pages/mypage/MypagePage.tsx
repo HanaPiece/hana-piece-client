@@ -7,16 +7,18 @@ import {
   SlSettings,
 } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../contexts/UserContext";
 
 export const MypagePage = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
 
   return (
     <>
       <div className="">
         <div className="flex bg-white p-10 mb-4">
           <img src="/hana.png" alt="Hana Image" className="w-16 h-16"></img>
-          <span className="m-4 text-xl font-bold font-hana-m">김하나 님</span>
+          <span className="m-4 text-xl font-bold font-hana-m">{user.name} 님</span>
         </div>
         <div className="mx-8 mb-2 font-hana-m text-lg">메뉴</div>
         <div className="divide-y divide-solid m-5">
