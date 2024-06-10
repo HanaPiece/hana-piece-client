@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions } from "../../hooks/fetch";
 import { API_BASE_URL } from "../../constants";
-
 export const SplitStartSplitPage = () => {
   const navigate = useNavigate();
   const { user } = useUser();
@@ -15,28 +14,23 @@ export const SplitStartSplitPage = () => {
     life: 0,
     reserve: 0,
   });
-
   //통장 설정 페이지에서 받아온 값
   const location = useLocation();
   const { selectedAccounts } = location.state || {};
-
   const [ratio, setRatio] = useState<Ratio>({
     saving: 0,
     life: 0,
     reserve: 0,
   });
-
   const [recoRatio, setRecoRatio] = useState<Ratio>({
     saving: 0,
     life: 0,
     reserve: 0,
   });
-
   useEffect(() => {
     getRatio();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.jwt]);
-
   const getRatio = async () => {
     try {
       const response = await fetch(
@@ -58,10 +52,8 @@ export const SplitStartSplitPage = () => {
       console.error("Fetch error:", error);
     }
   };
-
   const [isEditing, setIsEditing] = useState(false);
   const [isCorrect, setIsCorrect] = useState(true);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setRatio((prevRatio) => ({
@@ -69,16 +61,13 @@ export const SplitStartSplitPage = () => {
       [name]: Number(value),
     }));
   };
-
   const calcAmount = (ratio: number, salary: number): number => {
     return 0.01 * ratio * salary;
   };
-
   const setCancle = () => {
     setRatio(recoRatio);
     setIsEditing(false);
   };
-
   // 완료 버튼 -----------
   const adjustComplete = () => {
     const sum = ratio.saving + ratio.life + ratio.reserve;
@@ -88,7 +77,6 @@ export const SplitStartSplitPage = () => {
     }
     setAccountType();
   };
-
   useEffect(() => {
     if (
       accountAutoDebitId.saving !== 0 &&
@@ -99,7 +87,6 @@ export const SplitStartSplitPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountAutoDebitId]);
-
   // 통장 쪼개기 (자동이체 설정)
   const setAutoDebit = async () => {
     console.log(selectedAccounts.saving, calcAmount(ratio.saving, salary));
@@ -118,7 +105,6 @@ export const SplitStartSplitPage = () => {
         spareAutoDebitAmount: calcAmount(ratio.reserve, salary),
       }),
     };
-
     try {
       const response = await fetch(
         `${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`,
@@ -133,7 +119,6 @@ export const SplitStartSplitPage = () => {
       console.error("Error:", error);
     }
   };
-
   // 계좌 타입 요청
   const setAccountType = async () => {
     const postOptions: FetchOptions = {
@@ -149,7 +134,6 @@ export const SplitStartSplitPage = () => {
         spareAccountId: selectedAccounts.reserve,
       }),
     };
-
     try {
       const response = await fetch(
         `${API_BASE_URL}/api/v1/accounts/account-type-reg`,
@@ -164,7 +148,6 @@ export const SplitStartSplitPage = () => {
       console.error("Error:", error);
     }
   };
-
   // 사용자 계좌 가져오기
   const getAccounts = async () => {
     try {
@@ -187,7 +170,6 @@ export const SplitStartSplitPage = () => {
       console.error("Fetch error:", error);
     }
   };
-
   // 타입별 통장 번호 저장
   const setAccountId = (
     accounts: AccountAutoDebitAdjustGetResponse[]
@@ -210,7 +192,6 @@ export const SplitStartSplitPage = () => {
       reserve: reserve,
     };
   };
-
   return (
     <>
       <div className="container">
@@ -291,7 +272,6 @@ export const SplitStartSplitPage = () => {
                     </>
                   )}
                 </div>
-
                 <div className="font-semibold text-gray-400 text-sm text-right">
                   매달
                 </div>
@@ -393,7 +373,6 @@ export const SplitStartSplitPage = () => {
                 취소하기
               </button>
             )}
-
             <button
               className="py-2 bg-customGreen rounded-md text-white w-1/2"
               onClick={() => adjustComplete()}
