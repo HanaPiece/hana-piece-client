@@ -7,6 +7,7 @@ import { GoalHouse } from "./GoalHouse";
 import { GoalCar } from "./GoalCar";
 import { GoalWish } from "./GoalWish";
 import { API_BASE_URL } from "../../../constants";
+import { LoadingPage } from "../../LoadingPage";
 
 export type House = {
   apartmentNm: string;
@@ -68,7 +69,7 @@ export const GoalDetailPage = () => {
     }
   }, [data]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   return (

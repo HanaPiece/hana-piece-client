@@ -10,6 +10,7 @@ import { UserGoalGetResponse } from "./homeType";
 import { useUser } from "../../contexts/UserContext";
 import { API_BASE_URL } from "../../constants";
 import { useEffect } from "react";
+import { LoadingPage } from "../LoadingPage";
 
 const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ export const HomePage = () => {
 
   const totalAmount = calcTotalAmount(data || []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   return (
