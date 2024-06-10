@@ -1,44 +1,10 @@
-import GoalProductRecommend from "./GoalProductRecommend";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { UserGoalAccountGetResponse } from "./homeType";
 import { GoalProductDetail } from "./GoalProductDetail";
 import { GoalProductTransactionDetail } from "./GoalProductTransactionDetail";
-import { FetchOptions, useFetch } from "../../hooks/fetch";
-import { useUser } from "../../contexts/UserContext";
-import { API_BASE_URL } from "../../constants";
+import { TopLine } from "../../components/ui/TopLine";
 
 export const GoalProductDetailPage = () => {
-  const [isRecommend, setRecommend] = useState<boolean>(false);
-  const { id } = useParams<{ id: string }>();
-
-  const { user } = useUser();
-
-  const fetchOptions: FetchOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${user.jwt}`,
-    },
-  };
-
-  const { data, error, loading } = useFetch<UserGoalAccountGetResponse[]>(
-    `${API_BASE_URL}/api/v1/accounts/user-goal/${id}`,
-    fetchOptions
-  );
-
-  useEffect(() => {
-    if (!loading && data) {
-      console.log("Data fetched:", data);
-      if (data.length === 0) {
-        setRecommend(true);
-      } else {
-        setRecommend(false); // 추가: 데이터가 있는 경우 추천 상태를 false로 설정
-      }
-    }
-  }, [loading, data]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const { accountId } = useParams();
 
   return (
     <>
@@ -46,20 +12,11 @@ export const GoalProductDetailPage = () => {
         <img src="/logo.png" className="w-1/5" alt="하나피스" />
       </div>
       <div className="mx-10 my-5">
-        <div className="font-hana-r">
-          <p className="text-gray-400 text-xs">반갑습니다</p>
-          <h3 className="font-semibold text-lg pt-1">{user.name} 님</h3>
+        <div key={accountId}>
+          <TopLine name={"적금 상세내역"} />
+          <GoalProductDetail accountId={Number(accountId)} />
+          <GoalProductTransactionDetail accountId={Number(accountId)} />
         </div>
-        {isRecommend ? (
-          <GoalProductRecommend goalId={Number(id)} />
-        ) : (
-          data?.map((account) => (
-            <div key={account.accountNumber}>
-              <GoalProductDetail data={account} />
-              <GoalProductTransactionDetail accountId={account.accountId} />
-            </div>
-          ))
-        )}
       </div>
     </>
   );

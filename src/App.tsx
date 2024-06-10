@@ -41,6 +41,7 @@ import { TutorialPage } from "./pages/start/TutorialPage";
 import { LifeStartPage } from "./pages/life/LifeStartPage";
 import { AccountCreatePage } from "./pages/mypage/account/create/AccountCreatePage";
 import { AccountTermDetailPage } from "./pages/mypage/account/create/AccountTermDetailPage";
+import { GoalProductSelectPage } from "./pages/home/GoalProductSelectPage";
 
 function App() {
   return (
@@ -50,7 +51,11 @@ function App() {
           {/* NavBar 있는 화면 */}
           <Route path="home">
             <Route index element={<HomePage />} />
-            <Route path=":id" element={<GoalProductDetailPage />} />
+            <Route path=":goalId" element={<GoalProductSelectPage />} />
+            <Route
+              path=":goalId/:accountId"
+              element={<GoalProductDetailPage />}
+            />
           </Route>
           <Route path="product">
             <Route index element={<ProductGoalPage />} />

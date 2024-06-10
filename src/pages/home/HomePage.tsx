@@ -13,7 +13,7 @@ import { useEffect } from "react";
 
 const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
   const navigate = useNavigate();
-  const goToDetail = (userGoalId: number) => {
+  const goToSelect = (userGoalId: number) => {
     navigate(`${userGoalId}`);
   };
 
@@ -46,7 +46,7 @@ const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
     <>
       <div
         className={`relative ${gradientClass} border-2 border-customGreen rounded-2xl p-3 mt-5 mb-7 shadow-xl cursor-pointer`}
-        onClick={() => goToDetail(goal.userGoalId)}
+        onClick={() => goToSelect(goal.userGoalId)}
       >
         <div className="absolute top-0 left-0 bg-customGreen w-1/5 text-white p-1 text-sm text-center font-hana-r rounded-br-xl rounded-tl-xl">
           목표 {goal.userGoalId}
@@ -66,7 +66,12 @@ const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
               {beginDate(goal.goalBeginDate)} ~
             </div>
             <div className="text-right">
-              {goal.productNames ? goal.productNames[0] : null}
+              {goal.enrolledProducts.length >= 1
+                ? goal.enrolledProducts[0].enrolledProductName +
+                  (goal.enrolledProducts.length === 1
+                    ? ``
+                    : ` 외 ${goal.enrolledProducts.length - 1}개`)
+                : null}
             </div>
           </div>
         </div>
@@ -110,12 +115,12 @@ export const HomePage = () => {
     `${API_BASE_URL}/api/v1/user-goals/list`,
     fetchOptions
   );
-  
-  useEffect(()=>{
-    if(data){
-      console.log(data)
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
     }
-  },[data])
+  }, [data]);
 
   const totalAmount = calcTotalAmount(data || []);
 
