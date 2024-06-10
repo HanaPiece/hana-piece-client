@@ -11,30 +11,15 @@ export const TutorialPage = () => {
       content: (
         <>
         <div className='text-center mb-10'>
-          <p className='font-hana-b text-2xl mb-2'>목표 추천 적금</p>
+          <p className='font-hana-b text-2xl mb-2'>소비 내역 확인</p>
           <p className='font-hana-r'>
-            소비 목표를 만들고<br />목표를 달성할 수 있도록<br />최적의 적금을 추천해드려요!
-          </p>
-        </div>
-        <div className="p-1 mb-7">
-          <img src="tutorial1.png" alt="" className='w-full' />
-        </div>
-        </>
-      ),
-    },
-    {
-      content: (
-        <>
-        <div className='text-center mb-10'>
-          <p className='font-hana-b text-2xl mb-2'>목표 달성 금액</p>
-          <p className='font-hana-r'>
-          구체적인 목표를 입력하면<br />
-          시세를 예측해서<br />
-          목표 달성 금액을 정해줘요!
+          월 별 지출 금액을<br />
+          한 눈에 확인하고<br />
+          소비 습관을 개선해보아요!
           </p>
         </div>
         <div className="p-1 mb-5">
-          <img src="tutorial2.png" alt="" className='w-full' />
+          <img src="tutorial4.png" alt="" className='w-3/4 m-auto' />
         </div>
         </>
       ),
@@ -60,15 +45,30 @@ export const TutorialPage = () => {
       content: (
         <>
         <div className='text-center mb-10'>
-          <p className='font-hana-b text-2xl mb-2'>소비 내역 확인</p>
+          <p className='font-hana-b text-2xl mb-2'>목표 달성 금액</p>
           <p className='font-hana-r'>
-          월 별 지출 금액을<br />
-          한 눈에 확인하고<br />
-          소비 습관을 개선해보아요!
+          구체적인 목표를 입력하면<br />
+          시세를 예측해서<br />
+          목표 달성 금액을 정해줘요!
           </p>
         </div>
         <div className="p-1 mb-5">
-          <img src="tutorial4.png" alt="" className='w-3/4 m-auto' />
+          <img src="tutorial2.png" alt="" className='w-full' />
+        </div>
+        </>
+      ),
+    },
+    {
+      content: (
+        <>
+        <div className='text-center mb-10'>
+          <p className='font-hana-b text-2xl mb-2'>목표 추천 적금</p>
+          <p className='font-hana-r'>
+            소비 목표를 만들고<br />목표를 달성할 수 있도록<br />최적의 적금을 추천해드려요!
+          </p>
+        </div>
+        <div className="p-1 mb-7">
+          <img src="tutorial1.png" alt="" className='w-full' />
         </div>
         </>
       ),

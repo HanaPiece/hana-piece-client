@@ -5,6 +5,7 @@ import { Ratio } from "./SplitMainPage";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions } from "../../hooks/fetch";
 import { API_BASE_URL } from "../../constants";
+import Modal from "../../components/ui/Modal";
 
 
 
@@ -12,6 +13,8 @@ export const SplitManualPage = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const salary = Number(user.salary);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isCheckModalOpen, setCheckModalOpen] = useState(false);
   const [ratio, setRatio] = useState<Ratio>({ saving: 0, life: 0, reserve: 0 });
   const [isCorrect, setIsCorrect] = useState<boolean>(true);
   const [accountAutoDebitId, setAccountAutoDebitId] = useState<Ratio>({ saving: 0, life: 0, reserve: 0 });
@@ -49,7 +52,7 @@ export const SplitManualPage = () => {
       return false;
     }
 
-    getAccounts();
+    setModalOpen(true);
   };
 
   // 사용자 계좌 가져오기
@@ -124,7 +127,9 @@ export const SplitManualPage = () => {
       if (!response.ok) {
         console.error('Failed to set account types');
       } else {
-        navigate("/split");
+        setModalOpen(false);
+        setCheckModalOpen(true);
+        // navigate("/split");
       }
     } catch (error) {
       console.error('Error:', error);
@@ -256,6 +261,24 @@ export const SplitManualPage = () => {
             변경하기
           </button>
         </div>
+        <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+            <h2 className="mt-3 text-3xl text-center">✔️</h2>
+            <h2 className="mt-4 mb-4 text-xl font-bold text-center">
+              정말로 변경하시겠습니까?
+            </h2>
+            <div className="mt-10">
+              <button className="green-button" onClick={()=>getAccounts()}>확인</button>
+            </div>
+        </Modal>
+        <Modal isOpen={isCheckModalOpen} onClose={() => navigate("/split")}>
+            <h2 className="mt-3 text-3xl text-center">✔️</h2>
+            <h2 className="mt-4 mb-4 text-xl font-bold text-center">
+              변경되었습니다.
+            </h2>
+            <div className="mt-10">
+              <button className="green-button" onClick={()=>navigate("/split")}>확인</button>
+            </div>
+        </Modal>
       </div>
     </>
   );
