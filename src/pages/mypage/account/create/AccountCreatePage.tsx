@@ -23,10 +23,10 @@ export const AccountCreatePage = () => {
             </div>
             <p className="text-xl font-hana-cm">입출금 계좌</p>
           </div>
-          <div className="grid grid-cols-2 text-bold text-center pb-3 cursor-pointer">
+          <div className="text-bold text-center pb-3 cursor-pointer">
             <div
               className={
-                "px-4 py-2 border-customGreen border-b-2 font-bold text-customGreen"
+                "text-xl px-4 py-2 border-customGreen border-b-2 font-bold text-customGreen"
               }
             >
               상품 안내
