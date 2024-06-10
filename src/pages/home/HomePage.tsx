@@ -154,7 +154,7 @@ export const HomePage = () => {
 
         <div
           className="py-5 bg-white rounded-2xl p-3 mt-5 mb-7 shadow-xl cursor-pointer text-center"
-          onClick={() => navigate("/mypage/goal/create")}
+          onClick={() => navigate("/mypage/goal/0/create")}
         >
           <div className="m-auto mb-5 w-14 h-14 rounded-full bg-slate-300 flex justify-center items-center">
             <FaPlus className="text-customGreen text-xl" />
