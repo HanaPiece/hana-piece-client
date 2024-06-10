@@ -23,6 +23,8 @@ jobs:
         run: yarn install
 
       - name: Build the project
+        env:
+          VITE_API_URI: ${{ secrets.VITE_API_URI }}
         run: yarn build
 
       - name: Build Docker image
