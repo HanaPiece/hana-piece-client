@@ -216,13 +216,13 @@ export const SplitMainPage = () => {
         <div className="flex justify-between mt-14 gap-4">
           <button
             onClick={() => onAdjust()}
-            className="bg-gray-200 w-1/2 rounded-md h-10 font-bold text-gray-600"
+            className="bg-gray-200 w-full rounded-md h-13 font-bold text-gray-600"
           >
             비율 설정하기
           </button>
           <button
             onClick={() => navigate("auto")}
-            className="bg-emerald-600 w-1/2 rounded-md h-10 font-bold text-white"
+            className="green-button"
           >
             비율 추천받기
           </button>

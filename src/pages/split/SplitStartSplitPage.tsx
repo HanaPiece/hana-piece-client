@@ -222,8 +222,7 @@ export const SplitStartSplitPage = () => {
           <div>
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-xl">
-                <span className="text-green-600 mr-2">{user.name}</span>님을
-                위한
+                <span className="text-green-600 mr-2">{user.name}</span>님을 위한
                 <br />
                 통장 쪼개기 추천 비율
               </h3>

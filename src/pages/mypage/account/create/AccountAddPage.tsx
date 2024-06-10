@@ -10,7 +10,7 @@ export const AccountAddPage = () => {
       <div className="container">
         <TopLine name={"입출금 통장"} />
         <div className="h-1 bg-gray-200">
-          <div className="w-1/3 hana-color h-1"></div>
+          <div className="w-3/4 hana-color h-1"></div>
         </div>
         <div className="m-10">
           <div className="flex justify-center my-20">

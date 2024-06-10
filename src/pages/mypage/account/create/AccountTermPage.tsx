@@ -67,8 +67,10 @@ const AccountTerm = ({ name, content, onCheckboxChange }: Props) => {
           </div>
           <PhoneModal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
             <h2 className="mt-4 text-xl font-bold text-center">{name}</h2>
-            <div className="mt-4 text-center break-words overflow-auto border h-48">
-              {content}
+            <div className="mt-4 p-5 text-md break-words overflow-auto border h-48">
+            {content.split('.').map((item, count) => (
+                item.trim() && <p key={count}>{item.trim()}.</p>
+              ))}
             </div>
             <button
               onClick={() => setModalOpen(false)}
@@ -108,7 +110,7 @@ export const AccountTermPage = () => {
       <div className="container">
         <TopLine name={"입출금 통장"} />
         <div className="h-1 bg-gray-200">
-          <div className="w-2/3 hana-color h-1"></div>
+          <div className="w-2/4 hana-color h-1"></div>
         </div>
 
         <div className="m-7 mt-10">
