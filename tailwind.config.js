@@ -4,7 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        customTeal: "#008485",
+        customGreen: "#008485",
+      },
+      fontFamily: {
+        'noto-sans-kr': ['Noto Sans KR', 'sans-serif'],
       },
     },
   },

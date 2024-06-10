@@ -1,54 +1,53 @@
-import { useState } from "react";
-// import { SlArrowRight } from "react-icons/sl";
-import { SlBookOpen, SlWallet, SlCreditCard, SlUser } from "react-icons/sl";
+import { useState } from 'react';
+import {
+  SlWallet,
+  SlCreditCard,
+  SlUser,
+  SlSocialDropbox,
+} from 'react-icons/sl';
+import { useNavigate } from 'react-router-dom';
 
 export const NavBar = () => {
-  const [selected, setSelected] = useState(0);
+  const navigate = useNavigate();
+  const [selected, setSelected] = useState<string>('/home');
 
-  const handleClick = (index: number) => {
-    setSelected(index);
+  const handleNavigate = (path: string) => {
+    setSelected(path);
+    navigate(path);
+  };
+
+  const getIconClass = (path: string) => {
+    return selected === path ? 'nav-icon selected-nav-item' : 'nav-icon';
+  };
+
+  const getTextClass = (path: string) => {
+    return selected === path ? 'text-xs font-bold mt-1 hana-text-color' : 'text-xs mt-1';
   };
 
   return (
-    <>
-      <div className="nav-bar">
-        <div className="sticky flex justify-between bottom-0 left-0 w-full">
-          <div
-            className={`nav-item ${selected === 0 ? "selected" : ""}`}
-            onClick={() => handleClick(0)}
-          >
-            <SlBookOpen className="nav-icon" />
-            <p className="text-xs flex-1 align-middle justify-center">상품</p>
-          </div>
-          <div
-            className={`nav-item ${selected === 1 ? "selected" : ""}`}
-            onClick={() => handleClick(1)}
-          >
-            <SlWallet className="nav-icon" />
-            <p className="text-xs">통장쪼개기</p>
-          </div>
-          <div
-            className={`nav-item ${selected === 2 ? "selected" : ""}`}
-            onClick={() => handleClick(2)}
-          >
-            <img src="/home.png" alt="Home Image" />
-          </div>
-          <div
-            className={`nav-item ${selected === 3 ? "selected" : ""}`}
-            onClick={() => handleClick(2)}
-          >
-            <SlCreditCard className="nav-icon" />
-            <p className="text-xs">생활</p>
-          </div>
-          <div
-            className={`nav-item ${selected === 4 ? "selected" : ""}`}
-            onClick={() => handleClick(2)}
-          >
-            <SlUser className="nav-icon" />
-            <p className="text-xs">마이페이지</p>
-          </div>
+    <div className="nav-shadow-top-lg rounded-t-3xl w-full h-20 absolute bottom-0 bg-white">
+      <div className="sticky flex justify-between bottom-0 left-0 w-full px-4">
+        <div className="flex flex-col items-center justify-center nav-item" onClick={() => handleNavigate('/life')}>
+          <SlCreditCard className={getIconClass('/life')} />
+          <p className={getTextClass('/life')}>생활</p>
+        </div>
+        <div className="flex flex-col items-center justify-center nav-item" onClick={() => handleNavigate('/split')}>
+          <SlWallet className={getIconClass('/split')} />
+          <p className={getTextClass('/split')}>통장</p>
+        </div>
+        <div className="nav-item -mt-5" onClick={() => handleNavigate('/home')}>
+          <img src="/home.png" alt="Home Image" className={selected === '/home' ? 'text-green-500' : ''} />
+        </div>
+        <div className="flex flex-col items-center justify-center nav-item" onClick={() => handleNavigate('/product/start')}>
+          <SlSocialDropbox className={getIconClass('/product')} />
+          <p className={getTextClass('/product')}>상품</p>
+        </div>
+        <div className="flex flex-col items-center justify-center nav-item" onClick={() => handleNavigate('/mypage')}>
+          <SlUser className={getIconClass('/mypage')} />
+          <p className={getTextClass('/mypage')}>마이페이지</p>
         </div>
       </div>
-    </>
+      <div className="h-1 bg-gray-200 w-28 m-auto"></div>
+    </div>
   );
 };
