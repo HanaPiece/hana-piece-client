@@ -75,7 +75,9 @@ export const ProductSignupPage = () => {
     }
   }, [productId, user.jwt]);
 
-  const buttonClicked = () => {
+  const buttonClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault(); // 기본 동작 방지
+
     const autoDebitAmountElement = document.getElementById(
       "autoDebitAmount"
     ) as HTMLInputElement;
@@ -212,7 +214,11 @@ export const ProductSignupPage = () => {
             </div>
           </div>
 
-          <button onClick={buttonClicked} className="green-button">
+          <button
+            type="button"
+            onClick={buttonClicked}
+            className="green-button"
+          >
             적금 개설하기
           </button>
         </div>
