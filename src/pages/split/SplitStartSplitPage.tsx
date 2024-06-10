@@ -34,7 +34,7 @@ export const SplitStartSplitPage = () => {
 
   useEffect(() => {
     getRatio();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.jwt]);
 
   const getRatio = async () => {
@@ -97,7 +97,7 @@ export const SplitStartSplitPage = () => {
     ) {
       setAutoDebit();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountAutoDebitId]);
 
   // 통장 쪼개기 (자동이체 설정)
@@ -222,7 +222,8 @@ export const SplitStartSplitPage = () => {
           <div>
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-xl">
-                <span className="text-green-600 mr-2">하나</span>님을 위한
+                <span className="text-green-600 mr-2">{user.name}</span>님을
+                위한
                 <br />
                 통장 쪼개기 추천 비율
               </h3>

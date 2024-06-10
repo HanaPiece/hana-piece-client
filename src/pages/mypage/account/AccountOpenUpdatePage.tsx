@@ -117,7 +117,7 @@ export const AccountOpenUpdatePage = () => {
       (async function () {
         try {
           const response = await fetch(
-            `http://43.201.157.250:8080/api/v1/accounts/account-type-reg`,
+            `${API_BASE_URL}/api/v1/accounts/account-type-reg`,
             {
               method: "post",
               headers: {
@@ -227,7 +227,11 @@ export const AccountOpenUpdatePage = () => {
             </div>
           </div>
           <div className="mt-10">
-            <button onClick={() => buttonClicked()} disabled={!allSelected} className="green-button">
+            <button
+              onClick={() => buttonClicked()}
+              disabled={!allSelected}
+              className="green-button"
+            >
               확인
             </button>
           </div>
