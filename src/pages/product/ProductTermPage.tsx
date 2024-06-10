@@ -141,7 +141,7 @@ export const ProductTermPage = () => {
             />
           </div>
           <label className="text-customGreen font-semibold">이메일</label>
-          <input type="text" className="m-3 bg-slate-300" /> <br />
+          <input type="text" className="m-3 bg-slate-100 px-1" /> <br />
           <p className="text-sm">
             [필수] 입력하신 이메일로 상품 이용약관 설명서가 발송됩니다.
           </p>

@@ -137,14 +137,28 @@ export const HomePage = () => {
           <p className="text-gray-400 text-xs">반갑습니다</p>
           <h3 className="font-semibold text-lg pt-1">{user.name} 님</h3>
         </div>
-
-        <div className="px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end">
-          <h2 className="font-hana-b text-lg">💰현재 저축액 :</h2>
-          <h2 className="font-hana-b text-xl">
-            {Math.ceil(totalAmount / 10000).toLocaleString()}{" "}
-            <span className="text-lg">만원</span>
-          </h2>
-        </div>
+        {totalAmount.toString.length>10 ? (
+          <>
+            <div className="px-5 py-3 mt-3 bg-gray-200 rounded-2xl items-end">
+              <h2 className="font-hana-b text-lg">💰현재 저축액</h2>
+              <h2 className="font-hana-b text-xl text-right">
+                {totalAmount.toLocaleString()}{" "}
+                <span className="text-lg">원</span>
+              </h2>
+            </div>
+          </>
+        ): (
+          <>
+            <div className="px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end">
+              <h2 className="font-hana-b text-lg">💰현재 저축액 :</h2>
+              <h2 className="font-hana-b text-xl">
+                {totalAmount.toLocaleString()}{" "}
+                <span className="text-lg">원</span>
+              </h2>
+            </div>
+          </>
+        )}
+        
 
         {data?.map((goal) => (
           <div key={goal.userGoalId}>
