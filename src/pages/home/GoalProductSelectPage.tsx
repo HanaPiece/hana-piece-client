@@ -85,9 +85,9 @@ export const GoalProductSelectPage = () => {
           <GoalProductRecommend goalId={Number(goalId)} />
         ) : (
           <div>
-            <div className="text-center">
-              <p className="text-3xl mb-2 ml-3">🚩</p>
-              <h2 className="font-bold text-xl">적금 선택</h2>
+            <div className="text-center mt-5">
+              <p className="text-3xl mb-2 ml-3">💰</p>
+              <h2 className="font-bold text-xl">연결된 적금 선택</h2>
             </div>
             <div className="my-10">
               {goalAccount?.map((account, index) => (

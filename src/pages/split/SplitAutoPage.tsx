@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { GreenButton } from "../../components/ui/GreenButton";
 import { TopLine } from "../../components/ui/TopLine";
 import { Ratio } from "./SplitMainPage";
 import { Checkbox } from "../../components/ui/Checkbox";
 import { useUser } from "../../contexts/UserContext";
 import { API_BASE_URL } from "../../constants";
+import { FetchOptions } from "../../hooks/fetch";
+import { useNavigate } from "react-router-dom";
 
 export const SplitAutoPage = () => {
   const [mode, setMode] = useState<boolean>(true);
-
+  const [accountAutoDebitId, setAccountAutoDebitId] = useState<Ratio>({ saving: 0, life: 0, reserve: 0 });
+  const navigate = useNavigate();
   const [ratio, setRatio] = useState<Ratio>({
     saving: 50,
     life: 23,
@@ -16,6 +18,7 @@ export const SplitAutoPage = () => {
   });
 
   const { user } = useUser();
+  const salary = Number(user.salary);
 
   useEffect(() => {
     let type: string = "";
@@ -50,6 +53,89 @@ export const SplitAutoPage = () => {
       })();
     }
   }, [user.jwt, mode]);
+
+  const calcAmount = (ratio: number, salary: number): number => {
+    return 0.01 * ratio * salary;
+  };
+
+  // 사용자 계좌 가져오기
+  const getAccounts = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user.jwt}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: AccountAutoDebitAdjustGetResponse[] = await response.json();
+      const testData = setAccountId(data);
+      setAccountAutoDebitId(testData);
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+  }
+
+  // 타입별 통장 번호 저장
+  const setAccountId = (accounts: AccountAutoDebitAdjustGetResponse[]): Ratio => {
+    let saving = 0;
+    let life = 0;
+    let reserve = 0;
+    accounts.forEach((account) => {
+      if (account.accountType === "SAVING") {
+        saving = account.accountAutoDebitId;
+      } else if (account.accountType === "LIFE") {
+        life = account.accountAutoDebitId;
+      } else if (account.accountType === "SPARE") {
+        reserve = account.accountAutoDebitId;
+      }
+    });
+
+    return {
+      saving: saving,
+      life: life,
+      reserve: reserve
+    };
+  };
+
+  useEffect(() => {
+    if (accountAutoDebitId.saving !== 0 && accountAutoDebitId.life !== 0 && accountAutoDebitId.reserve !== 0) {
+      setAutoDebit();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountAutoDebitId]);
+
+  // 통장 쪼개기 (자동이체 설정)
+  const setAutoDebit = async () => {
+    const postOptions: FetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.jwt}`,
+      },
+      body: JSON.stringify({
+        "savingAccountAutoDebitId": accountAutoDebitId.saving,
+        "savingAutoDebitAmount": calcAmount(ratio.saving, salary),
+        "lifeAccountAutoDebitId": accountAutoDebitId.life,
+        "lifeAutoDebitAmount": calcAmount(ratio.life, salary),
+        "spareAccountAutoDebitId": accountAutoDebitId.reserve,
+        "spareAutoDebitAmount": calcAmount(ratio.reserve, salary)
+      }),
+    };
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/accounts/auto-debit/adjust`, postOptions);
+      if (!response.ok) {
+        console.error('Failed to set account types');
+      } else {
+        navigate("/split");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   return (
     <>
@@ -189,7 +275,9 @@ export const SplitAutoPage = () => {
           </div>
         </div>
         <hr className="bg-gray-200 border-0 w-16 mx-auto my-8 h-px" />
-        <GreenButton name={"이대로 설정하기"} path={"/split"} />
+        <button className="green-button" onClick={()=>getAccounts()}>
+          이대로 설정하기
+        </button>
       </div>
     </>
   );
