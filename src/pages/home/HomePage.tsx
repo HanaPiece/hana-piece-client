@@ -12,7 +12,12 @@ import { API_BASE_URL } from "../../constants";
 import { useEffect } from "react";
 import { LoadingPage } from "../LoadingPage";
 
-const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
+type Props = {
+  goal: UserGoalGetResponse;
+  idx: number;
+};
+
+const GoalBox = ({ goal, idx }: Props) => {
   const navigate = useNavigate();
   const goToSelect = (userGoalId: number) => {
     navigate(`${userGoalId}`);
@@ -50,7 +55,7 @@ const GoalBox = ({ goal }: { goal: UserGoalGetResponse }) => {
         onClick={() => goToSelect(goal.userGoalId)}
       >
         <div className="absolute top-0 left-0 bg-customGreen w-1/5 text-white p-1 text-sm text-center font-hana-r rounded-br-xl rounded-tl-xl">
-          목표 {goal.userGoalId}
+          목표 {idx}
         </div>
         <div className="grid grid-cols-5 text-md font-semibold mb-8 mt-3">
           <div className="align-bottom col-span-3 flex">
@@ -131,14 +136,14 @@ export const HomePage = () => {
   return (
     <>
       <div className="bg-white px-10">
-        <img src="logo.png" className="w-1/5" alt="" />
+        <img src="\logo.png" className="w-1/5" alt="" />
       </div>
       <div className="mx-10 my-5">
         <div className="font-hana-r">
           <p className="text-gray-400 text-xs">반갑습니다</p>
           <h3 className="font-semibold text-lg pt-1">{user.name} 님</h3>
         </div>
-        {totalAmount.toString.length>10 ? (
+        {totalAmount.toString.length > 10 ? (
           <>
             <div className="px-5 py-3 mt-3 bg-gray-200 rounded-2xl items-end">
               <h2 className="font-hana-b text-lg">💰현재 저축액</h2>
@@ -148,7 +153,7 @@ export const HomePage = () => {
               </h2>
             </div>
           </>
-        ): (
+        ) : (
           <>
             <div className="px-5 py-3 mt-3 bg-gray-200 rounded-2xl flex justify-between items-end">
               <h2 className="font-hana-b text-lg">💰현재 저축액 :</h2>
@@ -159,11 +164,10 @@ export const HomePage = () => {
             </div>
           </>
         )}
-        
 
-        {data?.map((goal) => (
+        {data?.map((goal, cnt) => (
           <div key={goal.userGoalId}>
-            <GoalBox goal={goal} />
+            <GoalBox goal={goal} idx={cnt + 1} />
           </div>
         ))}
 

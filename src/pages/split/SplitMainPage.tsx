@@ -122,7 +122,7 @@ export const SplitMainPage = () => {
   return (
     <>
       <div className="bg-white px-10">
-        <img src="logo.png" className="w-1/5" alt="" />
+        <img src="\logo.png" className="w-1/5" alt="" />
       </div>
       <div className="mx-5 mt-10 px-5 bg-white pb-20 rounded-2xl">
         <div className="pt-10">

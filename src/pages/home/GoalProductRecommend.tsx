@@ -3,8 +3,13 @@ import { useGoalsProducts } from "../../contexts/ProductContext";
 import { useUser } from "../../contexts/UserContext";
 import { ProductGetResponse } from "../product/ProductListPage";
 import { API_BASE_URL } from "../../constants";
+import { LoadingPage } from "../LoadingPage";
 
-const calcExpectedAmount = (years: number, annualInterestRate: number, monthlySavings: number): string => {
+const calcExpectedAmount = (
+  years: number,
+  annualInterestRate: number,
+  monthlySavings: number
+): string => {
   const months = years * 12;
   const monthlyInterestRate = annualInterestRate / 12 / 100;
 
@@ -12,10 +17,10 @@ const calcExpectedAmount = (years: number, annualInterestRate: number, monthlySa
 
   for (let i = 0; i < months; i++) {
     totalAmount += monthlySavings;
-    totalAmount *= (1 + monthlyInterestRate);
+    totalAmount *= 1 + monthlyInterestRate;
   }
 
-  return (Math.floor(totalAmount/100)*100).toLocaleString();
+  return (Math.floor(totalAmount / 100) * 100).toLocaleString();
 };
 
 const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
@@ -105,19 +110,27 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
                 </div>
                 <div className="text-xs text-lime-600 font-bold">예상금액</div>
                 <div className="col-span-4 text-xs">
-                <p>
+                  <p>
                     매달 10만원씩 적금한다면
                     <span className="text-red-600">
-                      {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[0]?.termYear, goalProduct.products.recommendedProducts[0]
-                      ?.interestRate, 100000)}`}
+                      {` ${calcExpectedAmount(
+                        goalProduct.products.recommendedProducts[0]?.termYear,
+                        goalProduct.products.recommendedProducts[0]
+                          ?.interestRate,
+                        100000
+                      )}`}
                     </span>
                     원
                   </p>
                   <p>
                     매달 100만원씩 적금한다면
                     <span className="text-red-600">
-                      {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[0]?.termYear, goalProduct.products.recommendedProducts[0]
-                      ?.interestRate, 1000000)}`}
+                      {` ${calcExpectedAmount(
+                        goalProduct.products.recommendedProducts[0]?.termYear,
+                        goalProduct.products.recommendedProducts[0]
+                          ?.interestRate,
+                        1000000
+                      )}`}
                     </span>
                     원
                   </p>
@@ -157,21 +170,31 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
                     </span>
                     %
                   </div>
-                  <div className="text-xs text-lime-600 font-bold">예상금액</div>
+                  <div className="text-xs text-lime-600 font-bold">
+                    예상금액
+                  </div>
                   <div className="text-xs col-span-4">
-                  <p>
+                    <p>
                       매달 10만원씩 적금한다면
                       <span className="text-red-600">
-                        {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[1]?.termYear, goalProduct.products.recommendedProducts[0]
-                        ?.interestRate, 100000)}`}
+                        {` ${calcExpectedAmount(
+                          goalProduct.products.recommendedProducts[1]?.termYear,
+                          goalProduct.products.recommendedProducts[0]
+                            ?.interestRate,
+                          100000
+                        )}`}
                       </span>
                       원
                     </p>
                     <p>
                       매달 100만원씩 적금한다면
                       <span className="text-red-600">
-                        {` ${calcExpectedAmount(goalProduct.products.recommendedProducts[1]?.termYear, goalProduct.products.recommendedProducts[0]
-                        ?.interestRate, 1000000)}`}
+                        {` ${calcExpectedAmount(
+                          goalProduct.products.recommendedProducts[1]?.termYear,
+                          goalProduct.products.recommendedProducts[0]
+                            ?.interestRate,
+                          1000000
+                        )}`}
                       </span>
                       원
                     </p>
@@ -182,7 +205,7 @@ const GoalProductRecommend = ({ goalId }: { goalId: number }) => {
           )}
         </>
       ) : (
-        <div>Loading...</div>
+        <LoadingPage />
       )}
     </>
   );

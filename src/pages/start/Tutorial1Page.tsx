@@ -6,7 +6,7 @@ export const Tutorial1Page = () => {
       <div className="container flex items-center justify-center">
         <div className="text-center">
           <img
-            src="hana.png"
+            src="/hana.png"
             alt="Hana Picture"
             className="mx-auto mb-2 w-5/6 h-3/4"
           />

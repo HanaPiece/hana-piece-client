@@ -28,25 +28,22 @@ export const GoalWish = ({ goal, goalDetail }: Props) => {
     if (user.jwt) {
       (async function () {
         try {
-          const response = await fetch(
-            `${API_BASE_URL}/api/v1/user-goals`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${user.jwt}`,
-              },
-              body: JSON.stringify({
-                userGoalId: goalId !== "0" ? goalId : null,
-                goalAlias: alias,
-                goalTypeCd: "WISH",
-                goalSpecificId: goal.goalSpecificId,
-                goalBeginDate: formatDateToYyyymmdd(begin),
-                duration: duration,
-                amount: price,
-              }),
-            }
-          );
+          const response = await fetch(`${API_BASE_URL}/api/v1/user-goals`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.jwt}`,
+            },
+            body: JSON.stringify({
+              userGoalId: goalId !== "0" ? goalId : null,
+              goalAlias: alias,
+              goalTypeCd: "WISH",
+              goalSpecificId: goal.goalSpecificId,
+              goalBeginDate: formatDateToYyyymmdd(begin),
+              duration: duration,
+              amount: price,
+            }),
+          });
           if (response.ok) {
             const json = await response.json();
             const goal: Goal = {
@@ -76,7 +73,7 @@ export const GoalWish = ({ goal, goalDetail }: Props) => {
 
   return (
     <>
-      <div className={`mb-5 ${Number(goalId) !== 0 ? 'mx-10' : ''}`}>
+      <div className={`mb-5 ${Number(goalId) !== 0 ? "mx-10" : ""}`}>
         <label className="text-customGreen font-bold text-lg">목표 이름</label>
         <input
           type="text"

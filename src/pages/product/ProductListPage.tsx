@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SlArrowRight } from "react-icons/sl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGoalsProducts } from "../../contexts/ProductContext";
 import { useUser } from "../../contexts/UserContext";
 import { TopLine } from "../../components/ui/TopLine";
 import { API_BASE_URL } from "../../constants";
+import { LoadingPage } from "../LoadingPage";
 
 export type Product = {
   id: number;
@@ -86,10 +87,12 @@ export const ProductListPage = () => {
   const { user } = useUser();
   const { goalsProducts, setProduct } = useGoalsProducts();
   let { goalId } = useParams();
-  console.log(goalId);
   if (goalId === undefined) {
     goalId = "";
   }
+
+  const [loading, setLoading] = useState<boolean>(true);
+
   const goalProduct = goalsProducts?.goalsProducts?.find(
     (gp) => gp.goal.userGoalId === +goalId
   );
@@ -111,6 +114,7 @@ export const ProductListPage = () => {
               const json: ProductGetResponse = await response.json();
               setProduct(+goalId, json);
               console.log(json);
+              setLoading(false);
             }
           } catch (err) {
             if (err instanceof Error) {
@@ -123,11 +127,18 @@ export const ProductListPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goalId, user.jwt]);
 
+  if (
+    goalProduct &&
+    goalProduct.products.recommendedProducts.length === 0 &&
+    loading
+  )
+    return <LoadingPage />;
+
   return (
     <>
       <TopLine name={"적금 상품 추천"} />
       <div className="h-1 bg-gray-200">
-          <div className="w-2/6 hana-color h-1"></div>
+        <div className="w-2/6 hana-color h-1"></div>
       </div>
       <div className="p-4 container">
         <h1 className="text-2xl font-bold mb-4 ml-2 font-hana-b mt-3">상품</h1>
@@ -141,13 +152,6 @@ export const ProductListPage = () => {
               <br />
               적합한 적금을 추천해 드릴게요!
             </p>
-            {/* <p className="text-sm mt-2">
-              이미 가입된 상품 목록입니다.
-              <br />
-              {goalProduct?.products.enrolledProducts.map(
-                (product: enrolledProducts) => product.productNm + ", "
-              )}
-            </p> */}
           </div>
           <div className="flex justify-center items-cneter text-4xl place-items-center font-hana-b">
             ☝️
@@ -157,14 +161,14 @@ export const ProductListPage = () => {
           <>
             <div className="rounded-2xl bg-white shadow-md p-3 px-5 mb-5 font-hana-m text-sm">
               이미 가입된 적금
-              <span className="font-hana-b text-red-400 text-lg"> {goalProduct?.products.enrolledProducts.length}</span>
+              <span className="font-hana-b text-red-400 text-lg">
+                {" "}
+                {goalProduct?.products.enrolledProducts.length}
+              </span>
               개가 존재합니다.
             </div>
           </>
-        ):(
-          null
-        )}
-        
+        ) : null}
 
         <div className="h-[470px] overflow-y-auto p-2">
           {goalProduct?.products.recommendedProducts.map(

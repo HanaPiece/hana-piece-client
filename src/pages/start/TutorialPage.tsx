@@ -19,7 +19,7 @@ export const TutorialPage = () => {
           </p>
         </div>
         <div className="p-1 mb-5">
-          <img src="tutorial4.png" alt="" className='w-3/4 m-auto' />
+          <img src="/tutorial4.png" alt="" className='w-3/4 m-auto' />
         </div>
         </>
       ),
