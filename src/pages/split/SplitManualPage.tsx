@@ -110,12 +110,12 @@ export const SplitManualPage = () => {
         'Authorization': `Bearer ${user.jwt}`,
       },
       body: JSON.stringify({
-        savingAccountAutoDebitId: accountAutoDebitId.saving,
-        savingAutoDebitAmount: calcAmount(ratio.saving, salary),
-        lifeAccountAutoDebitId: accountAutoDebitId.life,
-        lifeAutoDebitAmount: calcAmount(ratio.life, salary),
-        spareAccountAutoDebitId: accountAutoDebitId.reserve,
-        spareAutoDebitAmount: calcAmount(ratio.reserve, salary)
+        "savingAccountAutoDebitId": accountAutoDebitId.saving,
+        "savingAutoDebitAmount": calcAmount(ratio.saving, salary),
+        "lifeAccountAutoDebitId": accountAutoDebitId.life,
+        "lifeAutoDebitAmount": calcAmount(ratio.life, salary),
+        "spareAccountAutoDebitId": accountAutoDebitId.reserve,
+        "spareAutoDebitAmount": calcAmount(ratio.reserve, salary)
       }),
     };
 
