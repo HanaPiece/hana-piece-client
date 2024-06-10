@@ -140,7 +140,7 @@ export const SplitManualPage = () => {
   return (
     <>
       <TopLine name={"통장쪼개기 수동 설정"} />
-      <div className="m-10">
+      <div className="m-8">
         <div>
           <h3 className="font-bold text-xl">통장 쪼개기</h3>
           <p className="text-xs mt-3 font-semibold">
@@ -173,7 +173,7 @@ export const SplitManualPage = () => {
                 <span className="w-24 text-center border-black focus:outline-none">
                   {(salary*ratio.saving*0.01).toLocaleString()}
                 </span>
-                원
+                <span className="text-lg">원</span>
               </div>
             </div>
           </div>
@@ -203,7 +203,7 @@ export const SplitManualPage = () => {
                 <span className="w-24 text-center border-black focus:outline-none">
                   {(salary*ratio.life*0.01).toLocaleString()}
                 </span>
-                원
+                <span className="text-lg">원</span>
               </div>
             </div>
           </div>
@@ -233,7 +233,7 @@ export const SplitManualPage = () => {
                 <span className="w-24 text-center border-black focus:outline-none">
                   {(salary*ratio.reserve*0.01).toLocaleString()}
                 </span>
-                원
+                <span className="text-lg">원</span>
               </div>
             </div>
           </div>

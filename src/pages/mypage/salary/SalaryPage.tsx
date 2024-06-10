@@ -94,12 +94,12 @@ export const SalaryPage = () => {
             <label className="m-3 text-customGreen font-semibold col-span-1">
               은행 이름
             </label>
-            <span className="m-3 bg-slate-100 col-span-2">하나은행</span>
+            <span className="m-3 col-span-2">하나은행</span>
 
             <label className="m-3 text-customGreen font-semibold col-span-1">
               계좌 번호
             </label>
-            <span className="m-3 bg-slate-100 col-span-2">
+            <span className="m-3 col-span-2">
               {salaryInfo?.accountNumber}
             </span>
 
@@ -109,21 +109,21 @@ export const SalaryPage = () => {
             <input
               type="text"
               className="m-3 bg-slate-100 col-span-2"
-              value={newSalary}
+              value={Number(newSalary).toLocaleString()}
               id="salary"
-              onChange={(e) => setNewSalary(e.target.value)}
+              onChange={(e) => setNewSalary(e.target.value.replace(/,/g, ""))}
             />
-
             <label className="m-3 text-customGreen font-semibold col-span-1">
               월급 날짜
             </label>
             <input
               type="text"
-              className="m-3 bg-slate-100 col-span-2"
+              className="m-3 bg-slate-100"
               value={newSalaryDay}
               id="salaryDay"
               onChange={(e) => setNewSalaryDay(e.target.value)}
             />
+            <span className="my-3">일</span>
             <div className="col-span-3 mt-10">
               <button onClick={buttonClicked} className="green-button">저장</button>
             </div>

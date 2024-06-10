@@ -140,11 +140,12 @@ export const SplitAutoPage = () => {
               <div className="col-span-2 text-2xl font-bold">
                 {ratio.saving}%
               </div>
-              <div className="font-semibold text-gray-400 text-sm text-right">
+              <div className="font-semibold text-gray-400 text-sm text-center">
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                {(Number(user.salary) * 0.01 * ratio.saving).toLocaleString()}원
+                {(Number(user.salary) * 0.01 * ratio.saving).toLocaleString()}
+                <span className="text-lg">원</span>
               </div>
             </div>
           </div>
@@ -157,11 +158,12 @@ export const SplitAutoPage = () => {
                 비율
               </div>
               <div className="col-span-2 text-2xl font-bold">{ratio.life}%</div>
-              <div className="font-semibold text-gray-400 text-sm text-right">
+              <div className="font-semibold text-gray-400 text-sm text-center">
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
-                {(Number(user.salary) * 0.01 * ratio.life).toLocaleString()}원
+                {(Number(user.salary) * 0.01 * ratio.life).toLocaleString()}
+                <span className="text-lg">원</span>
               </div>
             </div>
           </div>
@@ -176,12 +178,12 @@ export const SplitAutoPage = () => {
               <div className="col-span-2 text-2xl font-bold">
                 {ratio.reserve}%
               </div>
-              <div className="font-semibold text-gray-400 text-sm text-right">
+              <div className="font-semibold text-gray-400 text-sm text-center">
                 매달
               </div>
               <div className="col-span-3 text-2xl font-bold text-right">
                 {(Number(user.salary) * 0.01 * ratio.reserve).toLocaleString()}
-                원
+                <span className="text-lg">원</span>
               </div>
             </div>
           </div>

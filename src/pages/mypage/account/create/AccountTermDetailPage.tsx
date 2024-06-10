@@ -61,14 +61,17 @@ export const AccountTermDetailPage = () => {
               <p className="text-xl font-hana-cm">입출금 통장</p>
             </div>
           </div>
-          <div className="bg-slate-200 h-[450px] overflow-y-auto border p-2">
+          <div className="h-[500px] overflow-y-auto p-2">
             {terms.map((term: Term) => (
-              <div key={term.id} className="bg-slate-200">
-                <span className="text-customGreen text-lg font-bold">
-                  {term.name}
-                </span>
-                <br />
-                <span>{term.content}</span>
+              <div className="my-3 mb-5">
+                <p className="text-customGreen text-lg font-bold mb-3">
+                📌 {term.name}
+                </p>
+                <div key={term.id} className="bg-white p-4 border  text-sm">
+                  {term.content.split('.').map((item, count) => (
+                    item.trim() && <p key={count}>{item.trim()}.</p>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
