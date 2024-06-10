@@ -57,7 +57,6 @@ export const ProductDetailPage = () => {
           <div className="w-3/6 hana-color h-1"></div>
         </div>
         <br />
-
         <div className="mx-7">
           <div className="flex justify-center gap-x-3 my-10 items-center">
             <div>
@@ -107,7 +106,6 @@ export const ProductDetailPage = () => {
               <div className="col-span-5">{product?.contractTerms}</div>
             </div>
           </div>
-
           <GreenButton path={`term`} name={"적금 개설하기"} />
         </div>
       </div>
