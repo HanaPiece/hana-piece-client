@@ -5,6 +5,7 @@ import { addCommas, dateToYYYYMM, getDateParseForLifePage } from '../../componen
 import { useUser } from '../../contexts/UserContext';
 import { API_BASE_URL } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import { LoadingPage } from '../LoadingPage';
 
 const TodayDate = (): Date => {
   return new Date();
@@ -147,9 +148,7 @@ export const LifePage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-2xl font-bold">Loading...</div>
-      </div>
+      <LoadingPage />
     );
   }
 

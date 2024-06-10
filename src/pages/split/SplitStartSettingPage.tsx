@@ -4,6 +4,7 @@ import { TopLine } from "../../components/ui/TopLine";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { API_BASE_URL } from "../../constants";
+import { LoadingPage } from "../LoadingPage";
 
 export const SplitStartSettingPage = () => {
   const { user } = useUser();
@@ -61,7 +62,7 @@ export const SplitStartSettingPage = () => {
     navigate("/split/start/split", { state: { selectedAccounts } });
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   return (

@@ -7,6 +7,7 @@ import {
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { useUser } from "../../contexts/UserContext";
 import { API_BASE_URL } from "../../constants";
+import { LoadingPage } from "../LoadingPage";
 
 export const GoalProductTransactionDetail = ({
   accountId,
@@ -27,7 +28,7 @@ export const GoalProductTransactionDetail = ({
     fetchOptions
   );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   return (

@@ -4,6 +4,7 @@ import { TopLine } from "../../../../components/ui/TopLine";
 import { useState, useEffect } from "react";
 import { useUser } from "../../../../contexts/UserContext";
 import { API_BASE_URL } from "../../../../constants";
+import { LoadingPage } from "../../../LoadingPage";
 
 type AccountGetResponse = {
   accountNumber: string;
@@ -54,7 +55,7 @@ export const AccountCompletePage = () => {
     };
   }, [user.jwt]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
 
   return (
     <div className="container">

@@ -4,6 +4,7 @@ import { useUser } from "../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { UserGoalAccountGetResponse } from "./homeType";
 import { useEffect, useState } from "react";
+import { LoadingPage } from "../LoadingPage";
 
 export const GoalProductDetail = ({ accountId }: { accountId: number }) => {
   const { user } = useUser();
@@ -33,7 +34,7 @@ export const GoalProductDetail = ({ accountId }: { accountId: number }) => {
     }
   }, [data, accountId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   if (!goalAccount) return <div>해당 계좌를 찾을 수 없습니다.</div>;

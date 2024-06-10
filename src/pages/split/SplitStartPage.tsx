@@ -5,6 +5,7 @@ import { addCommas } from "../../components/utils/formatters";
 import { useUser } from "../../contexts/UserContext";
 import { FetchOptions, useFetch } from "../../hooks/fetch";
 import { API_BASE_URL } from "../../constants";
+import { LoadingPage } from "../LoadingPage";
 
 export const SplitStartPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -19,7 +20,7 @@ export const SplitStartPage = () => {
 
   const { data, error, loading } = useFetch<UserGetResponse>(`${API_BASE_URL}/api/v1/users`, fetchOptions);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingPage />;
   if (error) return <div>Error: {error}</div>;
 
   return (
