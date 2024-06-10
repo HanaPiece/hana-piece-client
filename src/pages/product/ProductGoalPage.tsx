@@ -25,10 +25,12 @@ const Goal = ({ count, name, isSelected, onSelect }: Props) => {
 };
 
 export const ProductGoalPage = () => {
-  const [selectedGoal, setSelectedGoal] = useState<number | null>(null);
+  const [selectedIdx, setSelectedIdx] = useState<number>(0);
+  const [selectedGoal, setSelectedGoal] = useState<number>(0);
   const { goalsProducts } = useGoalsProducts();
 
-  const handleSelectGoal = (goalId: number) => {
+  const handleSelectGoal = (idx: number, goalId: number) => {
+    setSelectedIdx(idx);
     setSelectedGoal(goalId);
   };
 
@@ -50,8 +52,8 @@ export const ProductGoalPage = () => {
                 key={goalProduct.goal.userGoalId}
                 count={index + 1}
                 name={goalProduct.goal.goalAlias}
-                isSelected={index + 1 === selectedGoal}
-                onSelect={() => handleSelectGoal(goalProduct.goal.userGoalId)}
+                isSelected={index + 1 === selectedIdx}
+                onSelect={() => handleSelectGoal(index+1, goalProduct.goal.userGoalId)}
               />
             ))}
           </div>

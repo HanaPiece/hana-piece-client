@@ -16,7 +16,8 @@ type Complete = {
 export const ProductSignupPage = () => {
   const navigate = useNavigate();
   const { goalId, productId } = useParams();
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isAutoChecked, setIsAutoChecked] = useState<boolean>(false);
+  const [isCloseChecked, setIsCloseChecked] = useState<boolean>(false);
   const { user } = useUser();
   const [accountNumber, setAccountNumber] = useState<string>("");
   const [productNm, setProductNm] = useState<string>("");
@@ -167,40 +168,45 @@ export const ProductSignupPage = () => {
             </label>
             <input
               type="text"
-              className="bg-slate-300 col-span-3"
+              className="bg-slate-300 col-span-2"
               id="autoDebitAmount"
             />
-
+            <div className="ml-2">원</div>
             <label className="text-customGreen font-semibold col-span-2">
               납부일
             </label>
             <input
               type="text"
-              className="bg-slate-300 col-span-3"
+              className="bg-slate-300 col-span-2"
               id="autoDebitDay"
             />
-
-            <label className="text-customGreen font-semibold col-span-2">
-              만기 설정
-            </label>
-            <input type="text" className="bg-slate-300 col-span-3" />
-
+            <div className="ml-2">일</div>
             <label className="text-customGreen font-semibold col-span-2">
               출금 계좌
             </label>
             <input
               type="text"
-              className="bg-slate-300 col-span-3"
+              className="col-span-3"
               value={accountNumber}
               disabled
             />
+            <label className="text-customGreen font-semibold  col-span-2">
+              만기 시 자동 해지
+            </label>
+            <div className="col-span-2">
+              <Checkbox
+                checked={isCloseChecked}
+                onChange={setIsCloseChecked}
+                name="설정하기"
+              />
+            </div>
             <label className="text-customGreen font-semibold  col-span-2">
               자동이체 여부
             </label>
             <div className="col-span-2">
               <Checkbox
-                checked={isChecked}
-                onChange={setIsChecked}
+                checked={isAutoChecked}
+                onChange={setIsAutoChecked}
                 name="설정하기"
               />
             </div>
