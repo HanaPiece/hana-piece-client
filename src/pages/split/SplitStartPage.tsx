@@ -32,11 +32,11 @@ export const SplitStartPage = () => {
             <p className="text-sm font-hana-r mt-5">효율적인 돈 관리를 위해<br />하나피스가 대신 도와드릴게요!</p>
           </div>
           <div>
-            <img src="../byul3.png" alt="" />
+            <img src="/byul3.png" alt="" />
           </div>
         </div>
         <div className="my-10">
-          <img src="../split-start.png" alt="" />
+          <img src="/split-start.png" alt="" />
         </div>
         <button onClick={()=>setModalOpen(true)}
           className="green-button font-hana-m text-lg"

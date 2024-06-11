@@ -16,7 +16,7 @@ export const AccountAddPage = () => {
           <div className="flex justify-center my-20">
             <div className="bg-gray-200 w-8 h-8 rounded-full grid place-items-center mr-5">
               <img
-                src="\src\assets\img-hana-symbol-m.png"
+                src="/img-hana-symbol-m.png"
                 alt="하나은행"
                 className="w-9/12"
               />

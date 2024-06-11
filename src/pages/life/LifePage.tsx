@@ -172,7 +172,7 @@ export const LifePage = () => {
               {dailyTransaction.length !== 0 ? (
                 <ConsumptionChart amountByType={amountByType} />
               ) : (
-                <img src="byul2.png" alt="transaction_is_none" className="m-auto w-2/3" />
+                <img src="/byul2.png" alt="transaction_is_none" className="m-auto w-2/3" />
               )}
             </div>
             <div className="col-span-3 text-center ml-3">
