@@ -153,7 +153,8 @@ export const ProductListPage = () => {
         {goalProduct &&
         goalProduct.products.recommendedProducts.length === 0 &&
         loading ? (
-          <LoadingPage />
+          
+          <div className="-mt-20"><LoadingPage /></div>
         ) : (
           <>
             {goalProduct?.products.enrolledProducts.length != 0 ? (
