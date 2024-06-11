@@ -127,13 +127,6 @@ export const ProductListPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goalId, user.jwt]);
 
-  if (
-    goalProduct &&
-    goalProduct.products.recommendedProducts.length === 0 &&
-    loading
-  )
-    return <LoadingPage />;
-
   return (
     <>
       <TopLine name={"적금 상품 추천"} />
@@ -157,26 +150,34 @@ export const ProductListPage = () => {
             ☝️
           </div>
         </div>
-        {goalProduct?.products.enrolledProducts.length != 0 ? (
+        {goalProduct &&
+        goalProduct.products.recommendedProducts.length === 0 &&
+        loading ? (
+          <LoadingPage />
+        ) : (
           <>
-            <div className="rounded-2xl bg-white shadow-md p-3 px-5 mb-5 font-hana-m text-sm">
-              이미 가입된 적금
-              <span className="font-hana-b text-red-400 text-lg">
-                {" "}
-                {goalProduct?.products.enrolledProducts.length}
-              </span>
-              개가 존재합니다.
+            {goalProduct?.products.enrolledProducts.length != 0 ? (
+              <>
+                <div className="rounded-2xl bg-white shadow-md p-3 px-5 mb-5 font-hana-m text-sm">
+                  이미 가입된 적금
+                  <span className="font-hana-b text-red-400 text-lg">
+                    {" "}
+                    {goalProduct?.products.enrolledProducts.length}
+                  </span>
+                  개가 존재합니다.
+                </div>
+              </>
+            ) : null}
+
+            <div className="h-[470px] overflow-y-auto p-2">
+              {goalProduct?.products.recommendedProducts.map(
+                (product: recommendedProducts) => (
+                  <Product key={product.productId} product={product} />
+                )
+              )}
             </div>
           </>
-        ) : null}
-
-        <div className="h-[470px] overflow-y-auto p-2">
-          {goalProduct?.products.recommendedProducts.map(
-            (product: recommendedProducts) => (
-              <Product key={product.productId} product={product} />
-            )
-          )}
-        </div>
+        )}
       </div>
     </>
   );
