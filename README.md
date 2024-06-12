@@ -22,17 +22,13 @@
 [하나피스_프로젝트_기획서](https://github.com/user-attachments/files/15784531/_.pdf)  
 [하나피스_화면기획서](https://github.com/user-attachments/files/15784544/_.pdf)  
 
-
-
-
-
-### 
+<br>
 
 ## 2. 개발자 소개
-| **도승희** | **이서하** |
+| **Leader • Front-end** | **Front-end** |
 |:---:|:---:|
 |[도승희](https://github.com/doSeung11)|[이서하](https://github.com/sseohalee)|
-|프론트엔드 팀장||
+|<img src="https://github.com/HanaPiece/hana-piece-client/assets/74031550/25faae5a-8a4e-4836-b45c-6797ce29a944" style="width:200px;" />|<img src="https://github.com/HanaPiece/hana-piece-client/assets/74031550/82f21cec-9fb7-4179-82c7-673d097c95b8" style="width:200px;" />|
 <br>
 
 ## 3. 시스템 구성도  
@@ -44,12 +40,16 @@
 - Framework : SpringBoot 3.2.5
 - Dependencies : JPA, QueryDSL, Spring security, jsonwebtoken, lombok, gson, jackson-databind-nullable
 
+<br>
+
 ## 5. 주요 기능
 - 목표 관리 - 목표 등록 및 목표 달성을 위한 상품 추천
 - 계좌 관리 - 계좌 생성 및 관리
 - 통장 쪼개기 - 사용 목적 별 통장 쪼개기 및 자동이체
 - 상품 관리 - 상품 가입 및 자동이체
-    
+
+<br>
+
 ## 6. ERD
 ![image](https://github.com/HanaPiece/hana-piece-server/assets/31121731/1b318b10-e775-4dbc-af9d-0e18b962b5b1)
 
