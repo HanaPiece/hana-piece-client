@@ -19,8 +19,21 @@
 
 ![하나피스_주요기능](https://github.com/HanaPiece/hana-piece-client/assets/74031550/9a5d8356-8a0d-4361-98d9-ccf0065d17c4)
 
-[하나피스_프로젝트_기획서](https://github.com/user-attachments/files/15784531/_.pdf)  
-[하나피스_화면기획서](https://github.com/user-attachments/files/15784544/_.pdf)  
+
+<details>
+  <summary><strong>[프로젝트 기획서]</strong></summary>
+  <div markdown="1">
+    <a href="https://github.com/user-attachments/files/15784531/_.pdf" download="하나피스_프로젝트_기획서.pdf">하나피스_프로젝트_기획서 다운로드</a>
+  </div>
+</details>
+<details>
+  <summary><strong>[화면 기획서]</strong></summary>
+  <div markdown="1">
+    <a href="https://github.com/user-attachments/files/15784544/_.pdf" download="하나피스_화면기획서.pdf">화면기획서 다운로드</a> 
+  </div>
+</details>
+
+ 
 
 <br>
 
@@ -38,7 +51,7 @@
 ## 4. 개발 환경
 | name | stacks |
 |:---:|:---:|
-|Development|<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white">|
+|Development|<img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white"/> <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white"/> <img src="https://img.shields.io/badge/react%2018.2.66-61B6D4?style=for-the-badge&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=for-the-badge&logo=Tailwind CSS&logoColor=white"/>|
 
 <br>
 
@@ -53,5 +66,3 @@
 ## 6. ERD
 ![image](https://github.com/HanaPiece/hana-piece-server/assets/31121731/1b318b10-e775-4dbc-af9d-0e18b962b5b1)
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
