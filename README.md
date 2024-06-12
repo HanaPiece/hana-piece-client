@@ -25,20 +25,20 @@
 <br>
 
 ## 2. 개발자 소개
-| **Leader • Front-end** | **Front-end** |
+| **도승희** | **이서하** |
 |:---:|:---:|
-|[도승희](https://github.com/doSeung11)|[이서하](https://github.com/sseohalee)|
 |<img src="https://github.com/HanaPiece/hana-piece-client/assets/74031550/25faae5a-8a4e-4836-b45c-6797ce29a944" style="width:200px;" />|<img src="https://github.com/HanaPiece/hana-piece-client/assets/74031550/82f21cec-9fb7-4179-82c7-673d097c95b8" style="width:200px;" />|
+|[@doSeung11](https://github.com/doSeung11)|[@sseohalee](https://github.com/sseohalee)|
+|Leader • Front-end|Front-end|
 <br>
 
 ## 3. 시스템 구성도  
 ![image](https://github.com/HanaPiece/hana-piece-server/assets/31121731/c1675b1b-074a-4343-913a-1be0093a42b4)  
 
 ## 4. 개발 환경
-- Version : Java 17
-- IDE : IntelliJ
-- Framework : SpringBoot 3.2.5
-- Dependencies : JPA, QueryDSL, Spring security, jsonwebtoken, lombok, gson, jackson-databind-nullable
+| name | stacks |
+|:---:|:---:|
+|Development|<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white">|
 
 <br>
 
